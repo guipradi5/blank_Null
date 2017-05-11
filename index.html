@@ -1,0 +1,172 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>NulwOS</title>
+<meta name="author" content="blank Studio">
+<meta name="google-site-verification" content="9FSitU7eNYPvNw-hvTNKChXHAvPPv4iRa2mJ1bYaV4k" />
+
+<link rel="shortcut icon" type="image/png" href="img/favicon0.png"/>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="scripts/jquery-1.6.3.min.js"></script>
+<script src="scripts/jquery.hotkeys.js"></script>
+
+
+<script src="0/scripts/script.js"></script>
+<script src="scripts/Nulwo.js"></script>
+ <link rel="stylesheet" type="text/css" href="css/nulwos.css">
+ <link rel="stylesheet" type="text/css" href="css/nulwo.css">
+</head>
+
+<body id="body">
+<audio id="startNoise" style="opacity:0; position:absolute;top:0;left:0; z-index:-9999;" >
+  <source src="0/sound/startup.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+<div id="overlay"></div>
+<div id="overlay2"></div>
+
+<div id="screen1" style="">
+	<div hidden id="logo"><img src="img/NulwOS-logo.png"></div>
+
+
+	<div hidden id="loadbar">
+		<div id="progress"></div>
+		<div id="label">0%</div>
+	</div>
+</div>
+<div id="screen2" hidden style="">
+
+	<div id="wd1" class="window" style=" width:45%; height:80vh; margin-top:40px; float:left; margin-left: 0;">
+		<div class="window98" id="message" style="position:absolute;">
+			<div class="top">
+				<span>NEWS</span>
+				<input type="button" onclick="alert('ERROR');" value="X">
+				<input type="button" onclick="alert('ERROR');" value="&#x25a1;">
+				<input type="button" onclick="alert('ERROR');" value="_">
+			</div>
+			<div class="in" style="font-size:10pt; text-align:left;">
+				 
+				<!--<object type="text/html" data="http://validator.w3.org/" width="425px" height="100%" style="overflow:auto;">
+				</object>-->
+				
+			</div>
+			
+		</div>
+	</div>
+
+
+
+	<div id="breakFrameCode" class="window" hidden style=" width:700px; min-height:200px; margin-top:15%; position:absolute; float:left; margin-left: 10%;z-index:2">
+		<div class="window98" id="message" style="position:absolute;">
+			<div class="top">
+				<span>breakFrameCode</span>
+				<input type="button" onclick="alert('Can't close breakFrameCode. It's overwritting data in the disc right now.');"  value="X">
+				<input type="button" onclick="alert('ERROR');" value="&#x25a1;">
+				<input type="button" onclick="alert('ERROR');" value="_">
+			</div>
+			<div class="bfc"  style="font-size: 7pt; background: #101010; color: white; text-align: left; font-family: consolas;">
+				<div id="theProgress">
+					<div id="prog"></div>
+					<div id="lab">0%</div>
+				</div>
+				<div id="code">
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	
+	
+	<div id="errorwd" class="window" hidden style=" width:380px; height:140px; margin-top:25%; position:absolute; float:left; margin-left: 25%;z-index:2">
+		<div class="window98" id="message" style="position:absolute;">
+			<div class="top">
+				<span>Nulwo Os Error</span>
+				<input type="button" onclick="$( this ).parents('.window').hide();"  value="X">
+				<input type="button" onclick="alert('ERROR');" value="&#x25a1;">
+				<input type="button" onclick="alert('ERROR');" value="_">
+			</div>
+			<div class="in login"  style="font-size:14pt; text-align:center;">
+				<div style="width:70px; float:left; top:20px; left:10px;">
+					<img style="width:60%; height:auto; position: absolute; top: -10px; left: 10px;" src="img/error.png">
+				</div>					
+				<div style="width:100%; margin-top:20px;">
+					<p style="font-size:8pt">The Username or password is incorrect.</p><br>
+					<input style="float:unset;width:75px; position:relative; top:5px;" class="windowsbutton" onclick="$( this ).parents('.window').hide();" type="button" value="OK">
+
+				</div>	
+			</div>
+		</div>
+	</div>
+	
+	
+	<div id="wd2" class="window" style=" width:40%; height:150px; margin-top:30vh; float:left; margin-left: 30px;">
+		<div class="window98" id="message" style="position:absolute;">
+			<div class="top">
+				<span>Log In</span>
+				<input type="button" onclick="alert('ERROR');" value="X">
+				<input type="button" onclick="alert('ERROR');" value="&#x25a1;">
+				<input type="button" onclick="alert('ERROR');" value="_">
+			</div>
+			<div class="in login" style="font-size:14pt; text-align:center;">
+					<div style="width:19%;">
+						<img style="width:60%; height:auto; position: absolute; top: -10px; left: 10px;" src="0/img/key.png">
+					</div>					<div style="width:50%; margin-top:5px;" id="userpass">
+						<p style="font-size:8pt;">Input a valid username and password to access the Nulwo Network</p><br>
+						<form action="NulwoAccess.php" id="login"> 
+							<label class="labelpass" style="float:left; font-size:8pt">Username:</label><input type="text" name="user" id="user"><br>
+							<label class="labelpass" style="float:left;  font-size:8pt">Password:</label><input type="password" name="pass" id="pass">
+					</div>	
+							<input style="float:right;width:75px; position:relative; top:5px;" class="windowsbutton" type="submit" value="OK">
+						</form>
+					</div>
+			</div>
+		</div>
+			
+</div>
+
+
+<script>
+startup();
+</script>
+
+
+
+<script>
+// Attach a submit handler to the form
+$( "#login" ).submit(function( event ) {
+  // Stop form from submitting normally
+  event.preventDefault();
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    user = $form.find( "input[name='user']" ).val(),
+    pass = $form.find( "input[name='pass']" ).val();
+	
+  // Send the data using post
+  var posting = $.post( "NulwoAccess.php", 	{ user: user, pass: pass });
+	
+	posting.done(function( data ) {
+		data = data.split('//');
+		if(data[0] == "fail"){
+			lan();
+		}else if(data[0] == "success"){
+			loadGame(data);
+		}else if(data[0] == "New Game"){
+			newGame();
+		}
+	
+  });
+	
+});
+</script>
+
+
+</body>
+</html>

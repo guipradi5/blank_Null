@@ -1,0 +1,153 @@
+
+/* WINDOW 98 STYLE */	
+				.window98{
+				margin:auto;
+				position:relative;	
+				width:inherit;
+					border: 2px solid #878684;
+					border-top: 2px solid white;
+					border-left: 2px solid  white;
+				background-color: #D3D0C7;
+				height:inherit;
+				}
+				.window98 .top{
+					cursor:default;
+					position:relative;
+					height: 26px;
+					font-weight:bold;
+					background-color:darkblue;
+					color:white;
+					padding-top:2px;
+						pointer-events: none;
+					 -webkit-touch-callout: none; 
+					-webkit-user-select: none; 
+					 -khtml-user-select: none; 
+					   -moz-user-select: none; 
+						-ms-user-select: none; 
+							user-select: none; 
+					
+				}
+				.window98 .top span{
+					
+					color:white;
+					margin-left:5px;
+
+					line-height: 25px;
+					float: left;
+				}
+				.window98 .top input, .windowsbutton{
+					display:inline-block;
+					position:relative;
+					backface-visibility:hidden;
+					float: right;
+					margin-right:2px;
+					background: #D3D0C7;
+					font-weight: bold;
+					
+					pointer-events: initial;
+					 -webkit-touch-callout: initial; 
+					-webkit-user-select: initial; 
+					 -khtml-user-select: initial; 
+					   -moz-user-select: initial; 
+						-ms-user-select: initial; 
+							user-select: initial; 
+					
+				}
+				
+				.window98 .top input:active, .windowsbutton:active{
+					outline: solid 1px #585858;
+				}
+				.window98 .top input:focus, .windowsbutton:focus{
+					outline: solid 1px #585858;
+				}
+				
+				
+				.window98 .in{
+					/*! cursor:text; */
+					display:block;
+					position:relative;
+					height:90.5%;
+					/*! background-color:white; */
+					padding:5px;
+					color:black;
+				}
+
+				.window98 .in textarea{
+					font-family:'Lucida Sans';
+					background:transparent;
+					border:hidden;
+					outline-style: none;
+					font-size:10pt;	
+					height:inherit;
+					max-width:240px;
+					min-width:239px;
+					max-height:180px;
+					min-height:179px;
+					width:240px;
+					height:180px;
+				}
+				.windows98 .in input{
+					
+					border: 2px solid #878684;
+					border-top: 2px solid white;
+					border-left: 2px solid  white;
+				}
+				
+				
+				
+				
+
+
+#overlay {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	 -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+     -khtml-user-select: none; 
+       -moz-user-select: none; 
+        -ms-user-select: none; 
+            user-select: none; 
+	z-index: 1000;
+	background-image: url(../img/overlay.png);
+	background-repeat: all;
+	background-position: 0px 0px;
+	opacity: 1;
+		
+	animation-name: Static;
+	animation-duration: 0.5s;
+	animation-iteration-count: infinite;
+	animation-timing-function: steps(32);
+
+	box-shadow: inset 0px 0px 10em rgba(0,0,0,0.4);
+}
+
+@keyframes Static {
+	0% { background-position: 0px 0px; }
+	100% { background-position: 0px 32px; }
+}
+
+#overlay2 {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	z-index: 1000;
+	background-image: url(../img/overlay2.png);
+	background-repeat: all;
+	background-position: 0px 0px;
+	opacity: 0.7;
+	
+	animation-name: Static;
+	animation-duration: 0.2s;
+	animation-iteration-count: infinite;
+	animation-timing-function: steps(32);
+}
+
+				
+				

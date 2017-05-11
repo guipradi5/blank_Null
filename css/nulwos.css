@@ -1,0 +1,287 @@
+
+@font-face{
+font-family:DOS;
+src:url(fonts/DOS.ttf);
+}
+
+.buttons-container, .non-admin-buttons-container{
+    visibility:hidden;
+}
+iframe{
+    visibility:hidden;
+}
+body{
+	font-family:'MS sans serif', Monaco, monospace;
+	background-color: #E6FEFA;
+    background: linear-gradient(#6ddecc, #E6FEFA); /* Standard syntax */
+	color:black;
+	font-size:13pt;
+	text-align:center;
+	overflow: hidden;
+	margin: 0 auto;
+
+	width: auto;
+	height: 100vh;
+}
+
+#screen0{
+		background-color: black;
+    background: linear-gradient(black, black); /* Standard syntax */
+	
+}#screen1{
+		background-color: black;
+    background: linear-gradient(black, black); /* Standard syntax */
+	
+}
+
+body *{
+margin:0 auto;
+} 
+
+::-webkit-scrollbar {
+}
+::-webkit-scrollbar-track {
+    background-color: #dedede;
+}
+::-webkit-scrollbar-thumb {
+    background-color:#bdbdbd;
+	border: 2px solid #878684;
+	border-top: 2px solid white;
+	border-left: 2px solid  white;
+	
+}
+
+#logo{ width: 580px; margin:0 auto; position:relative; top:30vh; /*! float: left; *//*! text-align: center; */}
+#logo img{ width: 100%; }
+
+
+#loadbar {
+    position: relative;
+	left:0;
+    width: 480px;
+    height: 30px;
+    background-color: transparent;
+	border: 2px solid white;
+	border-top: 2px solid #878684;
+	border-left: 2px solid  #878684;
+    top: 40vh;
+}
+#progress {
+    position: absolute;
+    width: 0%;
+    height: 100%;
+    background-color: blue;
+}
+#label {
+position:absolute;
+    text-align: center; /* If you want to center it */
+	margin-left:50%;
+    line-height: 30px; /* Set the line-height to the same as the height of the progress bar container, to center it vertically */
+    color: white;
+	font-weight:bold;
+}
+#screen1{
+    width:100%;
+    position: absolute; 
+	height: 100vh;
+    top: 0;
+}
+#screen2{
+    width:960px;
+    position: relative; 
+	height: 100vh;
+}
+#screen2 *{
+	
+}
+
+.login div{
+	 position:relative; 
+	 top:0;
+	display:inline-table;
+	
+}
+#userpass input{
+	width:110px;
+	float: right;
+	border: 2px solid white;
+	border-top: 2px solid #878684;
+	border-left: 2px solid  #878684;				
+}
+
+.labelpass{
+float:left;  font-size:9pt; line-height:20px}
+
+#console {
+	
+	
+}
+#console .message{
+	
+	background:black;
+	color: white;
+	font-family:consolas;
+	
+}
+
+
+
+@font-face{
+font-family:DOS;
+src:url(../fonts/DOS.ttf);
+}
+
+
+#input{
+    color:white;
+}
+
+
+.message{
+	font-family:'Lucida Console', Monaco, monospace;
+	font-family:DOS;
+	background:none;
+	border:hidden;
+	outline-style: none;
+	font-size:10pt;
+	text-align:left;
+	font-weight:normal;
+	
+}
+
+
+
+
+.message .command{
+	
+	font-family:'Lucida Console', Monaco, monospace;
+	font-family:DOS;
+	background:none;
+	border:hidden;
+	outline-style: none;
+	font-size:10pt;
+
+}
+
+
+.message .blink_me {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    font-family:'Lucida Console', Monaco, monospace;
+	font-family:DOS;
+    background:none;
+    border:hidden;
+    outline-style: none;
+    font-size:10pt;
+    width:70%;
+}
+
+
+
+.message .blink_me:focus {
+    -webkit-animation-name: blinkerh;
+    -webkit-animation-duration: 0s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: 1;
+
+    -moz-animation-name: blinkerh;
+    -moz-animation-duration: 0s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: 1;
+
+    animation-name: blinkerh;
+    animation-duration: 0s;
+    animation-timing-function: linear;
+    animation-iteration-count: 1;
+	
+
+}
+
+audio{
+position:absolute;
+top:-60px;
+
+}
+
+
+.ALERT{
+position:absolute;
+width:600px;
+padding:15px;
+background-color:blue;
+left:15%;
+right:15%;
+color:white;
+font-family:consolas;
+font-weight:bold;
+border:3px solid blue;
+box-shadow: 10px 10px 0px black;
+/*verttical align*/
+  top: 50%;
+  transform: translateY(-50%);
+
+}
+
+.ALERT #ALERT{
+margin: 0 auto;
+border: white 3px solid;
+padding: 15px;
+}
+
+
+
+
+/*ANIMATIONS*/
+
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+
+
+
+@-moz-keyframes blinkerh {  
+    0% { opacity: 1.0; }
+    50% { opacity: 1.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinkerh {  
+    0% { opacity: 1.0; }
+    50% { opacity: 1.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinkerh {  
+    0% { opacity: 1.0; }
+    50% { opacity: 1.0; }
+    100% { opacity: 1.0; }
+}
+
+
+

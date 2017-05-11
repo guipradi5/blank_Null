@@ -1,0 +1,739 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Connection to router 10.0.0.0</title>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" type="text/css" href="../css/nulwo.css">
+<style>
+@font-face{
+font-family:DOS;
+src:url(../fonts/DOS.ttf);
+}
+.buttons-container, .non-admin-buttons-container{
+    visibility:hidden;
+}
+iframe{
+    visibility:hidden;
+}
+body{
+	font-family:'Lucida Console', Monaco, monospace;
+	font-family:DOS;
+	background-color: #101010;
+	color:white;
+	font-size:13pt;
+	text-align:center;
+	           overflow: hidden;
+
+}
+::-webkit-scrollbar {
+    width: 9px;
+}
+::-webkit-scrollbar-track {
+    background-color: black;
+    border-left: 0px solid #ccc;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    border-radius:5px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+}
+
+.top{
+	position:relative;
+	width:450px;
+	margin-left:auto;
+	margin-right:auto;
+	padding:10px;	
+	margin-top:15%;
+	border-style:ridge;
+	min-height: 110px;
+	
+}
+#input{
+	margin-top:20px;
+	position:relative;
+	width:400px;
+	left:25px;
+	font-size:20pt;
+}
+input{	
+	font-family:'Lucida Console', Monaco, monospace;
+	font-family:DOS;
+	position:relative;
+	text-align:center;	
+background:none;
+border-style:hidden;		
+outline-style:none;
+color:white;
+width: 20px;
+	font-size:16pt;
+}
+
+
+.blink_me {
+    -webkit-animation-name: blinker;
+    -webkit-animation-duration: 1s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+    -moz-animation-name: blinker;
+    -moz-animation-duration: 1s;
+    -moz-animation-timing-function: linear;
+    -moz-animation-iteration-count: infinite;
+    animation-name: blinker;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+
+}
+
+@-moz-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@-webkit-keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+@keyframes blinker {  
+    0% { opacity: 1.0; }
+    50% { opacity: 0.0; }
+    100% { opacity: 1.0; }
+}
+
+a{
+color:white;	
+}
+
+.fog{
+position:absolute;
+bottom:0;
+left:0;
+width:100%;
+height:100%;
+margin:0px;
+background-size:200% 1080px;
+background-repeat: repeat-x;
+background-image: url(img/6/fog.png); 
+
+    animation-name: fog1;
+    animation-duration: 120s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+	-webkit-animation-name: fog1;
+    -webkit-animation-duration: 120s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+
+
+}
+#fog2{
+background-image: url(img/6/fog2.png);
+
+
+    animation-name: fog2;
+    animation-duration: 150s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+	-webkit-animation-name: fog2;
+    -webkit-animation-duration: 150s;
+    -webkit-animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite;
+}
+
+
+@-webkit-@keyframes fog1 {  
+     from { background-position: left center ;
+      } to { background-position: 200% center ; }
+}
+@keyframes fog1 {  
+     from { background-position: left center ;
+      } to { background-position: 200% center ; }
+}
+
+@-webkit-@keyframes fog2 {  
+     from { background-position: right center ;
+      } to { background-position: -100% center ; }
+}
+@keyframes fog2 {  
+     from { background-position: right center ;
+      } to { background-position: -100% center; }
+}
+
+
+
+.thunderclap{
+
+position:absolute;
+left:0;
+height:100%;
+width: 100%;
+margin:0;
+top:0;
+}
+.thunderclap img{
+position:relative;
+height:90%;
+width:auto;
+bottom:0px;
+
+}
+
+.gates{
+position:absolute;
+width:30%;
+height:auto;
+bottom: 30%;
+visibility:hidden;
+opacity:0;
+cursor:pointer;
+animation-name: open;
+    animation-duration: 20s;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
+	transition: all 7s ease;
+
+}
+
+@keyframes open {  
+0% {
+        display: none;
+        opacity: 0;
+    }
+
+    50% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+
+}
+
+.scale{
+transform: scaleX(0.1);
+}
+.into{
+width: 80%;
+opacity:0;
+bottom:-10%;
+}
+.bye{
+display:none;
+}
+.appear{
+visibility:visible;
+opacity:1;
+}
+
+
+#gate1{
+left:20%;
+}
+#gate2{
+right:20%;
+}
+
+#active1, #active2{
+background:WHITE;
+color:BLACK;
+}
+
+.labelpass{
+    float: left;
+    width: 140px;
+    text-align: right;
+    padding: 2px;
+    font-size: 10pt;
+}
+
+#reg input{
+    background: black;
+    width: 252px;
+    font-size: 10pt;
+    float: left;
+    text-align: left;
+    padding: 2px;
+}
+
+</style>
+</head>
+<body>
+
+<div id="overlay"></div>
+<div id="overlay2"></div>
+
+<audio id="beep" controls loop  style="position:absolute; top:-50px;">
+  <source src="audio/beep.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+<audio controls loop autoplay style="position:absolute; top:-50px;">
+  <source src="audio/empty.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+<audio controls loop autoplay id="stepus" style="position:absolute; top:-50px;">
+  <source src="audio/steps.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+
+<audio controls id="run" style="position:absolute; top:-50px;">
+  <source src="audio/run.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+
+
+<audio id="gatess" controls style="position:absolute; top:-40px;">
+  <source src="audio/gates.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+
+<audio id="sound" controls style="position:absolute; top:-40px;">
+  <source src="audio/sound.mp3" type="audio/mpeg">
+  Your browser does not support the audio tag.
+</audio>
+
+
+<div hidden id="connection" style="border: 1px white solid; overflow:hidden;left: 50%;top: 50%;transform: translate(-50%, -50%); height: 960px;    width: 960px;     margin: -8px; position:absolute;">
+	<div id="line" style="    height: 100%;
+    background: white;
+    width: 5px;
+    top: -520px;
+    position: relative;
+    margin: 0 auto;">
+	</div>
+	<div id="yourehere" class="blink_me" style="background: #ca0303;
+		position: absolute;
+		border-radius: 50px;
+		height: 30px;
+		width: 30px;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);">
+	</div>
+	<div id="PC0" style="position:absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);">
+		<img src="img/pc.png"><br>
+		<span style="font-size:8pt;">10.5.95.1</span>
+	</div>
+	<div id="stop" hidden style="position:absolute;left: 50.1%;  top: 58%;transform: translate(-50%, -50%);">
+		<img src="img/stop.png"><br>
+		<span style="font-size:8pt; color: #df0202">The Gate</span>
+	</div>	
+	
+	<div id="graphRender" hidden style="position:absolute;    left:  -1%;   top: -675px;">
+		<img src="img/graphRender/001.png"><br>
+	</div>
+</div>
+
+<div class="hidden">
+	
+</div>
+
+<div class="fog" hidden >
+</div>
+<div class="fog" hidden id="fog2">
+</div>
+
+
+<img id="gate1" onclick="function(){flag=1;}" class="gates" src="img/6/gate1.png">
+<img id="gate2" onclick="function(){flag=1;}" class="gates" src="img/6/gate2.png">
+<script>
+var flag = 0;
+
+$( ".gates" ).click(function() {
+	if(flag ==0){
+	flag=1;
+	if(flag!=0){
+		document.getElementById("gatess").play();
+		  $(".gates").addClass("scale");
+		  $( "#gate1" ).animate({
+		   left:"7%"
+		  }, 0 );
+		  $( "#gate2" ).animate({
+		   right:"7%"
+		  }, 0 );
+		setTimeout(function(){   $(".gates").addClass("into"); $( "#gate1" ).animate({left:"-50%"}, 0 );$( "#gate2" ).animate({right:"-50%"}, 0 );  document.getElementById("sound").play() }, 5500);
+		setTimeout(function(){   
+			$(".gates").addClass("bye");
+			aniway();
+		},6500);
+		 $( ".fog" ).delay(6500).fadeOut( 2000 ); 
+	  }
+	  }
+
+});
+
+
+function aniin(){
+	$("#connection").fadeIn(3000);
+	setTimeout(function(){
+		$("#PC0").animate({top: "105%"}, 3000, "linear");
+		$("#line").animate({top: "0px"}, 3000, "linear");
+		setTimeout(function(){
+			$("#connection").fadeOut(3000);
+			fogin();
+		},4000);
+	},4000);
+}
+function aniway(){
+	$("#connection").fadeIn(3000);
+	$("#stop").fadeIn(3000);
+	$("#graphRender").fadeIn(3000);
+	setTimeout(function(){
+		$("#stop").animate({top: "105%"}, 4000, "linear");
+		$("#line").animate({top: "500px"}, 4000, "linear");
+		$("#graphRender").animate({top: "-174px"}, 4000, "linear");
+		setTimeout(function(){
+			window.location = "../10.0.0.0";
+		},7000);
+	},5000);
+}
+
+</script>
+ 
+
+<div class="top" hidden>         
+G.bio
+	<p id="window">
+
+	</p>
+	<div id="input">
+	<span hidden id="getname_">><input id="getname" onkeydown="changesize();" onkeyup="changesize();" type="text" class="blink_me" placeholder="█"/> </span>
+		<div hidden id="regis">
+		 <form hidden id="reg" style="margin-top:25px; display: block;height: 100px;"> 
+			 <label class="labelpass" >Name:</label><input type="text" name="name" id="name" value="">
+			 <label class="labelpass" >E-mail:</label><input type="email" name="user" id="user">
+			 <label class="labelpass">Password:</label><input type="password" name="pass" id="pass">
+			 <label class="labelpass">Confirm Password:</label><input type="password" name="pass2" id="pass2">
+			 <input style="float:right;width:75px; position:relative; top:5px;" class="windowsbutton" type="submit" value="Register">
+		 </form>
+		</div>
+	</div>
+</div>
+
+
+  
+<script>
+
+var name;
+
+
+
+$( document ).ready(function() {
+	aniin();
+});
+function fogin(){
+	document.getElementById("beep").pause();
+	$( ".fog" ).fadeIn( 4000 );
+	setTimeout(function(){textready();}, 4000);//thunderclap
+}
+
+function textready(){
+  $( ".top" ).fadeIn( 2000 );
+
+setTimeout(function(){printg("Hey...")}, 3000);
+setTimeout(function(){printg("In the whole rush from before...")}, 6000);
+setTimeout(function(){print("I forgot to ask your name...")}, 9000);
+setTimeout(function(){$( "#getname_" ).fadeIn( 700 ); document.getElementById("getname").focus()
+}, 10000);
+
+}
+
+function changesize(){
+	var length = (document.getElementById("getname").value.length + 1 ) * 12;
+	var input = document.getElementById("getname");
+	if(length > 20)
+		input.style.width = length+"px";
+	else
+		input.style.width = "20px";
+
+	
+}
+
+$("#getname").keyup(function (e) {
+    if (e.keyCode == 13) {
+	e.preventDefault();
+		$( "#window" ).fadeOut( 0 );
+		name = document.getElementById("getname").value;
+		$("#name").val(name);
+		$("#getname_").fadeOut(0);
+		document.getElementById("window").innerHTML = "Is your name " + document.getElementById("getname").value + "? <br> <a id='option1' onclick='yes(1);' href='#'>YES</a> <a id='option2' onclick='no(1);' href='#'>NO</a>";	
+		$( "#window" ).fadeIn( 700 );
+document.getElementById("window").innerHTML = "Is your name " + document.getElementById("getname").value + "? <br> <a id='option1' onclick='yes(1);' href='#'>YES</a> <a id='option2' onclick='no(1);' href='#'>NO</a>";	
+        
+    }
+});
+
+
+
+
+
+
+// ANSWERS:
+
+
+
+
+
+function yes(a){
+
+		if(a==1){
+		//ajax connection username and password and shiet
+
+			localStorage.name = name;
+			localStorage.cookie = true;
+			setTimeout(function(){printg(""+ name + ", eh? I can go with that...");
+				setTimeout(function(){printgg("Hey, I wanted to tell you.", 4000);
+					setTimeout(function(){printgg("I want to  keep a record of everything that's happening and will happen. Commit it to my memory, per say", 7000);
+						setTimeout(function(){printgg("For that I'd need an identifier. Something like an username and a password so I can store it in the Nulwo system for me to load it everytime you come back", 8000)
+							setTimeout(function(){$( "#window" ).fadeIn( 500 ); document.getElementById("window").innerHTML = "Because, let's face it. You are human, you'll need to go to sleep or do other things, right? <br> <a id='option1' onclick='yes(2)' href='#'>YES</a> <a id='option2' onclick='no(2)' href='#'>NO</a>"	
+							}, 8000);
+						}, 7000);
+					}, 4000);
+				}, 3000);
+			}, 0);
+				}
+				
+		if(a==2){
+				setTimeout(function(){
+					$( "#window" ).fadeOut( 500 );
+					setTimeout(function(){
+						document.getElementById("window").innerHTML = 'So, yeah, I`ll need an unique username and a Password, verify it, and remember it. I want to know it`s you when you come back. <br>';						
+						$( "#window" ).fadeIn( 500 ); 
+						$("#regis").fadeIn(500);
+					}, 500);
+				}, 0);
+
+		}			
+		
+}
+
+
+function no(a){
+		if(a==1){
+			print("What is your name?...");
+			$("#getname").fadeIn(500);
+			}
+
+		if(a==2){
+			$( "#window" ).fadeOut( 500 );
+			setTimeout(function(){
+				printgg("... ", 2500);
+				setTimeout(function(){
+					printgg("Yeah, good joke. HAHAHAHAHAHAHA. Of course you are human! you woldn't be answering me right now if that weren't the case. HAHAHAHA. You... you got me there for a second,"+name, 10000);
+					setTimeout(function(){
+						printgg("Now, sillyness aside. You won't be here for me ALWAYS, I'm well aware of that, and no need to worry, really. I can wait for you!", 10000);
+						setTimeout(function(){
+							printgg(" But I need to identify you everytime you come here, to know it's YOU, I can't see your face after all. So... I need you to give me some specific info for that. You understand, right? OK", 10000);
+							setTimeout(function(){
+								yes(2);
+							}, 10000);
+						}, 10000);
+					}, 10000);
+				}, 2500);
+			}, 500);
+			
+
+
+
+		}
+
+		
+
+}
+
+
+
+
+
+function continue_(){
+	 $( "#window" ).fadeOut( 500 );
+	 $( "#reg" ).fadeOut( 500 );
+		setTimeout(function(){
+			printgg("Perfect! It got registered. Remember these credentials for logging in and keep on from where we left.", 5000); 
+			setTimeout(function(){
+				printgg("Ok, we should be near the router now. Let's keep going. Let's see what's ahead!", 4000); 
+				
+				setTimeout(function(){ 
+					gates() ;
+					}, 4000);
+				
+			}, 5000);
+		}, 500);
+	
+
+}
+
+
+function gates(){
+
+
+		setTimeout(function(){printg("Hey...")}, 0);
+		//$( ".top" ).fadeIn( 3000 );
+		setTimeout(function(){printg("I CAN SEE SOMETHING!")}, 3000);
+		setTimeout(function(){printg("LET'S GO!!"); document.getElementById("run").play(); document.getElementById("stepus").pause()}, 6000);
+		$( ".top" ).delay(6000).fadeOut( 3000 );
+		setTimeout(function(){$(".gates").addClass("appear"); document.getElementById("gate1").style.visibility="visible"; document.getElementById("gate2").style.visibility="visible"}, 10000);
+
+
+
+
+}
+
+
+
+
+
+
+function printg(a){
+	  $( "#window" ).fadeOut( 0 );
+	  $( "#window" ).fadeIn( 2000 );
+document.getElementById("window").innerHTML = a;	
+	  $( "#window" ).fadeOut( 1000 );
+}
+function print(a){
+	  $( "#window" ).fadeOut( 0 );
+	  $( "#window" ).fadeIn( 2000 );
+document.getElementById("window").innerHTML = a;
+}
+
+function printgg(a,b){
+	  $( "#window" ).fadeIn( 800 );
+document.getElementById("window").innerHTML = a;
+$( "#window" ).delay( b-1500 );
+	  $( "#window" ).fadeOut( 700 );
+}
+
+
+$(document).keydown(function(e) {
+    switch(e.which) {
+        case 37: // left
+
+		var e = document.getElementById("option1");
+		e.id = "active1";
+		var f = document.getElementById("active2");
+		f.id = "option2";
+        break;
+
+        case 39: // right
+
+		var e = document.getElementById("option2");
+		e.id = "active2";
+		var f = document.getElementById("active1");
+		f.id = "option1";
+
+		
+        break;
+
+		
+		case 13: // enter
+			e.preventDefault();
+		    eval($('#active1').attr('onclick'));
+			eval($('#active2').attr('onclick'));
+		
+        break;
+		
+
+        default: return; // exit this handler for other keys
+    }
+    e.preventDefault(); // prevent the default action (scroll / move caret)
+});
+
+
+</script>
+
+
+
+
+
+<script>
+// Attach a submit handler to the form
+
+var tries;
+
+$( "#reg" ).submit(function( e ) {
+  // Stop form from submitting normally
+  e.preventDefault();
+ 
+	
+ 
+  // Get some values from elements on the page:
+  var $form = $( this ),
+    name = $form.find( "input[name='name']" ).val(),
+    user = $form.find( "input[name='user']" ).val(),
+    pass = $form.find( "input[name='pass']" ).val();
+	
+
+	var pass1 = $("#pass").val();
+	var pass2 = $("#pass2").val();
+	
+	console.log(pass1+" vs "+pass2);
+	if(pass1 == pass2){
+			console.log("We're in");
+		var posting = $.post( "../NulwoRegistry.php", { name: name, user: user, pass: pass });
+
+		posting.done(function( data ) {
+		console.log(data);
+			if(data == "1"){
+				continue_();
+			}else if(data == "0"){
+					$( "#window" ).fadeOut( 500 );
+					$("#reg").fadeOut(500);
+					setTimeout(function(){
+						document.getElementById("window").innerHTML = 'Oh... Seems like the system can`t register this username... Sorry, try inputing another, '+name+' <br> ';	
+						$( "#window" ).fadeIn( 500 ); 
+						$("#reg").fadeIn(500);
+					}, 500);
+				
+			}else if(data == "01"){
+				tries = tries + 1;
+				
+				
+				$( "#window" ).fadeOut( 500 );
+				$("#reg").fadeOut(500);
+
+					setTimeout(function(){
+					if(tries == 1){
+						document.getElementById("window").innerHTML = 'Ugh... Fuck! there was an error with the system... Try again... If it persists try later. How obnoxious... Sorry. <br>';	
+					}else if(tries == 2){
+						document.getElementById("window").innerHTML = 'FUCK! Try once more... <br> ';	
+					}else if(tries == 3){
+						document.getElementById("window").innerHTML = 'SHIT!! YOU PIECE OF SHIT OLD SERVERS!! UUUGH... SORRY!... Sorry... Seems like there is something wrong with the servers... I`ll try to fix this from here. Keep trying if you want, but you may have to come back later. Just copy paste the URL above in the browser and come back in some time. In the meantime, I`ll be here inspecting. UGH!... <br>';	
+					}else if(tries >= 4){
+						document.getElementById("window").innerHTML = '... Still trying to fix this, '+name+'...  <br> ';	
+					}
+						$( "#window" ).fadeIn( 500 ); 
+						$("#reg").fadeIn(500);
+				}, 500);
+				
+			}
+		
+	  });
+	}else{
+		$( "#window" ).fadeOut( 500 );
+		$("#reg").fadeOut(500);
+		document.getElementById("window").innerHTML = 'Um... Seems like the 2 passwords are not the same. Try inputing them again. <br>';	
+		$( "#window" ).fadeIn( 500 ); 
+		$("#reg").fadeIn(500);
+	}
+
+
+});
+</script>
+
+
+</body>
+</html>
