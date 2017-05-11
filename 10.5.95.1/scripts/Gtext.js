@@ -478,7 +478,7 @@ if(flagB == 0){
 	$("body").children().fadeOut(1500);
 	setTimeout(function(){
 		fadeVolumeUp(Room);
-		$("body").append("<div id='blanknull' style=' display:none;   font-size: 85pt;    margin-top: 25%;    display: block;    text-align: center;    color: white;    font-family: DOS;' hidden>blank(null)</div>");
+		$("body").append("<div id='blanknull' style=' display:none;   font-size: 85pt;    margin-top: 25%; text-align: center;    color: white;    font-family: DOS;' hidden>blank(null)</div>");
 		$("#blanknull").fadeIn(1500);
 		setTimeout(function(){
 				 window.location.assign("../connection_assistant_10.0.0.0");

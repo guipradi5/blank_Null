@@ -354,6 +354,11 @@ color:BLACK;
 var flag = 0;
 
 $( ".gates" ).click(function() {
+gateOpen();
+});
+
+
+function gateOpen() {
 	if(flag ==0){
 	flag=1;
 	if(flag!=0){
@@ -374,7 +379,7 @@ $( ".gates" ).click(function() {
 	  }
 	  }
 
-});
+}
 
 
 function aniin(){
@@ -586,9 +591,15 @@ function gates(){
 		setTimeout(function(){printg("I CAN SEE SOMETHING!")}, 3000);
 		setTimeout(function(){printg("LET'S GO!!"); document.getElementById("run").play(); document.getElementById("stepus").pause()}, 6000);
 		$( ".top" ).delay(6000).fadeOut( 3000 );
-		setTimeout(function(){$(".gates").addClass("appear"); document.getElementById("gate1").style.visibility="visible"; document.getElementById("gate2").style.visibility="visible"}, 10000);
+		setTimeout(function(){
+			$(".gates").addClass("appear"); 
+			document.getElementById("gate1").style.visibility="visible";
+			document.getElementById("gate2").style.visibility="visible"
+			$(document).unbind().bind('keydown', function(e) {if(e.which == 13) { flag=1; gateOpen();}});
 
+			}, 10000);
 
+		
 
 
 }
@@ -676,11 +687,6 @@ $( "#reg" ).submit(function( e ) {
     user = $form.find( "input[name='user']" ).val(),
     pass = $form.find( "input[name='pass']" ).val();
 	
-
-	var pass1 = $("#pass").val();
-	var pass2 = $("#pass2").val();
-	
-	console.log(pass1+" vs "+pass2);
 	if(pass1 == pass2){
 			console.log("We're in");
 		var posting = $.post( "../NulwoRegistry.php", { name: name, user: user, pass: pass });
