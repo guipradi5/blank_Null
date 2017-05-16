@@ -41,6 +41,10 @@
 		<script src="../scripts/stats.min.js"></script>
 
 		
+		
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="../scripts/jquery-1.6.3.min.js"></script>
+		
 		<!--DOME-->
 		
 		<script type="x-shader/x-vertex" id="vertexShader">
@@ -91,7 +95,13 @@
 				controls = new THREE.OrbitControls( camera );
 				controls.rotateSpeed = 2.0;
 				controls.zoomSpeed = 5;
-
+				controls.minDistance = 10;
+				controls.maxDistance = 200;
+				
+				controls.minPolarAngle = 0; // radians
+				controls.maxPolarAngle = Math.PI; // radians
+				
+				controls.maxPolarAngle = Math.PI/2; 
 				console.log(controls);
 				
 				//raycaster
@@ -264,7 +274,7 @@
 				if (intersects.length > 0 ) {
 					console.log( "clicked: "+intersects[ 0 ].object.name);
 					if(intersects[ 0 ].object.name == "TV"){
-						//Code
+						$(document)
 					}
 					render();
 				}
@@ -272,12 +282,14 @@
 			
 			
 			
-			//
+			//animate
 			function animate() {
-				
-				requestAnimationFrame( animate );
-				renderer.render( scene, camera );
-				controls.update();
+				setTimeout( function() {
+					requestAnimationFrame( animate );
+					renderer.render( scene, camera );
+					controls.update();
+					
+				}, 1000 / 25 );
 				render();
 			}
 			
