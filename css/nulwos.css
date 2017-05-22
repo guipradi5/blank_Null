@@ -238,7 +238,9 @@ border: white 3px solid;
 padding: 15px;
 }
 
-
+.commandCol{
+	color:#f006ff;
+}
 
 
 /*ANIMATIONS*/

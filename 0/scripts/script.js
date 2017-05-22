@@ -195,7 +195,7 @@ function newGame(){
 
 function breakFrameCode_result(){
 
-	var console = '<p id="code">Welcome to Nulwo 2.0...<br>Type <span style="color:purple">help</span> for a list of commands</p><div class="command" id="command" style="visibility:visible;"><form id="norman" action="javascript:blank(null);">/<input id="input" autocomplete="off" type="text" class="blink_me" placeholder="█" ></form></div>';
+	var console = '<p id="code">Welcome to Nulwo 2.0...<br>Type <span class="commandCol">help</span> for a list of commands</p><div class="command" id="command" style="visibility:visible;"><form id="norman" action="javascript:blank(null);">/<input id="input" autocomplete="off" type="text" class="blink_me" placeholder="█" ></form></div>';
 	
 	$("#screen2").html(" ");
 	generateTextWindow("console","5","","500","200","Command shell",console, "#screen2");
@@ -235,7 +235,9 @@ function consoleStart(){
 
 			$('#input').bind('keydown.return', function(){
 				var x=document.getElementById("input").value;
-				lines("/<span style='color:purple'>"+x+"</span>");
+				
+				space();
+				lines("<span style='color:#00b7ff'>"+x+"</span>");
 
 				if (x=="start" || x=="START")
 				{
@@ -249,9 +251,9 @@ function consoleStart(){
 				stop(0);
 				space();
 				lines("Public commands:");
-				lines("/<span style='color:purple'>log</span> ==> gives a report on the last commands used by admin");
-				lines("/<span style='color:purple'>open [file]</span> ==> open a document. The program finds the file name in the memory and tries to open it in the default protocol");
-				lines("/<span style='color:purple'>debug [file]</span> ==> opens a file without stoping on errors");
+				lines("/<span class='commandCol'>log</span> ==> gives a report on the last commands used by admin");
+				lines("/<span class='commandCol'>open [file]</span> ==> open a document. The program finds the file name in the memory and tries to open it in the default protocol");
+				lines("/<span class='commandCol'>debug [file]</span> ==> opens a file without stoping on errors");
 				space();
 				stop(1);
 				scrollbottom();
@@ -267,7 +269,7 @@ function consoleStart(){
 				space();
 				lines("OPENING LAST LOG:");
 				lines(" ");
-				lines("/<span style='color:purple'>open key.jpg</span>");
+				lines("/<span class='commandCol'>open key.jpg</span>");
 				lines("opening...");
 				lines("[ERROR REPORT]");
 				lines(" ");
@@ -280,7 +282,7 @@ function consoleStart(){
 				space();
 				error.play();
 				lines("<span style='color:red'>7▓89611.╩t///HEY!! YOU!! TRY OPENING THAT FILE!</span>");
-				lines("<span style='color:red'>USE /<span style='color:purple'>open key.jpg</span>///?▒s4?▒s4</span>");
+				lines("<span style='color:red'>USE /<span class='commandCol'>open key.jpg</span>///?▒s4?▒s4</span>");
 				stop(1);
 				scrollbottom();
 				}, 3000);
@@ -298,7 +300,7 @@ function consoleStart(){
 				lines(" ");
 				lines("selected file(s) opened with errors");
 				lines(" ");
-				lines("Try: /<span style='color:purple'>debug "+ com +"</span>");
+				lines("Try: /<span class='commandCol'>debug "+ com +"</span>");
 				stop(1);
 				 scrollbottom();}, 3000);
 
@@ -342,7 +344,7 @@ function consoleStart(){
 				scrollbottom();
 				delay = setTimeout(function(){ lines("Instance of G.bio was found already executing. Transmitting...")}, 3000);
 				delay = setTimeout(function(){ lines("Transmitted running iteration succesfully!");
-				lines("Please type in /<span style='color:purple'>run nulworld.exe</span> to display your 'G.bio'");
+				lines("Please type in /<span class='commandCol'>run nulworld.exe</span> to display your 'G.bio'");
 				stop(1);
 				scrollbottom();}, 6000);
 
@@ -366,9 +368,9 @@ function consoleStart(){
 				if (x=="exit"){
 				window.location = '';
 				return false;
-				}else
-					
-				if( x.split(" ", 2)[0] == color){
+				}
+				/*
+				else if( x.split(" ", 2)[0] == color){
 					
 					var ranColor = x.split(" ", 2)[1];
 					var randomColor = ranColor.toLowerCase();
@@ -382,7 +384,7 @@ function consoleStart(){
 						localStorage.setItem("color", randomColor);
 				  /*      // generate new styles and append to the placeholder style block
 						var styleContent = 'input:-moz-placeholder {color: ' + randomColor + ';} input::-webkit-input-placeholder {color: ' + randomColor + ';}'
-						$('#placeholder-style').text(styleContent);*/
+						$('#placeholder-style').text(styleContent);*//*
 						 }
 						 }
 						$( "input" ).val( "" );
@@ -395,15 +397,15 @@ function consoleStart(){
 					return;
 				  event.preventDefault();
 					
-				}
-
-
-					else if(x!="" || x!=" "){
+				}*/
+					else if(x!=""){
 				stop(0);
-				lines("Error 001: Command <span style='color:purple'>'"+x+"'</span> was wrongly inputed or doesn't exist, try again.");
+				lines("Error: <span style='color: #00b7ff;'>'"+x+"'</span> was not found as a command. It was wrongly inputed or doesn't exist, try again.");
 				stop(1);
 				scrollbottom();
 
+				}else if(x==""){
+					scrollbottom();
 				}
 
 
