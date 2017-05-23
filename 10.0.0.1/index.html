@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<title>three.js webgl - OBJLoader + MTLLoader</title>
+		<title>10.0.0.1</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
@@ -22,21 +22,47 @@
 				display:block;
 			}
 			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+			.phonebutton{
+				background:rgba(255,255,255,0);
+				width:30px;
+				height:30px;
+				position:fixed;
+				display:inline;
+				cursor:pointer;
+			}
+			.phonebutton:hover{
+				background:rgba(255,255,255,0.3);
+
+			}
+			
+			.row1{top: 218px;}
+			.row2{top: 250px;}
+			.row3{top: 280px;}
+			.row4{top: 311px;}
+			
+			.col1{margin-left: 333px;}
+			.col2{margin-left: 362px;}
+			.col3{margin-left: 393px;}
 		</style>
+		
+<link rel="stylesheet" type="text/css" href="../css/nulwo.css">
 	</head>
 
 	<body>
-		<div id="info">
-		<a href="http://threejs.org" target="_blank">three.js</a> - OBJLoader + MTLLoader
-		</div>
+		
+	<div id="overlay"></div>
+	<div id="overlay2"></div>
+	
+		<div id="info">		</div>
 
-		<script src="../scripts/three.js"></script>
+		<script src="../scripts/three.min.js"></script>
+		<script src="https://threejs.org/build/three.min.js"></script>
 
 		<script src="../scripts/DDSLoader.js"></script>
 		<script src="../scripts/MTLLoader.js"></script>
 		<script src="../scripts/OBJLoader.js"></script>
 		<script src="../scripts/OrbitControls.js"></script>
-
+		<script src="../scripts/Mirror.js"></script>
 		<script src="../scripts/Detector.js"></script>
 		<script src="../scripts/stats.min.js"></script>
 
@@ -71,7 +97,8 @@
 		<script>
 			var container, stats;
 			var camera, controls, scene, renderer, raycaster;
-			
+			var WIDTH = window.innerWidth;
+			var HEIGHT = window.innerHeight;
 			var mesh, line;
 
 			var mouse = new THREE.Vector2(), INTERSECTED;
@@ -80,7 +107,8 @@
 			
 			var tea;
 			var team;
-			
+			var phonenumber = "0";
+			var phoneflag = 0;
 			
 			init();
 			animate();
@@ -113,6 +141,8 @@
 				scene.fog = new THREE.Fog( 0xffffff, 2000, 10000 );
 					//scene.add( camera );
 
+
+				
 				//ambient
 				var ambient = new THREE.AmbientLight( 0x444444 );
 				scene.add( ambient );
@@ -166,13 +196,14 @@
 				
 				
 				
-				
-				
 				// model load
 				var onProgress = function ( xhr ) {
 					if ( xhr.lengthComputable ) {
 						var percentComplete = xhr.loaded / xhr.total * 100;
-						console.log( Math.round(percentComplete, 2) + '% downloaded' );
+						console.log( Math.round(percentComplete, 2) + '% loaded' );
+						if(Math.round(percentComplete, 2) >= 100){
+							console.log("FULLY LOADED!");
+						}
 					}
 				};
 				
@@ -209,6 +240,12 @@
 				});
 				
 				
+				//Mirror
+				var verticalMirror = new THREE.Mirror( 50, 200, { clipBias: 0.003, textureWidth: WIDTH, textureHeight: HEIGHT, color:0x889999 } );
+				verticalMirror.position.x = -237;
+				verticalMirror.position.y = 20;
+				verticalMirror.position.z = -379;
+				scene.add( verticalMirror );
 				
 				
 				//renderer
@@ -269,12 +306,47 @@
 				event.preventDefault();
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( scene.children[4].children );				
+				var intersects = raycaster.intersectObjects( scene.children[5].children );				
 				if (intersects.length > 0 ) {
 					console.log( "clicked: "+intersects[ 0 ].object.name);
 					if(intersects[ 0 ].object.name == "TV"){
-					console.log("TV");
+						$("#info").html("");
 						$("#info").append("<div>test</div>");
+					}
+					if(intersects[ 0 ].object.name == "InBook1"){
+						$("#info").html("");
+						$("#info").append("<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'><div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div><div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> Hello Georgia. I wanted to write you to take a look at the recordings for day 23/11/94. In your same office. There seems to be someone stealing office supplies and we want to know who. .</div></div>");
+					}
+					if(intersects[ 0 ].object.name == "InBook2"){
+						$("#info").html("");
+						$("#info").append("<div>test</div>");
+					}
+					if(intersects[ 0 ].object.name == "InBook3"){
+						$("#info").html("");
+						$("#info").append("<div>test</div>");
+					}
+					if(intersects[ 0 ].object.name == "InBook4"){
+						$("#info").html("");
+						$("#info").append("<div>test</div>");
+					}
+					if(intersects[ 0 ].object.name == "InBook5"){
+						$("#info").html("");
+						$("#info").append("<div>test</div>");
+					}
+					if(intersects[ 0 ].object.name == "InBook6"){
+						$("#info").html("");
+						$("#info").append("<div>test</div>");
+					}
+					if(intersects[ 0 ].object.name == "Phone"){
+						//add number binding
+						var string ="<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'>";
+						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+						string = string + "<div onclick='phonenumber += `1`;' class='phonebutton row1 col1'></div>  <div onclick='phonenumber += `2`;' class='phonebutton row1 col2'></div>  <div onclick='phonenumber += `3`;' class='phonebutton row1 col3'></div>";
+						string = string + "<div onclick='phonenumber += `4`;' class='phonebutton row2 col1'></div>  <div onclick='phonenumber += `5`;' class='phonebutton row2 col2'></div>  <div onclick='phonenumber += `6`;' class='phonebutton row2 col3'></div>";
+						string = string + "<div onclick='phonenumber += `7`;' class='phonebutton row3 col1'></div>  <div onclick='phonenumber += `8`;' class='phonebutton row3 col2'></div>  <div onclick='phonenumber += `9`;' class='phonebutton row3 col3'></div>";
+						string = string + "<div onclick='phonenumber += `#`;' class='phonebutton row4 col1'></div>  <div onclick='phonenumber += `0`;' class='phonebutton row4 col2'></div>  <div onclick='phonenumber += `-`;' class='phonebutton row4 col3'></div>";
+						string = string + "<img style='width:100%;height:auto;' src='img/phone.png'/></div>";
+						$("#info").html(string);
 					}
 					render();
 				}
@@ -298,7 +370,8 @@
 
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );
-				var intersects = raycaster.intersectObjects( scene.children[4].children );
+				var intersects = raycaster.intersectObjects( scene.children[5].children );
+				
 				if ( intersects.length > 0 ) {
 				console.log(intersects[ 0 ].object.name);
 					if ( INTERSECTED != intersects[ 0 ].object ) {
@@ -317,6 +390,14 @@
 					if ( INTERSECTED ) {INTERSECTED.material.emissive.r = 0;INTERSECTED.material.emissive.g = 0;INTERSECTED.material.emissive.b = 0;
 					INTERSECTED = null;}
 				}
+				if(phoneflag == 0){
+					if(phonenumber.slice(-12) == "416-555-0127" || phonenumber.slice(-10) == "4165550127"){
+						phoneflag = 1;
+						//audio
+					}
+				}
+				
+				
 				renderer.render( scene, camera );
 
 			}
