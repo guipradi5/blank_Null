@@ -70,6 +70,7 @@
 		
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="../scripts/jquery-1.6.3.min.js"></script>
+		<script src="../scripts/DTMFgenerator.js"></script>
 		
 		<!--DOME-->
 		
@@ -149,7 +150,7 @@
 				
 				//light
 				hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
-				hemiLight.color.setHSL( 0.7, 0.5, 0.5 );
+				hemiLight.color.setHSL( 0.9, 0.6, 0.6 );
 				hemiLight.groundColor.setHSL( 0.095, 1, 0.75 );
 				hemiLight.position.set( 0, 500, 0 );
 				scene.add( hemiLight );
@@ -315,7 +316,11 @@
 					}
 					if(intersects[ 0 ].object.name == "InBook1"){
 						$("#info").html("");
-						$("#info").append("<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'><div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div><div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> Hello Georgia. I wanted to write you to take a look at the recordings for day 23/11/94. In your same office. There seems to be someone stealing office supplies and we want to know who. .</div></div>");
+						var string = "<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
+							string += "Hello Georgia. From the higer ups in Nulwo we want to welcome you to our offices and to your new job as Human Resources  .</div></div>";
+						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook2"){
 						$("#info").html("");
@@ -341,10 +346,10 @@
 						//add number binding
 						var string ="<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'>";
 						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-						string = string + "<div onclick='phonenumber += `1`;' class='phonebutton row1 col1'></div>  <div onclick='phonenumber += `2`;' class='phonebutton row1 col2'></div>  <div onclick='phonenumber += `3`;' class='phonebutton row1 col3'></div>";
-						string = string + "<div onclick='phonenumber += `4`;' class='phonebutton row2 col1'></div>  <div onclick='phonenumber += `5`;' class='phonebutton row2 col2'></div>  <div onclick='phonenumber += `6`;' class='phonebutton row2 col3'></div>";
-						string = string + "<div onclick='phonenumber += `7`;' class='phonebutton row3 col1'></div>  <div onclick='phonenumber += `8`;' class='phonebutton row3 col2'></div>  <div onclick='phonenumber += `9`;' class='phonebutton row3 col3'></div>";
-						string = string + "<div onclick='phonenumber += `#`;' class='phonebutton row4 col1'></div>  <div onclick='phonenumber += `0`;' class='phonebutton row4 col2'></div>  <div onclick='phonenumber += `-`;' class='phonebutton row4 col3'></div>";
+						string = string + "<div onclick='phonenumber += `1`;' onmousedown='dialTone(697.0, 1209.0)' onmouseup='stop()' class='phonebutton row1 col1'></div>  <div onclick='phonenumber += `2`;' onmousedown='dialTone(697.0, 1336.0)' onmouseup='stop()' class='phonebutton row1 col2'></div>  <div onclick='phonenumber += `3`;' onmousedown='dialTone(697.0, 1477.0)' onmouseup='stop()' class='phonebutton row1 col3'></div>";
+						string = string + "<div onclick='phonenumber += `4`;' onmousedown='dialTone(770.0, 1209.0)' onmouseup='stop()' class='phonebutton row2 col1'></div>  <div onclick='phonenumber += `5`;' onmousedown='dialTone(770.0, 1336.0)' onmouseup='stop()' class='phonebutton row2 col2'></div>  <div onclick='phonenumber += `6`;' onmousedown='dialTone(770.0, 1477.0)' onmouseup='stop()' class='phonebutton row2 col3'></div>";
+						string = string + "<div onclick='phonenumber += `7`;' onmousedown='dialTone(852.0, 1209.0)' onmouseup='stop()' class='phonebutton row3 col1'></div>  <div onclick='phonenumber += `8`;' onmousedown='dialTone(852.0, 1336.0)' onmouseup='stop()'class='phonebutton row3 col2'></div>  <div onclick='phonenumber += `9`;' onmousedown='dialTone(852.0, 1477.0)' onmouseup='stop()' class='phonebutton row3 col3'></div>";
+						string = string + "<div onclick='phonenumber += `#`;' onmousedown='dialTone(941.0, 1477.0)' onmouseup='stop()' class='phonebutton row4 col1'></div>  <div onclick='phonenumber += `0`;' onmousedown='dialTone(941.0, 1336.0)' onmouseup='stop()' class='phonebutton row4 col2'></div>  <div onclick='phonenumber += `-`;' onmousedown='dialTone(941.0, 1209.0)' onmouseup='stop()' class='phonebutton row4 col3'></div>";
 						string = string + "<img style='width:100%;height:auto;' src='img/phone.png'/></div>";
 						$("#info").html(string);
 					}
@@ -393,7 +398,10 @@
 				if(phoneflag == 0){
 					if(phonenumber.slice(-12) == "416-555-0127" || phonenumber.slice(-10) == "4165550127"){
 						phoneflag = 1;
-						//audio
+						console.log("GOT IT");
+						var cache_phone_call = new Audio("audio/cached_telephonic_transmission_01.mp3");
+						cache_phone_call.play();
+						scene.children[1].color.setHSL( 1, 0.9, 0.1 );
 					}
 				}
 				
