@@ -331,14 +331,23 @@
 					}
 					if(intersects[ 0 ].object.name == "InBook2"){
 						$("#info").html("");
-						$("#info").append("<div>test</div>");
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: The first session<br>--------------------------------------<br> ";
+							
+							string += "Hello Mrs. Baker, thank you for that session the other day. It really helped me out with some of the things going on on my life. Also for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that";
+							string += "</div>";
+						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook3"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
-							string += "Hello Georgia. From the higer ups in Nulwo we want to welcome you to our offices and to your new job as Human Resources  .</div></div>";
+							string += "<b>F</b>eeling the bast oc<b>e</b>an ben<b>e</b>ath my sou<b>l</b><br>";
+							string += "<b>E</b>ntering the cold and soothing sound<br>";
+							string += "<b>E</b>xpuned from the essence for feeling raw<br>";
+							string += "<b>L</b>ying on the waves for I am gone.</div>";
+							string += "</div>";
 						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook4"){
