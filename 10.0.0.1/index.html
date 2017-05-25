@@ -43,6 +43,11 @@
 			.col1{margin-left: 333px;}
 			.col2{margin-left: 362px;}
 			.col3{margin-left: 393px;}
+			
+			.window3d{
+				margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px
+			}
+			
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -110,6 +115,8 @@
 			var team;
 			var phonenumber = "0";
 			var phoneflag = 0;
+			var down = 0;
+			var phonecall = 0;
 			
 			init();
 			animate();
@@ -310,13 +317,13 @@
 				var intersects = raycaster.intersectObjects( scene.children[5].children );				
 				if (intersects.length > 0 ) {
 					console.log( "clicked: "+intersects[ 0 ].object.name);
-					if(intersects[ 0 ].object.name == "TV"){
+					if(intersects[ 0 ].object.name == "TV" || intersects[ 0 ].object.name == "TVScreen"){
 						$("#info").html("");
 						$("#info").append("<div>test</div>");
 					}
 					if(intersects[ 0 ].object.name == "InBook1"){
 						$("#info").html("");
-						var string = "<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'>";
+						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
 							string += "Hello Georgia. From the higer ups in Nulwo we want to welcome you to our offices and to your new job as Human Resources  .</div></div>";
@@ -328,7 +335,11 @@
 					}
 					if(intersects[ 0 ].object.name == "InBook3"){
 						$("#info").html("");
-						$("#info").append("<div>test</div>");
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
+							string += "Hello Georgia. From the higer ups in Nulwo we want to welcome you to our offices and to your new job as Human Resources  .</div></div>";
+						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook4"){
 						$("#info").html("");
@@ -344,14 +355,93 @@
 					}
 					if(intersects[ 0 ].object.name == "Phone"){
 						//add number binding
-						var string ="<div class='window3d' style='margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px'>";
-						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-						string = string + "<div onclick='phonenumber += `1`;' onmousedown='dialTone(697.0, 1209.0)' onmouseup='stop()' class='phonebutton row1 col1'></div>  <div onclick='phonenumber += `2`;' onmousedown='dialTone(697.0, 1336.0)' onmouseup='stop()' class='phonebutton row1 col2'></div>  <div onclick='phonenumber += `3`;' onmousedown='dialTone(697.0, 1477.0)' onmouseup='stop()' class='phonebutton row1 col3'></div>";
-						string = string + "<div onclick='phonenumber += `4`;' onmousedown='dialTone(770.0, 1209.0)' onmouseup='stop()' class='phonebutton row2 col1'></div>  <div onclick='phonenumber += `5`;' onmousedown='dialTone(770.0, 1336.0)' onmouseup='stop()' class='phonebutton row2 col2'></div>  <div onclick='phonenumber += `6`;' onmousedown='dialTone(770.0, 1477.0)' onmouseup='stop()' class='phonebutton row2 col3'></div>";
-						string = string + "<div onclick='phonenumber += `7`;' onmousedown='dialTone(852.0, 1209.0)' onmouseup='stop()' class='phonebutton row3 col1'></div>  <div onclick='phonenumber += `8`;' onmousedown='dialTone(852.0, 1336.0)' onmouseup='stop()'class='phonebutton row3 col2'></div>  <div onclick='phonenumber += `9`;' onmousedown='dialTone(852.0, 1477.0)' onmouseup='stop()' class='phonebutton row3 col3'></div>";
-						string = string + "<div onclick='phonenumber += `#`;' onmousedown='dialTone(941.0, 1477.0)' onmouseup='stop()' class='phonebutton row4 col1'></div>  <div onclick='phonenumber += `0`;' onmousedown='dialTone(941.0, 1336.0)' onmouseup='stop()' class='phonebutton row4 col2'></div>  <div onclick='phonenumber += `-`;' onmousedown='dialTone(941.0, 1209.0)' onmouseup='stop()' class='phonebutton row4 col3'></div>";
+						var string ="<div class='window3d' style=''>";
+						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();$(document).unbind(); stop();'>Close</div>";
+						string = string + "<div id='bu1' onclick='phonenumber += `1`;' onmousedown='dialTone(697.0, 1209.0)' onmouseup='stop()' class='phonebutton row1 col1'></div>  <div id='bu2' onclick='phonenumber += `2`;' onmousedown='dialTone(697.0, 1336.0)' onmouseup='stop()' class='phonebutton row1 col2'></div>  <div id='bu3' onclick='phonenumber += `3`;' onmousedown='dialTone(697.0, 1477.0)' onmouseup='stop()' class='phonebutton row1 col3'></div>";
+						string = string + "<div id='bu4' onclick='phonenumber += `4`;' onmousedown='dialTone(770.0, 1209.0)' onmouseup='stop()' class='phonebutton row2 col1'></div>  <div id='bu5' onclick='phonenumber += `5`;' onmousedown='dialTone(770.0, 1336.0)' onmouseup='stop()' class='phonebutton row2 col2'></div>  <div id='bu6' onclick='phonenumber += `6`;' onmousedown='dialTone(770.0, 1477.0)' onmouseup='stop()' class='phonebutton row2 col3'></div>";
+						string = string + "<div id='bu7' onclick='phonenumber += `7`;' onmousedown='dialTone(852.0, 1209.0)' onmouseup='stop()' class='phonebutton row3 col1'></div>  <div id='bu8' onclick='phonenumber += `8`;' onmousedown='dialTone(852.0, 1336.0)' onmouseup='stop()'class='phonebutton row3 col2'></div>  <div id='bu9' onclick='phonenumber += `9`;' onmousedown='dialTone(852.0, 1477.0)' onmouseup='stop()' class='phonebutton row3 col3'></div>";
+						string = string + "<div onclick='phonenumber += `#`;' onmousedown='dialTone(941.0, 1477.0)' onmouseup='stop()' class='phonebutton row4 col1'></div>  <div id='bu0' onclick='phonenumber += `0`;' onmousedown='dialTone(941.0, 1336.0)' onmouseup='stop()' class='phonebutton row4 col2'></div>  <div onclick='phonenumber += `-`;' onmousedown='dialTone(941.0, 1209.0)' onmouseup='stop()' class='phonebutton row4 col3'></div>";
 						string = string + "<img style='width:100%;height:auto;' src='img/phone.png'/></div>";
 						$("#info").html(string);
+						
+						$( document ).bind( "keydown", function(e) {
+						  var key = e.which - 96;
+						  if(down == 0){
+							  switch(key){
+							  case 1:
+								dialTone(697.0, 1209.0);
+								phonenumber += '1';
+								$("#bu1").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 2:
+								dialTone(697.0, 1336.0);
+								phonenumber += '2';
+								$("#bu2").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 3:
+								dialTone(697.0, 1477.0);
+								phonenumber += '3';
+								$("#bu3").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 4:
+								dialTone(770.0, 1209.0);
+								phonenumber += '4';
+								$("#bu4").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 5:
+								dialTone(770.0, 1336.0);
+								phonenumber += '5';
+								$("#bu5").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 6:
+								dialTone(770.0, 1477.0);
+								phonenumber += '6';
+								$("#bu6").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 7:
+								dialTone(852.0, 1209.0);
+								phonenumber += '7';
+								$("#bu7").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 8:
+								dialTone(852.0, 1336.0);
+								phonenumber += '8';
+								$("#bu8").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 9:
+								dialTone(852.0, 1477.0);
+								phonenumber += '9';
+								$("#bu9").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+							  case 0:
+								dialTone(941.0, 1336.0);
+								phonenumber += '0';
+								$("#bu0").css( "background", "rgba(255,255,255,0.3)" );
+								down = 1;
+								break;
+								default:
+								stop();
+								down = 1;
+								$(".phonebutton").css( "background", "rgba(255,255,255,0)" );
+								break;
+							  
+							  }
+						  }
+						});
+						$( document ).bind( "keyup", function(e) {
+						    stop();
+							down = 0;
+							$(".phonebutton").css( "background", "rgba(255,255,255,0)" );
+						});
 					}
 					render();
 				}
@@ -397,11 +487,18 @@
 				}
 				if(phoneflag == 0){
 					if(phonenumber.slice(-12) == "416-555-0127" || phonenumber.slice(-10) == "4165550127"){
+						if(cache_phone_call) cache_phone_call.pause();
 						phoneflag = 1;
 						console.log("GOT IT");
-						var cache_phone_call = new Audio("audio/cached_telephonic_transmission_01.mp3");
-						cache_phone_call.play();
-						scene.children[1].color.setHSL( 1, 0.9, 0.1 );
+						if(phonecall == 0){
+							var cache_phone_call = new Audio("audio/cached_telephonic_transmission_01.mp3");
+							cache_phone_call.play();
+							phonecall = 1;
+							cache_phone_call.onended = function(){phonecall = 0;};
+						}
+							phonenumber = "";
+							phoneflag = 0;
+						
 					}
 				}
 				
