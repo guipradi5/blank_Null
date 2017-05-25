@@ -48,6 +48,10 @@
 				margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px
 			}
 			
+			#poemback{
+				background: url('img/poem.png'); background-size:cover;margin:10px; padding:30px;text-align:left;color:black; font-size:14pt;
+			}
+			
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -123,6 +127,21 @@
 			
 			
 			function init() {
+				
+				//session
+					$.ajax({
+							type: "GET",
+							url: "../session.php"
+						})
+						.done(function (msg) {
+							if(msg != "true"){
+								window.location.assign("../")
+							}
+						});
+						
+			
+			
+			
 				//camera
 				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 1e10 );
 				camera.position.z = 250;
@@ -325,17 +344,17 @@
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adelen@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
-							string += "Hello Georgia. From the higer ups in Nulwo we want to welcome you to our offices and to your new job as Human Resources  .</div></div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adanln@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
+							string += "Hello Georgia. From the higher ups in Nulwo we want to welcome you to our offices and to your new job in the department of Human Resources. AS you know your task will be looking after the mental well of our employees and to tighten the internal relationships between your colleagues to have an ideal work environment. We are trusting in you. Welcome to our family.<br><br> - Nulwo's executive directive team.</div></div>";
 						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook2"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: The first session<br>--------------------------------------<br> ";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: RE: The first session<br>--------------------------------------<br> ";
 							
-							string += "Hello Mrs. Baker, thank you for that session the other day. It really helped me out with some of the things going on on my life. Also for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that";
+							string += "Hi, Hector. You are welcome, it is my job after all and I'm taking care of the mental  health of everyone in the company. Regarding your offer, I'd love to be of help to you in these hard moments. Contact me using my phone number, Hillary will give it to you. I hope you have a productive weekend and, remember, Stay possitive. <br><br>- Doctor Georgia Baker <br><br>================================================<br><br>Hello Mrs. Baker. Thank you for that therapy session the other day. It really helped me out with some of the things going on in my life. Also, for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that, but... Well, we have talked about it. <br>Anyways, thank you. i wanted to contact you for other thing too. I'd love to hire you to do personal therapy sessions. This is helping me a lot and, as you know, my mental state is note really good, it's never been. <br> I await for your answer, doctor. One more time, thank you. Have a nice day<br><br> - Hector.";
 							string += "</div>";
 						$("#info").html(string);
 					}
@@ -343,7 +362,7 @@
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<b>F</b>eeling the bast oc<b>e</b>an ben<b>e</b>ath my sou<b>l</b><br>";
+							string += "<div id='poemback'><b>F</b>eeling the bast oc<b>e</b>an ben<b>e</b>ath my sou<b>l</b><br>";
 							string += "<b>E</b>ntering the cold and soothing sound<br>";
 							string += "<b>E</b>xpuned from the essence for feeling raw<br>";
 							string += "<b>L</b>ying on the waves for I am gone.</div>";
@@ -352,15 +371,37 @@
 					}
 					if(intersects[ 0 ].object.name == "InBook4"){
 						$("#info").html("");
-						$("#info").append("<div>test</div>");
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
+							string += "Here goes the field for inputing test. Remember to make the keyboard available [Focus on input]";
+							string += "</div></div>";
+						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook5"){
 						$("#info").html("");
-						$("#info").append("<div>test</div>");
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
+							string += "Email from Hector after some time speaking about THAT";
+							string += "</div></div>";
+						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "InBook6"){
 						$("#info").html("");
-						$("#info").append("<div>test</div>");
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
+							string += "NOTES<br><br>- Today I got Hector once again on the phone. He calls every other day for a little session. I have to count the hours for the bill at the end of the month.<br>- Marie and Lilly fought again over some stupid shit about 'poisoning' Lilly's coffee. It's just too weird. My hipothesis is that they have a personal problem, looking at answers and anilisis i0ve donde, it seems that lilly thinks that Marie is having an adventure with her husband and wants her out of the way. I'll have to speak to her husband to clear things up.<br>- Joey's been kind slacking in the last few weeks, his department director just sent him in last tuesday and we talked. The conclusion is that his 2 sons have been slacking in school and even skipping. He's worried so he is underperforming. Remember to apply a confort therapy on him. Estimated time 2 - 4 weeks.<br>- Finally. They sent me Norman from enginering. it is the first time I saw this. It seems he's under performing on his tasks. The reason and analysis? He's in love. And for what I can deduct, it's with someone in his department or the company. In these cases I just have to remind him to do his job and apply a light concentration and rutine therapy. ";
+							string += "</div></div>";
+						$("#info").html(string);
+					}
+					if(intersects[ 0 ].object.name == "Safe"){
+						$("#info").html("");
+						var string = "<div class='window3d' style=''>";
+						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();$(document).unbind(); stop();'>Close</div>";
+						string = string + "<img style='width:100%;height:auto;' src='img/safe.png'/></div>";
+						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "Phone"){
 						//add number binding
