@@ -4,25 +4,123 @@ font-family:'DOS';
 src: url(DOS.ttf);
 }
 
-body{
-background-color: #101010;
-    display: block;
-	width:960px;
-	height:100vh;
-	margin: 0 auto;
-	overflow:hidden;
-	color:white;
-	font-family:DOS
+#G{
+	height:auto;
+	background:transparent;
+	position:absolute;
+	bottom:0;
+}
+#G div{
+	display:inline-table;
 	
+}
+#G #bio{
+	width: 28vh;
+    height: 28vh;
+	background:#101010;
+	border:white 5px solid;
+	max-height: 220px;
+	max-width: 220px;	
+	min-height: 120px;
+	min-width: 120px;
+}
+#G #bio img{
+	text-align:center;
+	width:100%;
+	height:auto;
+}
+#G #Gtext{
+	background: #101010;
+	border: white 5px solid;
+	padding: 10px;
+    width: 538px;
+    font-weight: 100;
+	height: 100px;
+	bottom: 0;
+	position: absolute;
+	
+}
+#ind{
+	width:100%;
+	height: 100%;
+	position:relative;
+	
+}
+.action{
+	background:yellow;
+	width: 50px;
+	height: 60px;
+	position:absolute;
+	z-index:1;
+	opacity:0.1;
+	cursor:pointer
+}
+.action:hover{
+	opacity:0.2;
+}
+#a1{
+	bottom: 141px;
+	left: 318px;
+}
+#a2{
+	bottom: 141px;
+	left: 397px;
+}
+#a3{
+	bottom: 211px;
+	left: 567px;
+}
+
+.ALERT{
+position: absolute;
+padding: 15px;
+background-color: blue;
+left: 25%;
+right: 25%;
+color: white;
+font-family: consolas;
+font-weight: bold;
+border: 3px solid blue;
+box-shadow: 10px 10px 0px black;
+top: 50%;
+transform: translateY(-50%);
+text-align: center;
+min-width: 600px;
+z-index:2;
+
+}
+
+.ALERT #ALERT{
+margin: 0 auto;
+border: white 3px solid;
+padding: 15px;
+}
+.answer{
+    width: 561px;
+	font-weight:100;
 	
 }
 
-body *{
-	-webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-     -khtml-user-select: none; /* Konqueror HTML */
-       -moz-user-select: none; /* Firefox */
-        -ms-user-select: none; /* Internet Explorer/Edge */
-            user-select: none; /* Non-prefixed version, currently
-                                  supported by Chrome and Opera */
+
+#next, .answer{
+	color:black;
+	cursor:pointer;
+    position: relative;
+    backface-visibility: hidden;
+    margin-right: 2px;
+    background: #D3D0C7;
+    font-weight: bold;
+    pointer-events: initial;
+	
+	background-color: #bdbdbd;
+    border: 2px solid #878684;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+}
+
+#next:active, .answer:active{
+    border-bottom: 2px solid white;
+    border-right: 2px solid white;
+    border-top: 2px solid #878684;
+    border-left: 2px solid #878684;
 }

@@ -5,6 +5,11 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		<style>
+			@font-face {
+				font-family: digital;
+				src: url(font/digital-7.ttf);
+			}
+			
 			body {
 				font-family: Monospace;
 				background-color: #000;
@@ -52,9 +57,26 @@
 				background: url('img/poem.png'); background-size:cover;margin:10px; padding:30px;text-align:left;color:black; font-size:14pt;
 			}
 			
+			#safeinput{
+				position: fixed;
+				display: inline;
+				cursor: pointer;
+				background: transparent;
+				outline: none;
+				border: none;
+				margin-left: 199px;
+				margin-top: 167px;
+				width: 121px;
+				color: white;
+				text-align: center;
+				font-family: digital;
+				font-size: 16pt;			
+			}
+			
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
+<link rel="stylesheet" type="text/css" href="styles/style.css">
 	</head>
 
 	<body>
@@ -63,6 +85,37 @@
 	<div id="overlay2"></div>
 	
 		<div id="info">		</div>
+		<table style="width:100%" id="G">
+		  <tr>
+			<th style="width:30%; text-align:right;">
+				<div id="bio">
+					<img id="Gimg" src="img/G/angry.png">
+				</div>
+			</th>
+			<th style="width:60%;text-align:left;position:relative;">
+				<div style="top: 0;	position: absolute;">
+					<div id="answer1" style="display: none;" onclick="" class="answer">
+						Answer1
+					</div>
+					<div id="answer2" style="display: none;" onclick="" class="answer">
+						Answer2
+					</div>
+					<div id="answer3" style="display: none;" onclick="" class="answer">
+						Answer3
+					</div>
+					<div id="answer4" style="display: none;" onclick="" class="answer">
+						Answer4
+					</div>
+				</div>
+				<div id="Gtext" class="Gtext">
+					Here we are!! The Router! Now, from here we are able to go to multiple computers.
+				</div>
+			</th>
+			<th id="next" onclick="" style="width:10%; displaY:none;">
+				==>
+			</th>
+		</tr>
+	</table>
 
 		<script src="../scripts/three.min.js"></script>
 		<script src="https://threejs.org/build/three.min.js"></script>
@@ -81,6 +134,7 @@
 		<script src="../scripts/jquery-1.6.3.min.js"></script>
 		<script src="../scripts/DTMFgenerator.js"></script>
 		
+		<script src="scripts/script.js"></script>
 		<!--DOME-->
 		
 		<script type="x-shader/x-vertex" id="vertexShader">
@@ -121,6 +175,14 @@
 			var phoneflag = 0;
 			var down = 0;
 			var phonecall = 0;
+			
+			var intvar = 5;
+			
+			var angela = new Audio("audio/angela.mp3");
+			angela.loop = true;
+			if(sessionStorage.angela != 1){
+				angela.play();
+			}
 			
 			init();
 			animate();
@@ -352,9 +414,9 @@
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: RE: The first session<br>--------------------------------------<br> ";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: georgiabr@nulwo.com<br>To: hectorfr@nulwo.com<br> Topic: RE: The first session<br>--------------------------------------<br> ";
 							
-							string += "Hi, Hector. You are welcome, it is my job after all and I'm taking care of the mental  health of everyone in the company. Regarding your offer, I'd love to be of help to you in these hard moments. Contact me using my phone number, Hillary will give it to you. I hope you have a productive weekend and, remember, Stay possitive. <br><br>- Doctor Georgia Baker <br><br>================================================<br><br>Hello Mrs. Baker. Thank you for that therapy session the other day. It really helped me out with some of the things going on in my life. Also, for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that, but... Well, we have talked about it. <br>Anyways, thank you. i wanted to contact you for other thing too. I'd love to hire you to do personal therapy sessions. This is helping me a lot and, as you know, my mental state is note really good, it's never been. <br> I await for your answer, doctor. One more time, thank you. Have a nice day<br><br> - Hector.";
+							string += "Hi, Hector. You are welcome, it is my job after all and I'm taking care of the mental  health of everyone in the company. Regarding your offer, I'd love to be of help to you in these hard moments. Contact me using my phone number, Hillary will give it to you. I hope you have a productive weekend and, remember, Stay possitive. <br><br>- Doctor Georgia Baker <br><br>================================================<br><br>Hello Mrs. Baker. Thank you for that therapy session the other day. It really helped me out with some of the things going on in my life. Also, for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that, but... Well, we have talked about it. <br>Anyways, thank you. i wanted to contact you for other thing too. I'd love to hire you to do personal therapy sessions. This is helping me a lot and, as you know, my mental state is not really good, it's never been. <br> I await for your answer, doctor. One more time, thank you. Have a nice day<br><br> - Hector.";
 							string += "</div>";
 						$("#info").html(string);
 					}
@@ -382,8 +444,8 @@
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
-							string += "Email from Hector after some time speaking about THAT";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: THAT<br>--------------------------------------<br> ";
+							string += "Hello Doctor. I think you've heard about it by now, about the... THING...<br> And... Doctor, I... Can't anymore. It's just... It was just so fast. So fast. So fast. I could't even react and I feel horrible for it. It's not fair. I lost to it and now I am loosing myself. The... The snow... It got so <span style='color:red'>RED. IT WAS ALL JUST SO FUCKING RED AND I WAS THERE LAYING IN THE GROUND WHILE I COULD ONLY HEAR SCREAMS FOR HELP. AGONIZING SCREAMS. HAVE YOU EVER HEARD SOMEONE <STRONG>DIE!?</STRONG> IT'S THE MOST HORRIBLE THING YOU CAN FUCKING IMAGINE! AND TO TOP IT ALL OFF, YOU KNOW <STRONG>WHO DIED</STRONG> CAN YOU EVEN THINK HOW I FEEL!?!? AH!? I FEEL DEVASTATED I FEEL LIKE MY HEART AND SOUL WERE RIPPED FROM ME! <STRONG>I WAS RAPED FROM WITHIN</STRONG> FROM THE MOST OBSCURE AND DEEP PLACES FROM MY BEING AND IT WAS ALL <STRONG>TORNED, SLIT AND RIPPED FROM WITHIN MEEEEEEEEEEEEEEEE!!!</STRONG></span><br><br>===========================================<br><br><br>I'm sorry doctor. I am just... My mind is telling me things...<br> I don't know anymore who I am.<br><br>In case anything HAPPENS to me, ANYTHING, someone will need the password for my computer. <br> The IP address to my PC is 10.0.0.2, right next to yours. And the password for entering is something I can't tell you through this e-mail, but it's revealed once you call a specific <strong>phone number</strong>. I'll send you personally this number. When you get it, save it in your PC somewhere... But, it will be encrypted with <strong>ANOTHER password</strong>... You'll know the decryption key to this `safe` (It's got the shape of a safe), it's in one of <strong>my materials</strong>. <srong>Save this materials</strong> I send you too.<br>And doctor, Thank you for everything. I hope to see you soon.<br><br>- Hector.";
 							string += "</div></div>";
 						$("#info").html(string);
 					}
@@ -392,7 +454,7 @@
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
-							string += "NOTES<br><br>- Today I got Hector once again on the phone. He calls every other day for a little session. I have to count the hours for the bill at the end of the month.<br>- Marie and Lilly fought again over some stupid shit about 'poisoning' Lilly's coffee. It's just too weird. My hipothesis is that they have a personal problem, looking at answers and anilisis i0ve donde, it seems that lilly thinks that Marie is having an adventure with her husband and wants her out of the way. I'll have to speak to her husband to clear things up.<br>- Joey's been kind slacking in the last few weeks, his department director just sent him in last tuesday and we talked. The conclusion is that his 2 sons have been slacking in school and even skipping. He's worried so he is underperforming. Remember to apply a confort therapy on him. Estimated time 2 - 4 weeks.<br>- Finally. They sent me Norman from enginering. it is the first time I saw this. It seems he's under performing on his tasks. The reason and analysis? He's in love. And for what I can deduct, it's with someone in his department or the company. In these cases I just have to remind him to do his job and apply a light concentration and rutine therapy. ";
+							string += "NOTES<br><br>- Today I got Hector once again on the phone. He calls every other day for a little session. I have to count the hours for the bill at the end of the month. Also, he is sending me all of the materials from the session, It seems he likes to write poetry. It helps him to feel more relaxed. I'll be saving the important ones in the bookshelf.<br><br>- Marie and Lilly fought again over some stupid shit about 'poisoning' Lilly's coffee. It's just too weird. My hipothesis is that they have a personal problem, looking at answers and anilisis i0ve donde, it seems that lilly thinks that Marie is having an adventure with her husband and wants her out of the way. I'll have to speak to her husband to clear things up.<br><br>- Joey's been kind slacking in the last few weeks, his department director just sent him in last tuesday and we talked. The conclusion is that his 2 sons have been slacking in school and even skipping. He's worried so he is underperforming. Remember to apply a confort therapy on him. Estimated time 2 - 4 weeks.<br><br>- Finally. They sent me Norman from enginering. it is the first time I saw this. It seems he's under performing on his tasks. The reason and analysis? He's in love. And for what I can deduct, it's with someone in his department or the company. In these cases I just have to remind him to do his job and apply a light concentration and rutine therapy. ";
 							string += "</div></div>";
 						$("#info").html(string);
 					}
@@ -400,8 +462,31 @@
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
 						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();$(document).unbind(); stop();'>Close</div>";
-						string = string + "<img style='width:100%;height:auto;' src='img/safe.png'/></div>";
+						if( sessionStorage.safeopen != 1){
+							string = string + "<input id='safeinput' maxlength='4'>";
+							string = string + "<img id='safeimg' style='width:100%;height:auto;' src='img/safe.png'/></div>";
+						}else{
+							string = string + "<img id='safeimg' style='width:100%;height:auto;' src='img/safe_.png'/></div>";
+						}
 						$("#info").html(string);
+						$( "#safeinput" ).focus();
+						$( ".window3d" ).bind( "click", function(e) {
+							$( "#safeinput" ).focus();
+						});
+						$( "#safeinput" ).bind( "keydown", function(e) {
+							var pass = $( "#safeinput" ).val().toUpperCase();
+							if( pass == "FEEL" && e.which == 13){
+								var open = new Audio("audio/open.mp3");
+								open.play();
+								 sessionStorage.safeopen = 1;
+								setTimeout(function(){$( "#safeinput" ).hide();$( "#safeimg" ).attr("src", "img/safe_.png");}, 1000);
+							}else if(e.which == 13 && pass != "FEEL"){
+								var error = new Audio("audio/error.mp3");
+								error.play();
+								$( "#safeinput" ).val("ERROR");
+								 setTimeout(function(){$( "#safeinput" ).val(""); }, 1000);
+							}
+						});
 					}
 					if(intersects[ 0 ].object.name == "Phone"){
 						//add number binding
@@ -542,9 +627,13 @@
 						console.log("GOT IT");
 						if(phonecall == 0){
 							var cache_phone_call = new Audio("audio/cached_telephonic_transmission_01.mp3");
+							var hEc = new Audio("audio/hS.mp3");
+							hEc.loop = true;
 							cache_phone_call.play();
+							angela.pause();
+							sessionStorage.angela = 0;
 							phonecall = 1;
-							cache_phone_call.onended = function(){phonecall = 0;};
+							cache_phone_call.onended = function(){phonecall = 0;hEc.play();};
 						}
 							phonenumber = "";
 							phoneflag = 0;

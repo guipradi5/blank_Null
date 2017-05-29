@@ -14,8 +14,8 @@ disablekeypress();
 	
 	$("#next").attr("onclick", "conversation(1)");
 	
-	$(document).keydown(function(e) {
-		if(e.which == 13) { conversation(1);}
+	$(document).bind("keydown",function(e) {
+		if(e.which == 13) { conversation(1);disablekeypress();}
 	});
 	
 	
@@ -32,7 +32,7 @@ function conversation(ide){
 
 
 /*
-$(document).keydown(function(e) {
+$(document).bind("keydown",function(e) {
 console.log(e.keyCode);
 
 					if(e.which == 13) { 
@@ -539,6 +539,7 @@ function nextC(a){
 function disablekeypress(){
 	$(document).unbind("keypress");
 	$(document).unbind("keydown");
+	$(document).unbind();
 }
 
 function hideAnswers(){
@@ -548,9 +549,9 @@ function hidenext(){
 	$("#next").hide();
 }
 
-/*
+
 function enableEnterPress(){
-$(document).keydown(function(e) {
+$(document).bind("keydown",function(e) {
 
 					if(e.keyCode == 13) { 
 						if($('#next').is(':visible')){
@@ -562,10 +563,10 @@ $(document).keydown(function(e) {
 							}
 					}
 	});
-}*/
+}
 
 function enableAnswerPress(){
-$(document).keydown(function(e) {
+$(document).bind("keydown",function(e) {
 		if(len >= 1){ if(e.keyCode == 49 || e.keyCode == 97) {var b = $("#a1").attr("onclick"); var id = b.substring(b.lastIndexOf("(")+1,b.lastIndexOf(")")); conversation(arrayA[0]);}
 		if(len >= 2){ if(e.keyCode == 50 || e.keyCode == 98) {var b = $("#a2").attr("onclick"); var id = b.substring(b.lastIndexOf("(")+1,b.lastIndexOf(")")); conversation(arrayA[1]);}
 		if(len >= 3){ if(e.keyCode == 51 || e.keyCode == 99) {var b = $("#a3").attr("onclick"); var id = b.substring(b.lastIndexOf("(")+1,b.lastIndexOf(")")); conversation(arrayA[2]);}

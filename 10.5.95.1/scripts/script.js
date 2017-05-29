@@ -158,7 +158,7 @@ function disconnect(){
 					dork.loop = true;
 					dork.play();
 					$("#next").show();
-						$(document).keydown(function(e) {
+						$(document).bind("keydown",function(e) {
 							if(e.which == 13) { engageConversation(); }
 						});
 
