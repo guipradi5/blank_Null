@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>10.0.0.2</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			@font-face {
+				font-family: digital;
+				src: url(font/digital-7.ttf);
+			}
+			
+			body {
+				font-family: Monospace;
+				background-color: #000;
+				color: #fff;
+				margin: 0px;
+				overflow: hidden;
+			}
+			#info {
+				color: #fff;
+				position: absolute;
+				top: 10px;
+				width: 100%;
+				text-align: center;
+				z-index: 100;
+				display:block;
+			}
+			#info a, .button { color: #f00; font-weight: bold; text-decoration: underline; cursor: pointer }
+			.phonebutton{
+				background:rgba(255,255,255,0);
+				width:30px;
+				height:30px;
+				position:fixed;
+				display:inline;
+				cursor:pointer;
+			}
+			.phonebutton:hover{
+				background:rgba(255,255,255,0.3);
+
+			}
+			
+			.row1{top: 218px;}
+			.row2{top: 250px;}
+			.row3{top: 280px;}
+			.row4{top: 311px;}
+			
+			.col1{margin-left: 333px;}
+			.col2{margin-left: 362px;}
+			.col3{margin-left: 393px;}
+			
+			.window3d{
+				margin:0 auto;padding:30px;max-width:600px;background:#101010;margin-top:30px
+			}
+			
+			#poemback{
+				background: url('img/poem.png'); background-size:cover;margin:10px; padding:30px;text-align:left;color:black; font-size:14pt;
+			}
+			
+			#safeinput{
+				position: fixed;
+				display: inline;
+				cursor: pointer;
+				background: transparent;
+				outline: none;
+				border: none;
+				margin-left: 199px;
+				margin-top: 167px;
+				width: 121px;
+				color: white;
+				text-align: center;
+				font-family: digital;
+				font-size: 16pt;			
+			}
+			
+		</style>
+		
+<link rel="stylesheet" type="text/css" href="../css/nulwo.css">
+<link rel="stylesheet" type="text/css" href="styles/style.css">
+	</head>
+
+	<body>
+		
+	<div id="overlay"></div>
+	<div id="overlay2"></div>
+		<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
+		<div id="info">		</div>
+		<table style="width:100%" id="G">
+		  <tr>
+			<th style="width:30%; text-align:right;">
+				<div id="bio">
+					<img id="Gimg" src="img/G/angry.png">
+				</div>
+			</th>
+			<th style="width:60%;text-align:left;position:relative;">
+				<div style="top: 0;	position: absolute;">
+					<div id="answer1" style="display: none;" onclick="" class="answer">
+						Answer1
+					</div>
+					<div id="answer2" style="display: none;" onclick="" class="answer">
+						Answer2
+					</div>
+					<div id="answer3" style="display: none;" onclick="" class="answer">
+						Answer3
+					</div>
+					<div id="answer4" style="display: none;" onclick="" class="answer">
+						Answer4
+					</div>
+				</div>
+				<div id="Gtext" class="Gtext">
+					Here we are!! The Router! Now, from here we are able to go to multiple computers.
+				</div>
+			</th>
+			<th id="next" onclick="" style="width:10%; displaY:none;">
+				==>
+			</th>
+		</tr>
+	</table>
+
+		<script src="../scripts/three.min.js"></script>
+		<script src="https://threejs.org/build/three.min.js"></script>
+
+		<script src="../scripts/DDSLoader.js"></script>
+		<script src="../scripts/MTLLoader.js"></script>
+		<script src="../scripts/OBJLoader.js"></script>
+		<script src="../scripts/OrbitControls.js"></script>
+		<script src="../scripts/Mirror.js"></script>
+		<script src="../scripts/Detector.js"></script>
+		<script src="../scripts/stats.min.js"></script>
+		<script src="../scripts/WaterShader.js"></script>
+
+		
+		
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="../scripts/jquery-1.6.3.min.js"></script>
+		<script src="../scripts/DTMFgenerator.js"></script>
+		
+		<script src="scripts/script.js"></script>
+		<!--DOME-->
+		
+		<script type="x-shader/x-vertex" id="vertexShader">
+			varying vec3 vWorldPosition;
+			void main() {
+				vec4 worldPosition = modelMatrix * vec4( position, 1.0 );
+				vWorldPosition = worldPosition.xyz;
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+			}
+		</script>
+
+		<script type="x-shader/x-fragment" id="fragmentShader">
+			uniform vec3 topColor;
+			uniform vec3 bottomColor;
+			uniform float offset;
+			uniform float exponent;
+			varying vec3 vWorldPosition;
+			void main() {
+				float h = normalize( vWorldPosition + offset ).y;
+				gl_FragColor = vec4( mix( bottomColor, topColor, max( pow( max( h , 0.0), exponent ), 0.0 ) ), 1.0 );
+			}
+		</script>
+		
+		<script>
+			var container, stats;
+			var camera, controls, scene, renderer, raycaster;
+			var WIDTH = window.innerWidth;
+			var HEIGHT = window.innerHeight;
+			var mesh, line;
+
+			var mouse = new THREE.Vector2(), INTERSECTED;
+
+			var hemiLight;
+			
+			var tea;
+			var team;
+			var phonenumber = "0";
+			var phoneflag = 0;
+			var down = 0;
+			var phonecall = 0;
+			
+			var intvar = 5;
+			
+			var amb = new Audio("audio/amb.mp3");
+			amb.loop = true;
+				amb.play();
+			
+			var parameters = {
+				width: 0.35,
+				height: 0.35,
+				widthSegments: 20,
+				heightSegments: 20,
+				depth: 1,
+				param: 2,
+				filterparam: 1
+			};
+			var waterNormals;
+			
+			init();
+			animate();
+			
+			
+			function init() {
+				
+				//session
+					$.ajax({
+						type: "GET",
+						url: "../session.php"
+					})
+					.done(function (msg) {
+						if(msg != "true"){
+							window.location.assign("../")
+						}
+					});
+					
+					$.ajax({
+						type: "GET",
+						url: "../userinfo.php"
+					})
+					.done(function (msg) {
+						var mail = msg;
+					});	
+					
+					$.ajax({
+						type: "POST",
+						url: "../updateplace.php",
+					//	data: {user:mail},
+						success: function(data, textStatus, jqXHR)
+						{
+							//data - response from server
+						},
+						error: function (jqXHR, textStatus, errorThrown)
+						{
+					 
+						}
+					});
+					
+						
+			
+			
+			
+				//camera
+				camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 0.01, 1e10 );
+				camera.position.z = 250;
+				
+				//controls
+				controls = new THREE.OrbitControls( camera );
+				controls.rotateSpeed = 2.0;
+				controls.zoomSpeed = 5;
+				controls.minDistance = 10;
+				controls.maxDistance = 200;
+				
+				controls.minPolarAngle = 0; // radians
+				controls.maxPolarAngle = Math.PI; // radians
+				controls.noPan = true;
+				controls.maxPolarAngle = Math.PI/2; 
+				console.log(controls);
+				
+				//raycaster
+				raycaster = new THREE.Raycaster();
+				
+				
+				// scene
+				scene = new THREE.Scene();
+				scene.fog = new THREE.Fog( 0xffffff, -500, 3000 );
+					//scene.add( camera );
+				
+
+				
+				//ambient
+				var ambient = new THREE.AmbientLight( 0x444444 );
+				scene.add( ambient );
+				
+				//light
+				hemiLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.6 );
+				hemiLight.color.setHSL( 1, 1, 1 );
+				hemiLight.groundColor.setHSL( 1, 1, 1 );
+				hemiLight.position.set( 1, 20, 1 );
+				scene.add( hemiLight );
+				
+				
+				var light = new THREE.DirectionalLight( 0xebf3ff, 0.9 );
+				light.position.set( 0, 1, 1 ).multiplyScalar( 1 );
+				scene.add( light );
+				light.castShadow = true;
+				light.shadow.mapSize.width = 1024;
+				light.shadow.mapSize.height = 1024;
+				var d = 390;
+				light.shadow.camera.left = -d;
+				light.shadow.camera.right = d;
+				light.shadow.camera.top = d * 1.5;
+				light.shadow.camera.bottom = -d;
+				light.shadow.camera.far = 3500;
+
+
+
+
+				//water
+				waterNormals = new THREE.TextureLoader().load( 'textures/waternormals.jpg' );
+				waterNormals.wrapS = waterNormals.wrapT = THREE.RepeatWrapping;
+				water = new THREE.Water( renderer, camera, scene, {
+					textureWidth: 10,
+					textureHeight: 10,
+					waterNormals: waterNormals,
+					alpha: 	1.0,
+					sunDirection: light.position.clone().normalize(),
+					sunColor: 0xffffff,
+					waterColor: 0x00c9fb,
+					distortionScale: 10.0,
+				} );
+				mirrorMesh = new THREE.Mesh(
+					new THREE.PlaneBufferGeometry( parameters.width * 500, parameters.height * 500 ),
+					water.material
+				);
+				mirrorMesh.add( water );
+				mirrorMesh.rotation.x = - Math.PI * 0.5;
+				scene.add( mirrorMesh );
+				mirrorMesh.position.y = -50;
+				
+				
+				// SKYDOME
+				var vertexShader = document.getElementById( 'vertexShader' ).textContent;
+				var fragmentShader = document.getElementById( 'fragmentShader' ).textContent;
+				var uniforms = {
+					topColor:    { value: new THREE.Color( 0x2b2b2b ) },
+					bottomColor: { value: new THREE.Color( 0x2b2b2b ) },
+					offset:      { value: 1000 },
+					exponent:    { value: 1 }
+				};
+				uniforms.topColor.value.copy( hemiLight.color );
+				scene.fog.color.copy( uniforms.bottomColor.value );
+				var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+				var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
+				var sky = new THREE.Mesh( skyGeo, skyMat );
+				scene.add( sky );
+				
+				
+				
+				
+				
+				
+				//mouse
+				//mouse = new THREE.Vector2();
+				
+				
+				
+				// model load
+				var onProgress = function ( xhr ) {
+					if ( xhr.lengthComputable ) {
+						var percentComplete = xhr.loaded / xhr.total * 100;
+						console.log( Math.round(percentComplete, 2) + '% loaded' );
+						if(Math.round(percentComplete, 2) >= 100){
+							console.log("FULLY LOADED!");
+						}
+					}
+				};
+				
+				
+				var onError = function ( xhr ) { };
+				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
+				var mtlLoader = new THREE.MTLLoader();
+				mtlLoader.setPath( 'mod/' );
+				
+					//desktop
+				mtlLoader.load( 'desktop.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( 'mod/' );
+					objLoader.load( 'desktop.obj', function ( object ) {
+						object.position.y = - 95;
+						scene.add( object );
+					}, onProgress, onError );
+				});
+				
+			/*		//interactuable objects
+				mtlLoader.load( 'interact.mtl', function( materials ) {
+					materials.preload();
+					var objLoader = new THREE.OBJLoader();
+					objLoader.setMaterials( materials );
+					objLoader.setPath( 'mod/' );
+					objLoader.load( 'interact.obj', function ( object ) {
+						object.position.y = - 95;
+						scene.add( object );
+						tea = object;
+					}, onProgress, onError );
+					team =  materials;
+				});*/
+			
+				
+				
+				//renderer
+				
+				renderer = new THREE.WebGLRenderer( { antialias: false } );
+				
+				renderer.setPixelRatio( window.devicePixelRatio );
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				renderer.sortObjects = false;
+				
+				container = document.createElement( 'div' );
+				document.body.appendChild( container );
+				container.appendChild( renderer.domElement );
+				
+				//stats¿?
+					//stats = new Stats();
+					//container.appendChild( stats.dom );
+				
+				//
+				window.addEventListener( 'resize', onWindowResize, false );
+				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+				document.addEventListener( 'mousedown', clickEvent, false );
+
+
+				
+				//Final?
+				if(sessionStorage.hecpresence == 1){
+					gasTime = 0.0020;
+					scene.fog = new THREE.FogExp2( 0x101010, 0.0020 );
+					$("#soundSwitch").remove();
+				}
+			}
+			
+			
+			
+			function onWindowResize() {
+				
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				
+				
+				/*
+				windowHalfX = window.innerWidth / 2;
+				windowHalfY = window.innerHeight / 2;
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+				*/
+			}
+
+			
+			
+			function onDocumentMouseMove( event ) {
+				event.preventDefault();
+				mouse.x = ( event.clientX / window.innerWidth ) * 2 - 1;
+				mouse.y = - ( event.clientY / window.innerHeight ) * 2 + 1;
+			}
+			function clickEvent( event ) {
+				event.preventDefault();
+				camera.updateMatrixWorld();
+				raycaster.setFromCamera( mouse, camera );
+				var intersects = raycaster.intersectObjects( scene.children[5].children );				
+				if (intersects.length > 0 ) {
+					console.log( "clicked: "+intersects[ 0 ].object.name);
+					if(intersects[ 0 ].object.name == "TV" || intersects[ 0 ].object.name == "TVScreen"){
+						
+					}
+					if(intersects[ 0 ].object.name == "InBook1"){
+						$("#info").html("");
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adanln@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
+							string += "Hello Georgia. From the higher ups in Nulwo we want to welcome you to our offices and to your new job in the department of Human Resources. As you know your task will be looking after the mental well of our employees and to tighten the internal relationships between your colleagues to have an ideal work environment. We are trusting in you. Welcome to our family.<br><br> - Nulwo's executive directive team.</div></div>";
+						$("#info").html(string);
+					}
+					
+					render();
+				}
+			}
+			
+			
+			
+			//animate
+			function animate() {
+				setTimeout( function() {
+					requestAnimationFrame( animate );
+					renderer.render( scene, camera );
+					controls.update();
+					
+				}, 1000 / 25 );
+				render();
+			}
+			
+			function render() {
+
+
+				camera.updateMatrixWorld();
+				raycaster.setFromCamera( mouse, camera );
+				var intersects = raycaster.intersectObjects( scene.children[5].children );
+				
+				if ( intersects.length > 0 ) {
+				console.log(intersects[ 0 ].object.name);
+					if ( INTERSECTED != intersects[ 0 ].object ) {
+						if ( INTERSECTED ){INTERSECTED.material.emissive.r = 0.0;
+						INTERSECTED.material.emissive.g = 0.0;
+						INTERSECTED.material.emissive.b = 0.0;}
+						INTERSECTED = intersects[ 0 ].object;
+						INTERSECTED.material.emissive.r = 0.5;
+						INTERSECTED.material.emissive.g = 0.5;
+						INTERSECTED.material.emissive.b = 0.5;
+						
+						
+					}
+				} 
+				else {
+					if ( INTERSECTED ) {INTERSECTED.material.emissive.r = 0;INTERSECTED.material.emissive.g = 0;INTERSECTED.material.emissive.b = 0;
+					INTERSECTED = null;}
+				}
+				
+				
+				water.material.uniforms.time.value += 6.0 / 60.0;
+				renderer.render( scene, camera );
+
+			}
+		</script>
+
+	</body>
+</html>
