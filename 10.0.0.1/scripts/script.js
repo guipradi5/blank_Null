@@ -109,3 +109,14 @@ function dialogue(i,t){
 	}
 	
 }
+var gasTime = 0.0001;
+function gas(){
+	if(gasTime <= 0.0015){
+		console.log(gasTime);
+		setTimeout(function(){ 
+			gasTime = gasTime + 0.000025
+			scene.fog = new THREE.FogExp2( 0xefd1b5, gasTime );
+			gas();
+		},500);
+	}
+}

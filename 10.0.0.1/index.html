@@ -629,8 +629,10 @@
 							var cache_phone_call = new Audio("audio/cached_telephonic_transmission_01.mp3");
 							var hEc = new Audio("audio/hS.mp3");
 							hEc.loop = true;
+							gas();
 							cache_phone_call.play();
 							angela.pause();
+							hEc.pause();
 							sessionStorage.angela = 0;
 							phonecall = 1;
 							cache_phone_call.onended = function(){phonecall = 0;hEc.play();};
