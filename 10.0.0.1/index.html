@@ -198,14 +198,37 @@
 				
 				//session
 					$.ajax({
-							type: "GET",
-							url: "../session.php"
-						})
-						.done(function (msg) {
-							if(msg != "true"){
-								window.location.assign("../")
-							}
-						});
+						type: "GET",
+						url: "../session.php"
+					})
+					.done(function (msg) {
+						if(msg != "true"){
+							window.location.assign("../")
+						}
+					});
+					
+					$.ajax({
+						type: "GET",
+						url: "../userinfo.php"
+					})
+					.done(function (msg) {
+						var mail = msg;
+					});	
+					
+					$.ajax({
+						type: "POST",
+						url: "../updateplace.php",
+						data: {user:mail},
+						success: function(data, textStatus, jqXHR)
+						{
+							//data - response from server
+						},
+						error: function (jqXHR, textStatus, errorThrown)
+						{
+					 
+						}
+					});
+					
 						
 			
 			
@@ -235,9 +258,7 @@
 				scene = new THREE.Scene();
 				scene.fog = new THREE.Fog( 0xffffff, 2000, 10000 );
 					//scene.add( camera );
-				if(sessionStorage.hecpresence == 1){
-					gas();
-				}
+				
 
 				
 				//ambient
@@ -369,9 +390,11 @@
 
 				
 				//Final?
-				
-				
-					
+				if(sessionStorage.hecpresence == 1){
+					gasTime = 0.0020;
+					scene.fog = new THREE.FogExp2( 0x101010, 0.0020 );
+					$("#soundSwitch").remove();
+				}
 			}
 			
 			
