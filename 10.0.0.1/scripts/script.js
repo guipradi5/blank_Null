@@ -111,12 +111,50 @@ function dialogue(i,t){
 }
 var gasTime = 0.0001;
 function gas(){
-	if(gasTime <= 0.0015){
+	if(gasTime <= 0.0020){
 		console.log(gasTime);
 		setTimeout(function(){ 
 			gasTime = gasTime + 0.000025
-			scene.fog = new THREE.FogExp2( 0xefd1b5, gasTime );
+			scene.fog = new THREE.FogExp2( 0x101010, gasTime );
 			gas();
 		},500);
+	}
+}
+
+function playAngela(a){
+	if(a == 0){
+		angela.pause();
+		$("#soundSwitch").attr("onclick", "playAngela(1);")
+		$("#soundSwitch img").attr("src", "img/soundoff.png")
+	}else
+	if(a == 1){
+		angela.play();
+		$("#soundSwitch").attr("onclick", "playAngela(0);")
+		$("#soundSwitch img").attr("src", "img/soundon.png")
+	}
+}
+
+
+function fadeVolumeDown(a){
+var vol = a.volume;
+if(!(vol == 0)){
+	setTimeout(function(){
+			vol = vol - 0.03;
+			if(vol < 0)vol = 0;
+			a.volume = vol;
+			fadeVolumeDown(a);
+		}, 75);
+	}
+}
+
+function fadeVolumeUp(a){
+var vol = a.volume;
+if(!(vol == 1)){
+	setTimeout(function(){
+			vol = vol + 0.03;
+			if(vol > 1)vol = 1;
+			a.volume = vol;
+			fadeVolumeUp(a);
+		}, 75);
 	}
 }
