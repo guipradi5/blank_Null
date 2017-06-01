@@ -73,6 +73,13 @@
 				font-size: 16pt;			
 			}
 			
+			#G #bio{
+				max-height: 180px !important;
+				max-width: 180px!important; 
+				min-height: 180px!important;
+				min-width: 180px!important;
+			}
+			
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -94,17 +101,8 @@
 			</th>
 			<th style="width:60%;text-align:left;position:relative;">
 				<div style="top: 0;	position: absolute;">
-					<div id="answer1" style="display: none;" onclick="" class="answer">
-						Answer1
-					</div>
-					<div id="answer2" style="display: none;" onclick="" class="answer">
-						Answer2
-					</div>
-					<div id="answer3" style="display: none;" onclick="" class="answer">
-						Answer3
-					</div>
-					<div id="answer4" style="display: none;" onclick="" class="answer">
-						Answer4
+					<div id="answer1" onclick="insertInfo($(this).html())" style="display: none;" onclick="" class="img">
+						<img style='width:100%;height:auto;' src='img/safe_.png'>
 					</div>
 				</div>
 				<div id="Gtext" class="Gtext">
@@ -188,6 +186,9 @@
 				var hEc = new Audio("audio/hS.mp3");
 				hEc.loop = true;
 				hEc.play();
+			}
+			if( sessionStorage.safeopen == 1){
+				$("#answer1").show();
 			}
 			
 			init();
@@ -517,6 +518,7 @@
 							string = string + "<img id='safeimg' style='width:100%;height:auto;' src='img/safe.png'/></div>";
 						}else{
 							string = string + "<img id='safeimg' style='width:100%;height:auto;' src='img/safe_.png'/></div>";
+							
 						}
 						$("#info").html(string);
 						$( "#safeinput" ).focus();
@@ -529,7 +531,7 @@
 								var open = new Audio("audio/open.mp3");
 								open.play();
 								 sessionStorage.safeopen = 1;
-								setTimeout(function(){$( "#safeinput" ).hide();$( "#safeimg" ).attr("src", "img/safe_.png");}, 1000);
+								setTimeout(function(){$( "#safeinput" ).hide();$( "#safeimg" ).attr("src", "img/safe_.png");$("#answer1").show();}, 1000);
 							}else if(e.which == 13 && pass != "FEEL"){
 								var error = new Audio("audio/error.mp3");
 								error.play();

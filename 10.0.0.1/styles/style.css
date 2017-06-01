@@ -118,9 +118,33 @@ padding: 15px;
     border-left: 2px solid white;
 }
 
-#next:active, .answer:active{
+
+#next:active, .answer:active, .img:hover, .img.active{
     border-bottom: 2px solid white;
     border-right: 2px solid white;
-    border-top: 2px solid #878684;
+    border-top: 2px solid white;
     border-left: 2px solid #878684;
+}
+
+
+.img{
+	color:black;
+	cursor:pointer;
+    position: inline;
+	height:50px;
+	width:50px;
+    backface-visibility: hidden;
+    margin-right: 2px;
+    background: #D3D0C7;
+    font-weight: bold;
+    pointer-events: initial;
+	
+	background-color: black;
+    border: 2px solid #878684;
+    border-top: 2px solid white;
+    border-left: 2px solid white;
+}
+
+.img img{
+	margin-top: 13%;
 }

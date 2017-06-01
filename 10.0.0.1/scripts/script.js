@@ -158,3 +158,12 @@ if(!(vol == 1)){
 		}, 75);
 	}
 }
+
+function insertInfo(a){
+		$("#info").html("");
+	var string = "<div class='window3d' style=''>";
+		string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+		string += a;
+		string += "</div>";
+		$("#info").html(string);
+}
