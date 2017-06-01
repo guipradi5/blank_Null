@@ -128,7 +128,6 @@
 		<script src="../scripts/Detector.js"></script>
 		<script src="../scripts/stats.min.js"></script>
 		<script src="../scripts/WaterShader.js"></script>
-
 		
 		
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
@@ -337,9 +336,6 @@
 				
 				
 				
-				
-				
-				
 				//mouse
 				//mouse = new THREE.Vector2();
 				
@@ -477,14 +473,11 @@
 					requestAnimationFrame( animate );
 					renderer.render( scene, camera );
 					controls.update();
-					
 				}, 1000 / 25 );
 				render();
 			}
 			
 			function render() {
-
-
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( scene.children[5].children );
@@ -522,6 +515,7 @@
 						INTERSECTED.material.emissive.r = 0.5;
 						INTERSECTED.material.emissive.g = 0.5;
 						INTERSECTED.material.emissive.b = 0.5;
+
 						}
 					}
 				}
@@ -544,6 +538,7 @@
 						INTERSECTED.material.emissive.b = 0;
 						INTERSECTED = null;
 						}
+
 					}
 				}
 				
