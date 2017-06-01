@@ -655,20 +655,59 @@
 				if ( intersects.length > 0 ) {
 				console.log(intersects[ 0 ].object.name);
 					if ( INTERSECTED != intersects[ 0 ].object ) {
-						if ( INTERSECTED ){INTERSECTED.material.emissive.r = 0.0;
-						INTERSECTED.material.emissive.g = 0.0;
-						INTERSECTED.material.emissive.b = 0.0;}
+						if ( INTERSECTED ){
+							if(Array.isArray(INTERSECTED.material)){
+								 var i, n = INTERSECTED.material.length;
+									for (i = 0; i < n; ++i) {
+										INTERSECTED.material[i].emissive.r = 0;
+										INTERSECTED.material[i].emissive.g = 0;
+										INTERSECTED.material[i].emissive.b = 0;
+										
+									}
+							}
+							else{
+								INTERSECTED.material.emissive.r = 0.0;
+								INTERSECTED.material.emissive.g = 0.0;
+								INTERSECTED.material.emissive.b = 0.0;
+							}
+						}
 						INTERSECTED = intersects[ 0 ].object;
+						if(Array.isArray(INTERSECTED.material)){
+							 var i, n = INTERSECTED.material.length;
+								for (i = 0; i < n; ++i) {
+									INTERSECTED.material[i].emissive.r = 0.5;
+									INTERSECTED.material[i].emissive.g = 0.5;
+									INTERSECTED.material[i].emissive.b = 0.5;
+									
+								}
+						}
+						else{
 						INTERSECTED.material.emissive.r = 0.5;
 						INTERSECTED.material.emissive.g = 0.5;
 						INTERSECTED.material.emissive.b = 0.5;
-						
-						
+						}
 					}
-				} 
+				}
 				else {
-					if ( INTERSECTED ) {INTERSECTED.material.emissive.r = 0;INTERSECTED.material.emissive.g = 0;INTERSECTED.material.emissive.b = 0;
-					INTERSECTED = null;}
+					if ( INTERSECTED ) {
+						
+						if(Array.isArray(INTERSECTED.material)){
+							 var i, n = INTERSECTED.material.length;
+								for (i = 0; i < n; ++i) {
+									INTERSECTED.material[i].emissive.r = 0;
+									INTERSECTED.material[i].emissive.g = 0;
+									INTERSECTED.material[i].emissive.b = 0;
+									
+								}
+								INTERSECTED = null;
+						}else{
+						
+						INTERSECTED.material.emissive.r = 0;
+						INTERSECTED.material.emissive.g = 0;
+						INTERSECTED.material.emissive.b = 0;
+						INTERSECTED = null;
+						}
+					}
 				}
 				if(phoneflag == 0){
 					if(phonenumber.slice(-12) == "416-555-0127" || phonenumber.slice(-10) == "4165550127"){

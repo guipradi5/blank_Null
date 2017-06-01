@@ -83,7 +83,7 @@
 		
 	<div id="overlay"></div>
 	<div id="overlay2"></div>
-		<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
+	<!--<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
 		<div id="info">		</div>
 		<table style="width:100%" id="G">
 		  <tr>
@@ -115,7 +115,7 @@
 				==>
 			</th>
 		</tr>
-	</table>
+	</table>-->
 
 		<script src="../scripts/three.min.js"></script>
 		<script src="https://threejs.org/build/three.min.js"></script>
@@ -260,8 +260,11 @@
 				
 				// scene
 				scene = new THREE.Scene();
-				scene.fog = new THREE.Fog( 0xffffff, -500, 3000 );
-					//scene.add( camera );
+				
+				//fog
+				scene.fog = new THREE.Fog( 0xffffff, -500, 4000 );
+
+									//scene.add( camera );
 				
 
 				
@@ -323,11 +326,11 @@
 					topColor:    { value: new THREE.Color( 0x2b2b2b ) },
 					bottomColor: { value: new THREE.Color( 0x2b2b2b ) },
 					offset:      { value: 1000 },
-					exponent:    { value: 1 }
+					exponent:    { value: 2 }
 				};
 				uniforms.topColor.value.copy( hemiLight.color );
 				scene.fog.color.copy( uniforms.bottomColor.value );
-				var skyGeo = new THREE.SphereGeometry( 4000, 32, 15 );
+				var skyGeo = new THREE.SphereGeometry( 8000, 32, 15 );
 				var skyMat = new THREE.ShaderMaterial( { vertexShader: vertexShader, fragmentShader: fragmentShader, uniforms: uniforms, side: THREE.BackSide } );
 				var sky = new THREE.Mesh( skyGeo, skyMat );
 				scene.add( sky );
@@ -371,7 +374,7 @@
 					}, onProgress, onError );
 				});
 				
-			/*		//interactuable objects
+					//interactuable objects
 				mtlLoader.load( 'interact.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
@@ -383,7 +386,7 @@
 						tea = object;
 					}, onProgress, onError );
 					team =  materials;
-				});*/
+				});
 			
 				
 				
@@ -489,23 +492,62 @@
 				if ( intersects.length > 0 ) {
 				console.log(intersects[ 0 ].object.name);
 					if ( INTERSECTED != intersects[ 0 ].object ) {
-						if ( INTERSECTED ){INTERSECTED.material.emissive.r = 0.0;
-						INTERSECTED.material.emissive.g = 0.0;
-						INTERSECTED.material.emissive.b = 0.0;}
+						if ( INTERSECTED ){
+							if(Array.isArray(INTERSECTED.material)){
+								 var i, n = INTERSECTED.material.length;
+									for (i = 0; i < n; ++i) {
+										INTERSECTED.material[i].emissive.r = 0;
+										INTERSECTED.material[i].emissive.g = 0;
+										INTERSECTED.material[i].emissive.b = 0;
+										
+									}
+							}
+							else{
+								INTERSECTED.material.emissive.r = 0.0;
+								INTERSECTED.material.emissive.g = 0.0;
+								INTERSECTED.material.emissive.b = 0.0;
+							}
+						}
 						INTERSECTED = intersects[ 0 ].object;
+						if(Array.isArray(INTERSECTED.material)){
+							 var i, n = INTERSECTED.material.length;
+								for (i = 0; i < n; ++i) {
+									INTERSECTED.material[i].emissive.r = 0.5;
+									INTERSECTED.material[i].emissive.g = 0.5;
+									INTERSECTED.material[i].emissive.b = 0.5;
+									
+								}
+						}
+						else{
 						INTERSECTED.material.emissive.r = 0.5;
 						INTERSECTED.material.emissive.g = 0.5;
 						INTERSECTED.material.emissive.b = 0.5;
-						
-						
+						}
 					}
-				} 
+				}
 				else {
-					if ( INTERSECTED ) {INTERSECTED.material.emissive.r = 0;INTERSECTED.material.emissive.g = 0;INTERSECTED.material.emissive.b = 0;
-					INTERSECTED = null;}
+					if ( INTERSECTED ) {
+						
+						if(Array.isArray(INTERSECTED.material)){
+							 var i, n = INTERSECTED.material.length;
+								for (i = 0; i < n; ++i) {
+									INTERSECTED.material[i].emissive.r = 0;
+									INTERSECTED.material[i].emissive.g = 0;
+									INTERSECTED.material[i].emissive.b = 0;
+									
+								}
+								INTERSECTED = null;
+						}else{
+						
+						INTERSECTED.material.emissive.r = 0;
+						INTERSECTED.material.emissive.g = 0;
+						INTERSECTED.material.emissive.b = 0;
+						INTERSECTED = null;
+						}
+					}
 				}
 				
-				
+			
 				water.material.uniforms.time.value += 6.0 / 60.0;
 				renderer.render( scene, camera );
 
