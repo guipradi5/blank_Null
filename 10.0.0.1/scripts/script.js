@@ -1,7 +1,6 @@
 $(document).ready(function(){
 
-	        printG("HEY LOOK! Now I have COLOR!", "happy");
-
+			setNext(1);
 
 });
 
@@ -51,59 +50,131 @@ function dialogue(i,t){
 	
 	switch(i) {
     case 1:
-        printG("There is no access to anything right now...", "angry");
+        printG("We are right now in a computer desktop. There should be files and information about the company or something.", "curious");
 		setNext(2);
         break;
     case 2:
-        printG("... 'No boot.exe detected'... I wonder", "curious");
-		setNext(3);
+        printG("Maybe we can get something about me. SO LET'S GO!", "normalhappy");
+		setNext(0);
         break;   
+		
+		
+		
+		
 	case 3:
-        printG("I THINK I KNOW HOW TO CONTINUE!", "impressed");
-		setNext(4);
+		printG("Seems like we are in the computer of a woman called Georgia.", "curious");
         break;   
+		
+		
+		
 	case 4:
-        printG("You'll see, a boot.exe is the file that executes at the start when a computer turns on.", "normalhappy");
-		setNext(5);
+		 printG('Ok, from what I can recolect... Hector works in Nulwo and Georgia is his psycholgist... ', 'VVV'); 
+		 setNext(5);
         break;
 	case 5:
-        printG("It seems that the file is missing in 2 computers... That makes me wonder", "curious");
-		setNext(6);
+        printG("It's incredible how you humans need the aid of other humans to solve your programming problems. Amazing!", "impressed");
+		setNext(0);
         break;
+		
+		
+		
 	case 6:
-        printG("If I can rewrite that file and inject it somehow into the computer we can start it up!", "normalhappy");
+        printG("Aren't there some letters that are a little thicker than the others?", "curious");
 		setNext(7);
         break;
 	case 7:
-        printG("But... that may take some time...", "hesitant");
-		setNext(0);
-		setAnswers(["How much?"], [8]);
+        printG("Also. What is this mathematic form of writing...?", "normalhappy");
+		$("#next").html("Poetry");
+		setNext(8);
         break;
 	case 8:
-        printG("Well... Around a month. I estimate around June 25th", "hesitant");
+        printG("... Poetry? Sounds interesting! I'd love to try that some day!", "happy");
+		$("#next").html("==>");
 		setNext(0);
-		setAnswers(["WHAT?","It's Ok, I can wait."], [9,10]);
         break;
-		case 9:
-			printG("HEY! Programming is not easy. It takes time, Ok? I'm sorry!", "angrier");
-			setNext(11);
-			break;
-		case 10:
-			printG("Perfect! Then I'll put myself to it!", "normalhappy");
-			setNext(11);
-			break;
-	case 11:
-		printG("I'll send you an e-mail when it's done. I'll be waiting for you", "happy");
-		setNext(12);
+		
+		
+		
+	case 9:
+		printG("This seems to be a system for broadcasting channels", "curious");
+		setNext(10);
 		break;
+	case 10:
+		printG("If you put a code, something like ABC123, in that format, and it exists, the channel should appear on the TV over there", "curious");
+		setNext(11);
+		break;
+	case 11:
+		printG("Video broadcasting... What an interesting way to share content... I presume it was made to share information in video form between the employees of Nulwo.", "curious");
+		setNext(0);
+		break;
+	
+	
 	case 12:
-		printG("And.. please... Come back eventually, could you?", "blush-happy");
+		printG("... Wow...", "sad");
 		setNext(13);
 		break;	
 		
 	case 13:
-		printG("See ya!", "happy");
+		printG("I'm... I'm sorry, "+name+". It's just... reading that letter made me feel very uneasy somehow. Human despair...", "sad");
+		setNext(14);
+		break;
+	case 14:
+		printG("I mean... Seems like Hector went though something horrible... Maybe someone he loved... was 'destroyed'. How would you say it?", "sad");
+		$("#next").html("Died?");
+		setNext(15);
+		break;
+	case 15:
+		printG("Yeah... 'die'. Isn't that the same as being deleted? It's scary. I... I never had anyone to care for. I've been alone. But only the sensation of ceasing to exist makes me feel bad... It's scary.", "sad");
+		$("#next").html("Died?");
+		setNext(15);
+		break;
+	case 16:
+		printG("... Anyways. We have a new clue!!", "hesitant");
+		$("#next").html("==>");
+		setNext(16);
+		break;
+	case 16:
+		printG("Ehem. The password to the computer 10.0.0.2. Seems like when we call a specific phone number we'll get it. But seems like the phone number is inside a 'SAFE'... Isn't that Safe the one under the desk?", "normalhappy");
+		setNext(17);
+		break;
+	case 17:
+		printG("Now we need the password to the Safe... Mhhh... materials... Isn't there something on the bookshelf that may contain the password for the safe?", "curious");
 		setNext(0);
+		break;
+		
+		
+	case 18:
+		printG("A phone...", "curious");
+		setNext(0);
+		break;
+		
+		
+	case 19:
+		printG("We need a 4 letter word. Maybe we can find a combination in the bookshelf.", "curious");
+		setNext(0);
+		break;
+		
+		
+	case 20:
+		printG("We got it! A phone number!! LET'S TRY IT OUT ON THE PHONE OVER THERE. THe number is 416 555 0127", "impressed");
+		setNext(0);
+		break;
+		
+	case 21:
+		printG("... Hasn't the ambience of this room become... eerie?", "sad");
+		setNext(22);
+		break;
+	case 22:
+		printG("I'm getting scared... ", "sad");
+		setNext(23);
+		break;
+	case 23:
+		printG("Um... 25702... 25702. We got the number! The number for the second PC! Let's go right now!", "normalhappy");
+		setNext(24);
+		break;
+	case 23:
+		printG(" I want to go from here. Please, fast. Something's not right naymore with this comuter. Changes like this are not glitches or errors... Something doesn't add up... C'MON. CLICK THAT BUTTON AT THE TOP LEFT! Let's go <strong>BACK</strong>", "angry");
+		setNext(24);
 		break;
     
 	}

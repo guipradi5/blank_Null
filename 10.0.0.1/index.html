@@ -92,28 +92,30 @@
 	<div id="overlay2"></div>
 		<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
 		<div id="info">		</div>
-		<table style="width:100%" id="G">
+	<div style="width:100%; position: absolute; bottom: 0;">
+		<table style="width:960px; margin: 0 auto; position:absolute;" id="G">
 		  <tr>
-			<th style="width:30%; text-align:right;">
+			<th style="width:1%; text-align:right;">
 				<div id="bio">
 					<img id="Gimg" src="img/G/angry.png">
 				</div>
 			</th>
-			<th style="width:60%;text-align:left;position:relative;">
+			<th style="width:40%;text-align:left;position:relative;">
 				<div style="top: 0;	position: absolute;">
 					<div id="answer1" onclick="insertInfo($(this).html())" style="display: none;" onclick="" class="img">
 						<img style='width:100%;height:auto;' src='img/safe_.png'>
 					</div>
 				</div>
 				<div id="Gtext" class="Gtext">
-					Here we are!! The Router! Now, from here we are able to go to multiple computers.
+					Okey, First PC. Let's find out if we can get to the second PC, 10.0.0.2.Look around and see if any object around is interactuable.
 				</div>
 			</th>
-			<th id="next" onclick="" style="width:10%; displaY:none;">
+			<th id="next" onclick="" style="width:6%; displaY:none;">
 				==>
 			</th>
 		</tr>
 	</table>
+	</div>
 
 		<script src="../scripts/three.min.js"></script>
 		<script src="https://threejs.org/build/three.min.js"></script>
@@ -437,7 +439,7 @@
 					if(intersects[ 0 ].object.name == "InBook1"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(3);'>Close</div>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adanln@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
 							string += "Hello Georgia. From the higher ups in Nulwo we want to welcome you to our offices and to your new job in the department of Human Resources. As you know your task will be looking after the mental well of our employees and to tighten the internal relationships between your colleagues to have an ideal work environment. We are trusting in you. Welcome to our family.<br><br> - Nulwo's executive directive team.</div></div>";
 						$("#info").html(string);
@@ -445,17 +447,18 @@
 					if(intersects[ 0 ].object.name == "InBook2"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(4);'>Close</div>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: georgiabr@nulwo.com<br>To: hectorfr@nulwo.com<br> Topic: RE: The first session<br>--------------------------------------<br> ";
 							
 							string += "Hi, Hector. You are welcome, it is my job after all and I'm taking care of the mental  health of everyone in the company. Regarding your offer, I'd love to be of help to you in these hard moments. Contact me using my phone number, Hillary will give it to you. I hope you have a productive weekend and, remember, Stay possitive. <br><br>- Doctor Georgia Baker <br><br>================================================<br><br>Hello Mrs. Baker. Thank you for that therapy session the other day. It really helped me out with some of the things going on in my life. Also, for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that, but... Well, we have talked about it. <br>Anyways, thank you. i wanted to contact you for other thing too. I'd love to hire you to do personal therapy sessions. This is helping me a lot and, as you know, my mental state is not really good, it's never been. <br> I await for your answer, doctor. One more time, thank you. Have a nice day<br><br> - Hector.";
 							string += "</div>";
 						$("#info").html(string);
+
 					}
 					if(intersects[ 0 ].object.name == "InBook3"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(6);'>Close</div>";
 							string += "<div id='poemback'><b>F</b>eeling the bast oc<b>e</b>an ben<b>e</b>ath my sou<b>l</b><br>";
 							string += "<b>E</b>ntering the cold and soothing sound<br>";
 							string += "<b>E</b>xpuned from the essence for feeling raw<br>";
@@ -466,7 +469,7 @@
 					if(intersects[ 0 ].object.name == "InBook4"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(9);'>Close</div>";
 							string += "<div id='channel' style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:center;'>";
 							string += "<h1>NULWO CHANNEL BROADCAST SYSTEM</h1> Please input a broadcast channel 6 digit key to tune in.<br>You can access security camera footage and internal TV signal<br><br><input type='text' id='keyinput' style='text-align:center;' maxlength='6' placeholder='Input a Channel Key.'><div id='RESPONSE'></div>";
 							string += "</div></div>";
@@ -493,7 +496,7 @@
 					if(intersects[ 0 ].object.name == "InBook5"){
 						$("#info").html("");
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(12)'>Close</div>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: THAT<br>--------------------------------------<br> ";
 							string += "Hello Doctor. I think you've heard about it by now, about the... THING...<br> And... Doctor, I... Can't anymore. It's just... It was just so fast. So fast. So fast. I could't even react and I feel horrible for it. It's not fair. I lost to it and now I am loosing myself. The... The snow... It got so <span style='color:red'>RED. IT WAS ALL JUST SO FUCKING RED AND I WAS THERE LAYING IN THE GROUND WHILE I COULD ONLY HEAR SCREAMS FOR HELP. AGONIZING SCREAMS. HAVE YOU EVER HEARD SOMEONE <STRONG>DIE!?</STRONG> IT'S THE MOST HORRIBLE THING YOU CAN FUCKING IMAGINE! AND TO TOP IT ALL OFF, YOU KNOW <STRONG>WHO DIED</STRONG> CAN YOU EVEN THINK HOW I FEEL!?!? AH!? I FEEL DEVASTATED I FEEL LIKE MY HEART AND SOUL WERE RIPPED FROM ME! <STRONG>I WAS RAPED FROM WITHIN</STRONG> FROM THE MOST OBSCURE AND DEEP PLACES FROM MY BEING AND IT WAS ALL <STRONG>TORNED, SLIT AND RIPPED FROM WITHIN MEEEEEEEEEEEEEEEE!!!</STRONG></span><br><br>===========================================<br><br><br>I'm sorry doctor. I am just... My mind is telling me things...<br> I don't know anymore who I am.<br><br>In case anything HAPPENS to me, ANYTHING, someone will need the password for my computer. <br> The IP address to my PC is 10.0.0.2, right next to yours. And the password for entering is something I can't tell you through this e-mail, but it's revealed once you call a specific <strong>phone number</strong>. I'll send you personally this number. When you get it, save it in your PC somewhere... But, it will be encrypted with <strong>ANOTHER password</strong>... You'll know the decryption key to this `safe` (It's got the shape of a safe), it's in one of <strong>my materials</strong>. <srong>Save this materials</strong> I send you too.<br>And doctor, Thank you for everything. I hope to see you soon.<br><br>- Hector.";
 							string += "</div></div>";
