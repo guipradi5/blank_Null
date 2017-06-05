@@ -1,6 +1,6 @@
 $(document).ready(function(){
 
-			setNext(1);
+			
 
 });
 
@@ -125,19 +125,18 @@ function dialogue(i,t){
 		break;
 	case 15:
 		printG("Yeah... 'die'. Isn't that the same as being deleted? It's scary. I... I never had anyone to care for. I've been alone. But only the sensation of ceasing to exist makes me feel bad... It's scary.", "sad");
-		$("#next").html("Died?");
-		setNext(15);
-		break;
-	case 16:
-		printG("... Anyways. We have a new clue!!", "hesitant");
 		$("#next").html("==>");
 		setNext(16);
 		break;
 	case 16:
-		printG("Ehem. The password to the computer 10.0.0.2. Seems like when we call a specific phone number we'll get it. But seems like the phone number is inside a 'SAFE'... Isn't that Safe the one under the desk?", "normalhappy");
+		printG("... Anyways. We have a new clue!!", "hesitant");
 		setNext(17);
 		break;
 	case 17:
+		printG("Ehem. The password to the computer 10.0.0.2. Seems like when we call a specific phone number we'll get it. But seems like the phone number is inside a 'SAFE'... Isn't that Safe the one under the desk?", "normalhappy");
+		setNext(171);
+		break;
+	case 171:
 		printG("Now we need the password to the Safe... Mhhh... materials... Isn't there something on the bookshelf that may contain the password for the safe?", "curious");
 		setNext(0);
 		break;
@@ -169,12 +168,26 @@ function dialogue(i,t){
 		setNext(23);
 		break;
 	case 23:
-		printG("Um... 25702... 25702. We got the number! The number for the second PC! Let's go right now!", "normalhappy");
+		printG("Um... 25702... 25702. We got the number! The password for the second PC! Let's go right now!", "normalhappy");
 		setNext(24);
 		break;
-	case 23:
-		printG(" I want to go from here. Please, fast. Something's not right naymore with this comuter. Changes like this are not glitches or errors... Something doesn't add up... C'MON. CLICK THAT BUTTON AT THE TOP LEFT! Let's go <strong>BACK</strong>", "angry");
-		setNext(24);
+	case 24:
+		printG("I want to go from here. Please, fast. Something's not right anymore with this computer. Changes like this are not glitches or errors... Something doesn't add up... C'MON. CLICK THAT BUTTON AT THE TOP LEFT! Let's go <strong>BACK</strong>", "angry");
+		setNext(0);
+		break;
+		
+		
+	case 25:
+		printG("Yeah, let's use this phone number on the phone over there. Number's 416 555 0127", "angry");
+		setNext(0);
+		break;
+		
+		
+		
+		
+	case 201:
+		printG("Yeah, let's use this phone number on the phone over there. Number's 416 555 0127", "angry");
+		setNext(0);
 		break;
     
 	}
@@ -237,4 +250,12 @@ function insertInfo(a){
 		string += a;
 		string += "</div>";
 		$("#info").html(string);
+}
+function insertSup(a){
+		$("#infoS").html("");
+	var string = "<div class='window3d' style=''>";
+		string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
+		string += a;
+		string += "</div>";
+		$("#infoS").html(string);
 }
