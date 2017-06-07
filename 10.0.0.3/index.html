@@ -354,7 +354,7 @@
 				// model
 				var manager = new THREE.LoadingManager();
 				var loader = new THREE.FBXLoader( manager );
-				loader.load( 'mod/M.FBX', function( object ) {
+				loader.load( 'mod/HH.FBX', function( object ) {
 					object.mixer = new THREE.AnimationMixer( object );
 					mixers.push( object.mixer );
 					var action = object.mixer.clipAction( object.animations[ 0 ] );
@@ -455,7 +455,6 @@
 				requestAnimationFrame( animate );
 				if ( mixers.length > 0 ) {
 					for ( var i = 0; i < mixers.length; i ++ ) {
-						mixers[ i ].update( clock.getDelta() );
 					}
 				}
 				render();
