@@ -153,6 +153,8 @@
 		<script src="js/ShaderPass.js"></script>
 		
 		
+		<script src="js/FBXLoader2.js"></script>
+		
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="../scripts/jquery-1.6.3.min.js"></script>
 		<script src="../scripts/DTMFgenerator.js"></script>
@@ -193,6 +195,8 @@
 			var hemiLight;
 			
 			var flag = 0;
+			
+			var mixers = [];
 			
 			var intvar = 5;
 			
@@ -285,9 +289,9 @@
 				
 				
 				var light = new THREE.DirectionalLight( 0xebf3ff, 1.5 );
-				light.position.set( 0, 140, 500 ).multiplyScalar( 1.1 );
+				light.position.set( 1, 1, 1 ).multiplyScalar( 1.1 );
 				scene.add( light );
-				light.castShadow = true;
+				light.castShadow = false;
 				light.shadow.mapSize.width = 1024;
 				light.shadow.mapSize.height = 1024;
 				var d = 390;
@@ -342,12 +346,25 @@
 				};
 				
 				
-				var onError = function ( xhr ) { };
+				var onError = function ( xhr ) { console.log(xhr); };
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 				var mtlLoader = new THREE.MTLLoader();
 				mtlLoader.setPath( 'mod/' );
 				
-					//desktop
+				// model
+				var manager = new THREE.LoadingManager();
+				var loader = new THREE.FBXLoader( manager );
+				loader.load( 'mod/M.FBX', function( object ) {
+					object.mixer = new THREE.AnimationMixer( object );
+					mixers.push( object.mixer );
+					var action = object.mixer.clipAction( object.animations[ 0 ] );
+					action.play();
+					scene.add( object );
+				}, onProgress, onError );
+
+				
+				
+				//desktop
 				mtlLoader.load( 'desktop.mtl', function( materials ) {
 					materials.preload();
 					var objLoader = new THREE.OBJLoader();
@@ -358,7 +375,6 @@
 						scene.add( object );
 					}, onProgress, onError );
 				});
-				
 				
 				
 				//renderer
@@ -382,7 +398,7 @@
 				document.addEventListener( 'mousemove', onDocumentMouseMove, false );
 				document.addEventListener( 'mousedown', clickEvent, false );
 
-
+				
 				
 				//Final?
 				if(sessionStorage.hecpresence == 1){
@@ -428,206 +444,6 @@
 						$("#info").html("");
 						$("#info").append("<div>test</div>");
 					}
-					if(intersects[ 0 ].object.name == "InBook1"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(3);'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: adanln@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: Security Cameras<br>--------------------------------------<br> ";
-							string += "Hello Georgia. From the higher ups in Nulwo we want to welcome you to our offices and to your new job in the department of Human Resources. As you know your task will be looking after the mental well of our employees and to tighten the internal relationships between your colleagues to have an ideal work environment. We are trusting in you. Welcome to our family.<br><br> - Nulwo's executive directive team.</div></div>";
-						$("#info").html(string);
-					}
-					if(intersects[ 0 ].object.name == "InBook2"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(4);'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: georgiabr@nulwo.com<br>To: hectorfr@nulwo.com<br> Topic: RE: The first session<br>--------------------------------------<br> ";
-							
-							string += "Hi, Hector. You are welcome, it is my job after all and I'm taking care of the mental  health of everyone in the company. Regarding your offer, I'd love to be of help to you in these hard moments. Contact me using my phone number, Hillary will give it to you. I hope you have a productive weekend and, remember, Stay possitive. <br><br>- Doctor Georgia Baker <br><br>================================================<br><br>Hello Mrs. Baker. Thank you for that therapy session the other day. It really helped me out with some of the things going on in my life. Also, for everything about trying to be more firendly towards my job collegues, i know I'm not really social and all of that, but... Well, we have talked about it. <br>Anyways, thank you. i wanted to contact you for other thing too. I'd love to hire you to do personal therapy sessions. This is helping me a lot and, as you know, my mental state is not really good, it's never been. <br> I await for your answer, doctor. One more time, thank you. Have a nice day<br><br> - Hector.";
-							string += "</div>";
-						$("#info").html(string);
-
-					}
-					if(intersects[ 0 ].object.name == "InBook3"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(6);'>Close</div>";
-							string += "<div id='poemback'><b>F</b>eeling the bast oc<b>e</b>an ben<b>e</b>ath my sou<b>l</b><br>";
-							string += "<b>E</b>ntering the cold and soothing sound<br>";
-							string += "<b>E</b>xpuned from the essence for feeling raw<br>";
-							string += "<b>L</b>ying on the waves for I am gone.</div>";
-							string += "</div>";
-						$("#info").html(string);
-					}
-					if(intersects[ 0 ].object.name == "InBook4"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(9);'>Close</div>";
-							string += "<div id='channel' style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:center;'>";
-							string += "<h1>NULWO CHANNEL BROADCAST SYSTEM</h1> Please input a broadcast channel 6 digit key to tune in.<br>You can access security camera footage and internal TV signal<br><br><input type='text' id='keyinput' style='text-align:center;' maxlength='6' placeholder='Input a Channel Key.'><div id='RESPONSE'></div>";
-							string += "</div></div>";
-						$("#info").html(string);
-						$( "#keyinput" ).focus();
-						$( ".window3d" ).bind( "click", function(e) {
-							$( "#keyinput" ).focus();
-						});
-						
-						$( "#keyinput" ).bind( "keydown", function(e) {
-							var pass = $( "#keyinput" ).val().toUpperCase();//call broadcast function in nulwo.js
-							if( pass == "YHN852" && e.which == 13){
-								$( "#keyinput" ).val("");
-								$("#RESPONSE").html("<br><strong>YHN852 SIGNAL FOUND!</strong><br>Please refer to the nearest TV station.");
-								//Open broadcast 9 on TV - Static sounding suddenly
-							}else if(e.which == 13 && pass != "YHN852"){
-								var error = new Audio("audio/error.mp3");
-								error.play();
-								$( "#keyinput" ).val("NO SIGNAL FOUND");
-								 setTimeout(function(){$( "#keyinput" ).val(""); }, 1000);
-							}//end broadcast function
-						});
-					}
-					if(intersects[ 0 ].object.name == "InBook5"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(12)'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>From: hectorfr@nulwo.com<br>To: georgiabr@nulwo.com<br> Topic: THAT<br>--------------------------------------<br> ";
-							string += "Hello Doctor. I think you've heard about it by now, about the... THING...<br> And... Doctor, I... Can't anymore. It's just... It was just so fast. So fast. So fast. I could't even react and I feel horrible for it. It's not fair. I lost to it and now I am loosing myself. The... The snow... It got so <span style='color:red'>RED. IT WAS ALL JUST SO FUCKING RED AND I WAS THERE LAYING IN THE GROUND WHILE I COULD ONLY HEAR SCREAMS FOR HELP. AGONIZING SCREAMS. HAVE YOU EVER HEARD SOMEONE <STRONG>DIE!?</STRONG> IT'S THE MOST HORRIBLE THING YOU CAN FUCKING IMAGINE! AND TO TOP IT ALL OFF, YOU KNOW <STRONG>WHO DIED</STRONG> CAN YOU EVEN THINK HOW I FEEL!?!? AH!? I FEEL DEVASTATED I FEEL LIKE MY HEART AND SOUL WERE RIPPED FROM ME! <STRONG>I WAS RAPED FROM WITHIN</STRONG> FROM THE MOST OBSCURE AND DEEP PLACES FROM MY BEING AND IT WAS ALL <STRONG>TORNED, SLIT AND RIPPED FROM WITHIN MEEEEEEEEEEEEEEEE!!!</STRONG></span><br><br>===========================================<br><br><br>I'm sorry doctor. I am just... My mind is telling me things...<br> I don't know anymore who I am.<br><br>In case anything HAPPENS to me, ANYTHING, someone will need the password for my computer. <br> The IP address to my PC is 10.0.0.2, right next to yours. And the password for entering is something I can't tell you through this e-mail, but it's revealed once you call a specific <strong>phone number</strong>. I'll send you personally this number. When you get it, save it in your PC somewhere... But, it will be encrypted with <strong>ANOTHER password</strong>... You'll know the decryption key to this `safe` (It's got the shape of a safe), it's in one of <strong>my materials</strong>. <srong>Save this materials</strong> I send you too.<br>And doctor, Thank you for everything. I hope to see you soon.<br><br>- Hector.";
-							string += "</div></div>";
-						$("#info").html(string);
-					}
-					if(intersects[ 0 ].object.name == "InBook6"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();'>Close</div>";
-							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
-							string += "NOTES<br><br>- Today I got Hector once again on the phone. He calls every other day for a little session. I have to count the hours for the bill at the end of the month. Also, he is sending me all of the materials from the session, It seems he likes to write poetry. It helps him to feel more relaxed. I'll be saving the important ones in the bookshelf.<br><br>- Marie and Lilly fought again over some stupid shit about 'poisoning' Lilly's coffee. It's just too weird. My hipothesis is that they have a personal problem, looking at answers and anilisis i0ve donde, it seems that lilly thinks that Marie is having an adventure with her husband and wants her out of the way. I'll have to speak to her husband to clear things up.<br><br>- Joey's been kind slacking in the last few weeks, his department director just sent him in last tuesday and we talked. The conclusion is that his 2 sons have been slacking in school and even skipping. He's worried so he is underperforming. Remember to apply a confort therapy on him. Estimated time 2 - 4 weeks.<br><br>- Finally. They sent me Norman from enginering. it is the first time I saw this. It seems he's under performing on his tasks. The reason and analysis? He's in love. And for what I can deduct, it's with someone in his department or the company. In these cases I just have to remind him to do his job and apply a light concentration and rutine therapy. ";
-							string += "</div></div>";
-						$("#info").html(string);
-						
-					}
-					if(intersects[ 0 ].object.name == "Safe"){
-						$("#info").html("");
-						var string = "<div class='window3d' style=''>";
-						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();$(document).unbind(); stop();'>Close</div>";
-						if( sessionStorage.safeopen != 1){
-							string = string + "<input id='safeinput' maxlength='4'>";
-							string = string + "<img id='safeimg' style='width:100%;height:auto;' src='img/safe.png'/></div>";
-							dialogue(19);
-						}else{
-							string = string + "<img id='safeimg' style='width:100%;height:auto;' src='img/safe_.png'/></div>";
-							dialogue(25);
-						}
-						$("#info").html(string);
-						$( "#safeinput" ).focus();
-						$( ".window3d" ).bind( "click", function(e) {
-							$( "#safeinput" ).focus();
-						});
-						$( "#safeinput" ).bind( "keydown", function(e) {
-							var pass = $( "#safeinput" ).val().toUpperCase();
-							if( pass == "FEEL" && e.which == 13){
-								var open = new Audio("audio/open.mp3");
-								open.play();
-								 sessionStorage.safeopen = 1;
-								 dialogue(20);
-								setTimeout(function(){$( "#safeinput" ).hide();$( "#safeimg" ).attr("src", "img/safe_.png");$("#answer1").show();}, 1000);
-							}else if(e.which == 13 && pass != "FEEL"){
-								var error = new Audio("audio/error.mp3");
-								error.play();
-								$( "#safeinput" ).val("ERROR");
-								 setTimeout(function(){$( "#safeinput" ).val(""); }, 1000);
-							}
-						});
-					}
-					if(intersects[ 0 ].object.name == "Phone"){
-						//add number binding
-						var string ="<div class='window3d' style=''>";
-						string = string + "<div style='width: 50px;position:fixed; top:45px; float:right; margin:5px; cursor:pointer;margin-left: 550px;' onclick='$(this).parents(`.window3d`).remove();$(document).unbind(); stop();'>Close</div>";
-						string = string + "<div id='bu1' onclick='phonenumber += `1`;' onmousedown='dialTone(697.0, 1209.0)' onmouseup='stop()' class='phonebutton row1 col1'></div>  <div id='bu2' onclick='phonenumber += `2`;' onmousedown='dialTone(697.0, 1336.0)' onmouseup='stop()' class='phonebutton row1 col2'></div>  <div id='bu3' onclick='phonenumber += `3`;' onmousedown='dialTone(697.0, 1477.0)' onmouseup='stop()' class='phonebutton row1 col3'></div>";
-						string = string + "<div id='bu4' onclick='phonenumber += `4`;' onmousedown='dialTone(770.0, 1209.0)' onmouseup='stop()' class='phonebutton row2 col1'></div>  <div id='bu5' onclick='phonenumber += `5`;' onmousedown='dialTone(770.0, 1336.0)' onmouseup='stop()' class='phonebutton row2 col2'></div>  <div id='bu6' onclick='phonenumber += `6`;' onmousedown='dialTone(770.0, 1477.0)' onmouseup='stop()' class='phonebutton row2 col3'></div>";
-						string = string + "<div id='bu7' onclick='phonenumber += `7`;' onmousedown='dialTone(852.0, 1209.0)' onmouseup='stop()' class='phonebutton row3 col1'></div>  <div id='bu8' onclick='phonenumber += `8`;' onmousedown='dialTone(852.0, 1336.0)' onmouseup='stop()'class='phonebutton row3 col2'></div>  <div id='bu9' onclick='phonenumber += `9`;' onmousedown='dialTone(852.0, 1477.0)' onmouseup='stop()' class='phonebutton row3 col3'></div>";
-						string = string + "<div onclick='phonenumber += `#`;' onmousedown='dialTone(941.0, 1477.0)' onmouseup='stop()' class='phonebutton row4 col1'></div>  <div id='bu0' onclick='phonenumber += `0`;' onmousedown='dialTone(941.0, 1336.0)' onmouseup='stop()' class='phonebutton row4 col2'></div>  <div onclick='phonenumber += `-`;' onmousedown='dialTone(941.0, 1209.0)' onmouseup='stop()' class='phonebutton row4 col3'></div>";
-						string = string + "<img style='width:100%;height:auto;' src='img/phone.png'/></div>";
-						$("#info").html(string);
-						dialogue(18);
-						
-						$( document ).bind( "keydown", function(e) {
-						  var key = e.which - 96;
-						  if(down == 0){
-							  switch(key){
-							  case 1:
-								dialTone(697.0, 1209.0);
-								phonenumber += '1';
-								$("#bu1").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 2:
-								dialTone(697.0, 1336.0);
-								phonenumber += '2';
-								$("#bu2").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 3:
-								dialTone(697.0, 1477.0);
-								phonenumber += '3';
-								$("#bu3").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 4:
-								dialTone(770.0, 1209.0);
-								phonenumber += '4';
-								$("#bu4").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 5:
-								dialTone(770.0, 1336.0);
-								phonenumber += '5';
-								$("#bu5").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 6:
-								dialTone(770.0, 1477.0);
-								phonenumber += '6';
-								$("#bu6").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 7:
-								dialTone(852.0, 1209.0);
-								phonenumber += '7';
-								$("#bu7").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 8:
-								dialTone(852.0, 1336.0);
-								phonenumber += '8';
-								$("#bu8").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 9:
-								dialTone(852.0, 1477.0);
-								phonenumber += '9';
-								$("#bu9").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-							  case 0:
-								dialTone(941.0, 1336.0);
-								phonenumber += '0';
-								$("#bu0").css( "background", "rgba(255,255,255,0.3)" );
-								down = 1;
-								break;
-								default:
-								stop();
-								down = 1;
-								$(".phonebutton").css( "background", "rgba(255,255,255,0)" );
-								break;
-							  
-							  }
-						  }
-						});
-						$( document ).bind( "keyup", function(e) {
-						    stop();
-							down = 0;
-							$(".phonebutton").css( "background", "rgba(255,255,255,0)" );
-						});
-					}
 					render();
 				}
 			}
@@ -636,13 +452,14 @@
 			
 			//animate
 			function animate() {
-				setTimeout( function() {
-					requestAnimationFrame( animate );
-					renderer.render( scene, camera );
-					controls.update();
-					
-				}, 1000 / 25 );
+				requestAnimationFrame( animate );
+				if ( mixers.length > 0 ) {
+					for ( var i = 0; i < mixers.length; i ++ ) {
+						mixers[ i ].update( clock.getDelta() );
+					}
+				}
 				render();
+
 			}
 			
 			function render() {
