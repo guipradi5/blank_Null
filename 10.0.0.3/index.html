@@ -368,9 +368,10 @@
 				var manager = new THREE.LoadingManager();
 				var loader = new THREE.FBXLoader( manager );
 				loader.load( 'mod/HF.FBX', function( object ) {
-				object.mixer = new THREE.AnimationMixer( object );
+					scene.children[3].mixer = new THREE.AnimationMixer( object );
 					mixers.push( object.mixer );
 					action2 = object.mixer.clipAction( object.animations[ 0 ] );
+					scene.children[3].animations.push(object.animations[ 0 ]);
 				}, onProgress, onError );
 //load animations from different fbxs
 //do a script to divide the animations
