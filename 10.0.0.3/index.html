@@ -89,6 +89,31 @@
 				left: 0;
 				position: absolute;
 			}
+			#blocker{
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0,0,0,0.5);
+			}
+			#instructions{
+				    width: 100%;
+					height: 100%;
+					display: -webkit-box;
+					display: -moz-box;
+					display: box;
+					-webkit-box-orient: horizontal;
+					-moz-box-orient: horizontal;
+					box-orient: horizontal;
+					-webkit-box-pack: center;
+					-moz-box-pack: center;
+					box-pack: center;
+					-webkit-box-align: center;
+					-moz-box-align: center;
+					box-align: center;
+					color: #ffffff;
+					text-align: center;
+					cursor: pointer;
+			}
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -96,9 +121,21 @@
 	</head>
 
 	<body>
-	<video id="video"  loop webkit-playsinline style="display:none">
+	<video id="video" onended="startH()" webkit-playsinline style="display:none">
 			<source src="mod/vid.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
+		
+		<div id="blocker" style="display: -webkit-box;">
+
+			<div id="instructions">
+				<span style="font-size:40px">Click to obtain control</span>
+				<br>
+				(W, A, S, D = Move, MOUSE = Look around)
+			</div>
+
+		</div>
+		
+		
 	<!--<div style="width:100%; height:100vh; background:#101010; text-align:center;"><div style="position:relative;">LOADING</div></div>
 	--><div id="overlay"></div>
 	<div id="overlay2"></div>
@@ -158,7 +195,7 @@
 		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 		<script src="../scripts/jquery-1.6.3.min.js"></script>
 		<script src="../scripts/DTMFgenerator.js"></script>
-		
+		<script src="scripts/PointerLockControls.js"></script>
 		<script src="scripts/script.js"></script>
 		<!--DOME-->
 		
@@ -189,25 +226,85 @@
 			var WIDTH = window.innerWidth;
 			var HEIGHT = window.innerHeight;
 			var mesh, line;
-
+			var video, texture, material, mesh;
+			
 			var mouse = new THREE.Vector2(), INTERSECTED;
 
 			var hemiLight;
-			
 			var flag = 0;
 			
-			
 			var mixers = [];
+			var mixers2 = [];
 			var action, action2;
 			var clock = new THREE.Clock();
-			
-			var intvar = 5;
-			
-			var video, texture, material, mesh;
 
+			var annie;
+			
+			var geometry
+			var objects = [];
+
+			var blocker = document.getElementById( 'blocker' );
+			var instructions = document.getElementById( 'instructions' );
+			
+			
+			var controlsEnabled = false;
+			var moveForward = false;
+			var moveBackward = false;
+			var moveLeft = false;
+			var moveRight = false;
+			var canJump = false;
+			var prevTime = performance.now();
+			var velocity = new THREE.Vector3();
+
+			
+			
+			
+			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
+
+			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
+
+			if ( havePointerLock ) {
+				var element = document.body;
+				var pointerlockchange = function ( event ) {
+					if ( document.pointerLockElement === element || document.mozPointerLockElement === element || document.webkitPointerLockElement === element ) {
+						controlsEnabled = true;
+						controls.enabled = true;
+						blocker.style.display = 'none';
+					} else {
+						controls.enabled = false;
+						blocker.style.display = '-webkit-box';
+						blocker.style.display = '-moz-box';
+						blocker.style.display = 'box';
+						instructions.style.display = '';
+					}
+				};
+				var pointerlockerror = function ( event ) {
+					instructions.style.display = '';
+				};
+
+				// Hook pointer lock state change events
+				document.addEventListener( 'pointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'mozpointerlockchange', pointerlockchange, false );
+				document.addEventListener( 'webkitpointerlockchange', pointerlockchange, false );
+
+				document.addEventListener( 'pointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'mozpointerlockerror', pointerlockerror, false );
+				document.addEventListener( 'webkitpointerlockerror', pointerlockerror, false );
+
+				instructions.addEventListener( 'click', function ( event ) {
+					instructions.style.display = 'none';
+					// Ask the browser to lock the pointer
+					element.requestPointerLock = element.requestPointerLock || element.mozRequestPointerLock || element.webkitRequestPointerLock;
+					element.requestPointerLock();
+				}, false );
+			} else {
+				instructions.innerHTML = 'Your browser doesn\'t seem to support Pointer Lock API';
+			}
+			
 			
 			init();
 			animate();
+			
 			
 			
 			function init() {
@@ -236,7 +333,7 @@
 					$.ajax({
 						type: "POST",
 						url: "../updateplace.php",
-						//data: {user:mail},
+					//	data: {user:mail, url: "/10.0.0.3"},
 						success: function(data, textStatus, jqXHR)
 						{
 							//data - response from server
@@ -252,28 +349,87 @@
 			
 			
 				//camera
-				camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 1e10 );
-				camera.position.z = 15;
+				camera = new THREE.PerspectiveCamera( 80, window.innerWidth / window.innerHeight, 0.01, 1e10 );
+				camera.position.y = -10;
 				
-				//controls
-				controls = new THREE.OrbitControls( camera );
-				controls.rotateSpeed = 2.0;
-				controls.zoomSpeed = 5;
-				controls.minDistance = 0;
-				controls.maxDistance = 15;
-				
-				controls.minPolarAngle = Math.PI/1/3; // radians
-				controls.maxPolarAngle = Math.PI*2; // radians
-				controls.noPan = true;
-				console.log(controls);
-				
-				//raycaster
-				raycaster = new THREE.Raycaster();
-				
-				
+
 				// scene
 				scene = new THREE.Scene();
-				scene.fog = new THREE.Fog( 0xffffff, -200, 1000 );					
+				scene.fog = new THREE.Fog( 0xffffff, -200, 1000 );			
+
+
+
+				//controls
+				controls = new THREE.PointerLockControls( camera );
+				scene.add( controls.getObject() );
+
+				var onKeyDown = function ( event ) {
+
+					switch ( event.keyCode ) {
+
+						case 38: // up
+						case 87: // w
+							moveForward = true;
+							break;
+
+						case 37: // left
+						case 65: // a
+							moveLeft = true; break;
+
+						case 40: // down
+						case 83: // s
+							moveBackward = true;
+							break;
+
+						case 39: // right
+						case 68: // d
+							moveRight = true;
+							break;
+
+						case 32: // space
+							if ( canJump === true ) velocity.y += 350;
+							canJump = false;
+							break;
+
+					}
+
+				};
+
+				var onKeyUp = function ( event ) {
+
+					switch( event.keyCode ) {
+
+						case 38: // up
+						case 87: // w
+							moveForward = false;
+							break;
+
+						case 37: // left
+						case 65: // a
+							moveLeft = false;
+							break;
+
+						case 40: // down
+						case 83: // s
+							moveBackward = false;
+							break;
+
+						case 39: // right
+						case 68: // d
+							moveRight = false;
+							break;
+
+					}
+
+				};
+				document.addEventListener( 'keydown', onKeyDown, false );
+				document.addEventListener( 'keyup', onKeyUp, false );
+
+				raycaster = new THREE.Raycaster( new THREE.Vector3(), new THREE.Vector3( 0, - 1, 0 ), 0, 10 );
+				
+				
+				
+						
 				
 				//scene.add( camera );
 				
@@ -356,24 +512,33 @@
 				mtlLoader.setPath( 'mod/' );
 				
 				// model
+				
+				
+				
 				var manager = new THREE.LoadingManager();
 				var loader = new THREE.FBXLoader( manager );
 				loader.load( 'mod/entry.FBX', function( object ) {
 					object.mixer = new THREE.AnimationMixer( object );
-					mixers.push( object.mixer );
-					action = object.mixer.clipAction( object.animations[ 0 ] );
+					mixers2.push( object.mixer );
+					action2 = object.mixer.clipAction( object.animations[ 0 ] );
+					action2.timeScale = 700;
+					object.name = "entry";
 					scene.add( object );
 				}, onProgress, onError );
-				// animations
+				
 				var manager = new THREE.LoadingManager();
 				var loader = new THREE.FBXLoader( manager );
 				loader.load( 'mod/HF.FBX', function( object ) {
-					scene.children[3].mixer = new THREE.AnimationMixer( object );
 					object.mixer = new THREE.AnimationMixer( object );
 					mixers.push( object.mixer );
-					action2 = object.mixer.clipAction( object.animations[ 0 ] );
-					scene.children[3].animations.push(object.animations[ 0 ]);
+					object.name = "HF";
+					object.visible = false;
+					action = object.mixer.clipAction( object.animations[ 0 ] );
+					action.play();
+					scene.add( object );
 				}, onProgress, onError );
+				
+
 //load animations from different fbxs
 //do a script to divide the animations
 				
@@ -389,6 +554,7 @@
 						scene.add( object );
 					}, onProgress, onError );
 				});
+				
 				
 				
 				//renderer
@@ -420,6 +586,16 @@
 					scene.fog = new THREE.FogExp2( 0x101010, 0.0020 );
 					$("#soundSwitch").remove();
 				}
+				
+				
+				
+				var runnerTexture = new THREE.ImageUtils.loadTexture( 'mod/elec.png' );
+				annie = new TextureAnimator( runnerTexture, 10, 1, 10, 75 ); // texture, #horiz, #vert, #total, duration.
+				var runnerMaterial = new THREE.MeshBasicMaterial( { map: runnerTexture, side:THREE.DoubleSide } );
+				var runnerGeometry = new THREE.PlaneGeometry(50, 50, 1, 1);
+				var runner = new THREE.Mesh(runnerGeometry, runnerMaterial);
+				runner.position.set(-100,25,0);
+				scene.add(runner);
 			}
 			
 			
@@ -470,15 +646,58 @@
 				if ( mixers.length > 0 ) {
 					for ( var i = 0; i < mixers.length; i ++ ) {
 							mixers[ i ].update( clock.getDelta() );
+							mixers2[ i ].update( clock.getDelta() );
 					}
 				}
 				
-				if(action.time >= 5){
-					//action.paused=true;
+					annie.update(1000 * delta);
+				
+				
+				if ( controlsEnabled ) {
+					raycaster.ray.origin.copy( controls.getObject().position );
+					raycaster.ray.origin.y -= 10;
+
+					var intersections = raycaster.intersectObjects( objects );
+
+					var isOnObject = intersections.length > 0;
+
+					var time = performance.now();
+					var delta = ( time - prevTime ) / 1000;
+
+					velocity.x -= velocity.x * 10.0 * delta;
+					velocity.z -= velocity.z * 10.0 * delta;
+
+					velocity.y -= 9.8 * 100.0 * delta; // 100.0 = mass
+
+					if ( moveForward ) velocity.z -= 700.0 * delta;
+					if ( moveBackward ) velocity.z += 700.0 * delta;
+
+					if ( moveLeft ) velocity.x -= 700.0 * delta;
+					if ( moveRight ) velocity.x += 700.0 * delta;
+
+					if ( isOnObject === true ) {
+						velocity.y = Math.max( 0, velocity.y );
+
+						canJump = false;
+					}
+
+					controls.getObject().translateX( velocity.x * delta );
+					controls.getObject().translateY( velocity.y * delta );
+					controls.getObject().translateZ( velocity.z * delta );
+
+					if ( controls.getObject().position.y < 10 ) {
+						velocity.y = 0;
+						controls.getObject().position.y = 10;
+						canJump = false;
+					}
+					prevTime = time;
 				}
+
+				
 				render();
 
 			}
+			
 			
 			function render() {
 
@@ -546,7 +765,6 @@
 				if(flag == 0){
 				
 				 setTimeout(function(){ 
-				document.getElementById("video").play();
 				var flagvideo = 0;
 				var length1;
 					for(i = 0; i < scene.children.length && flagvideo != 1; i++){
@@ -564,9 +782,7 @@
 									scene.children[i].children[j+6].material = material;
 									scene.children[i].children[j+7].material = material;
 									scene.children[i].children[j+8].material = material;
-									action.repetitions = 0;
-									action.clampWhenFinished = true;
-									action.play();
+									document.getElementById("video").play();
 								}								
 							}
 						}
@@ -575,10 +791,76 @@
 					flag = 1;
 				}
 				
+				//Animation transitions:
+				
+				
+				
+				if(action2){
+					if(action2.time >= 7.3){
+						action2.stop();
+						for(i = 0; i < scene.children.length; i++){
+							if(scene.children[i].name == "entry"){
+								scene.children[i].visible = false;
+								scene.children[i+1].visible = true;
+							}
+						}
+					}
+				};
+				
+				
 				
 				renderer.render( scene, camera );
 
 			}
+			
+			
+			function TextureAnimator(texture, tilesHoriz, tilesVert, numTiles, tileDispDuration) 
+			{	
+				// note: texture passed by reference, will be updated by the update function.
+					
+				this.tilesHorizontal = tilesHoriz;
+				this.tilesVertical = tilesVert;
+				// how many images does this spritesheet contain?
+				//  usually equals tilesHoriz * tilesVert, but not necessarily,
+				//  if there at blank tiles at the bottom of the spritesheet. 
+				this.numberOfTiles = numTiles;
+				texture.wrapS = texture.wrapT = THREE.RepeatWrapping; 
+				texture.repeat.set( 1 / this.tilesHorizontal, 1 / this.tilesVertical );
+
+				// how long should each image be displayed?
+				this.tileDisplayDuration = tileDispDuration;
+
+				// how long has the current image been displayed?
+				this.currentDisplayTime = 0;
+
+				// which image is currently being displayed?
+				this.currentTile = 0;
+					
+				this.update = function( milliSec )
+				{
+					this.currentDisplayTime += milliSec;
+					while (this.currentDisplayTime > this.tileDisplayDuration)
+					{
+						this.currentDisplayTime -= this.tileDisplayDuration;
+						this.currentTile++;
+						if (this.currentTile == this.numberOfTiles)
+							this.currentTile = 0;
+						var currentColumn = this.currentTile % this.tilesHorizontal;
+						texture.offset.x = currentColumn / this.tilesHorizontal;
+						var currentRow = Math.floor( this.currentTile / this.tilesHorizontal );
+						texture.offset.y = currentRow / this.tilesVertical;
+					}
+				};
+			}		
+			
+function startH()
+{
+	action2.repetitions = 0;
+	action2.clampWhenFinished = true;
+	action2.play();
+}
+			
+			
 		</script>
 
 	</body>
