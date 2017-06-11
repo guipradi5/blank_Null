@@ -121,7 +121,7 @@
 	</head>
 
 	<body>
-	<video id="video" onended="startH()" webkit-playsinline style="display:none">
+	<video id="video" onended="startH();h1.play();h2.play();h3.play();h4.play();" webkit-playsinline style="display:none">
 			<source src="mod/vid.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
 		
@@ -277,24 +277,33 @@
 			var normal = new THREE.Vector3();
 			
 			var ray1 = new THREE.CatmullRomCurve3( [
-				new THREE.Vector3( 0, 10, -10 ), new THREE.Vector3( 10, 0, -10 ),
-				new THREE.Vector3( 20, 0, 0 ), new THREE.Vector3( 30, 0, 10 ),
-				new THREE.Vector3( 30, 0, 20 ), new THREE.Vector3( 20, 0, 30 ),
-				new THREE.Vector3( 10, 0, 30 ), new THREE.Vector3( 0, 0, 30 ),
-				new THREE.Vector3( -10, 10, 30 ), new THREE.Vector3( -10, 20, 30 ),
-				new THREE.Vector3( 0, 30, 30 ), new THREE.Vector3( 10, 30, 30 ),
-				new THREE.Vector3( 20, 30, 15 ), new THREE.Vector3( 10, 30, 10 ),
-				new THREE.Vector3( 0, 30, 10 ), new THREE.Vector3( -10, 20, 10 ),
-				new THREE.Vector3( -10, 10, 10 ), new THREE.Vector3( 0, 0, 10 ),
-				new THREE.Vector3( 10, -10, 10 ), new THREE.Vector3( 20, -15, 10 ),
-				new THREE.Vector3( 30, -15, 10 ), new THREE.Vector3( 40, -15, 10 ),
-				new THREE.Vector3( 50, -15, 10 ), new THREE.Vector3( 60, 0, 10 ),
-				new THREE.Vector3( 70, 0, 0 ), new THREE.Vector3( 80, 0, 0 ),
-				new THREE.Vector3( 90, 0, 0 ), new THREE.Vector3( 100, 0, 0 )
+				new THREE.Vector3( 0, 80, -70 ), new THREE.Vector3( 0, 40, 0 ),
+				new THREE.Vector3( 20, 0, 50 ), new THREE.Vector3( 0, 90, 132 )
+			] );
+			var ray2 = new THREE.CatmullRomCurve3( [
+				new THREE.Vector3( 0, 50, -70 ), new THREE.Vector3( 0, 0, 0 ),
+				new THREE.Vector3( 20, 150, 50 ), new THREE.Vector3( 0, 100, 132 )
+			] );
+			var ray3 = new THREE.CatmullRomCurve3( [
+				new THREE.Vector3( -220, 60, 250 ), new THREE.Vector3( 0, 50, 132 )
+			] );
+			var ray4 = new THREE.CatmullRomCurve3( [
+				new THREE.Vector3( -200, 30, 250 ), new THREE.Vector3( 0, 60, 132 )
+			] );
+			var ray5 = new THREE.CatmullRomCurve3( [
+				new THREE.Vector3( 240, 90, 232 ),  new THREE.Vector3( 0, 90, 132 )
+			] );
+			var ray6 = new THREE.CatmullRomCurve3( [
+				new THREE.Vector3( 220, 30, 232 ),  new THREE.Vector3( 0, 65, 132 )
 			] );
 			
 			var splines = {
-				ray1: ray1
+				ray1: ray1,
+				ray2: ray2,
+				ray3: ray3,
+				ray4: ray4,
+				ray5: ray5,
+				ray6: ray6
 			};
 			
 			var raymaterial = new THREE.MeshBasicMaterial( { color: 0x00d0fe } );
@@ -306,14 +315,17 @@
 			
 			var rayparams = {
 				spline: 'ray1',
-				scale: 4,
-				extrusionSegments: 100,
+				scale: 0.5,
+				extrusionSegments: 4,
 				radiusSegments: 3,
 				closed: false,
 				animationView: false,
 				lookAhead: false,
 				cameraHelper: false,
 			};
+			
+			var elecTime = new THREE.Clock();
+			
 			
 			//animationflags and vars
 			var toCenter = 0;
@@ -338,6 +350,37 @@
 			//Damage system
 			var lives = 3;
 			var Hlives = 3;
+			var damageArea;
+			var attacktime = 0;
+			var cooldownlife = 0;
+			var attackReady = 0;
+			var attackClock = new THREE.Clock();
+			var attackmaterial;
+			
+			//end variable
+			var endv = 0;
+			
+			
+			//music
+			var h1 = new Audio('audio/h_entry.mp3');
+			h1.loop = true;
+			var h2 = new Audio('audio/h_12.mp3');
+			h2.loop = true;
+			h2.volume = 0;
+			var h3 = new Audio('audio/h_3.mp3');
+			h3.loop = true;
+			h3.volume = 0;
+			var h4 = new Audio('audio/h_.mp3');
+			h4.loop = true;
+			h4.volume = 0;
+			var end = new Audio('audio/end.mp3');
+			
+			var charge = new Audio('audio/charge.mp3');
+			var bleep = new Audio('audio/bleep.mp3');
+			var bass = new Audio('audio/bass.mp3');
+			var chargeplay = 1;
+			
+			
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 
 			var havePointerLock = 'pointerLockElement' in document || 'mozPointerLockElement' in document || 'webkitPointerLockElement' in document;
@@ -389,7 +432,7 @@
 			function init() {
 			
 				 
-				document.getElementById("video").volume = 0;
+			//	document.getElementById("video").volume = 0;
 				//session
 					$.ajax({
 						type: "GET",
@@ -466,8 +509,7 @@
 							break;
 
 						case 32: // space
-							if ( canJump === true ) velocity.y += 350;
-							canJump = false;
+							clickEvent(event);
 							break;
 
 					}
@@ -497,6 +539,7 @@
 						case 68: // d
 							moveRight = false;
 							break;
+							
 
 					}
 
@@ -632,7 +675,6 @@
 						object.position.z = -40;
 						object.visible = false;
 						object.name = "lives";
-						console.log(scene.children);
 						HF.add( object );
 					}, onProgress, onError );
 				});
@@ -731,26 +773,20 @@
 				var distance = 100;
 				var decay = 2.0;
 				var c1 = 0xcb0000;
-				var sphere = new THREE.SphereGeometry( 0.25, 16, 8 );
 				light1 = new THREE.PointLight( c1, intensity, distance, decay );
 				light1.position.z = -80;
-				light1.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c1 } ) ) );
 				scene.add(light1);
 				
-				var sphere = new THREE.SphereGeometry( 0.25, 16, 8 );
 				light2 = new THREE.PointLight( c1, intensity, distance, decay );
 				light2.position.x = 237;
 				light2.position.y = 10;
 				light2.position.z = 237;
-				light2.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c1 } ) ) );
 				scene.add(light2);
 				
-				var sphere = new THREE.SphereGeometry( 0.25, 16, 8 );
 				light3 = new THREE.PointLight( c1, intensity, distance, decay );
 				light3.position.x = -222;
 				light3.position.y = 10;
 				light3.position.z = 250;
-				light3.add( new THREE.Mesh( sphere, new THREE.MeshBasicMaterial( { color: c1 } ) ) );
 				scene.add(light3);
 				
 				// tube
@@ -758,9 +794,26 @@
 				parent.name = "elec";
 				scene.add( parent );
 				
-				addTube();
 				
-			}
+				addTube("ray1");
+				addTube("ray2");
+				addTube("ray3");
+				addTube("ray4");
+				addTube("ray5");
+				addTube("ray6");
+				
+				attackmaterial = new THREE.MeshBasicMaterial( { color: 0xff0000} );
+				attackmaterial.transparent = true;
+				attackmaterial.opacity = 0;
+				attackmaterial.side = 2;
+				console.log(attackmaterial);
+				damageArea = new THREE.Mesh( new THREE.CylinderGeometry( 40, 40, 180, 50 ), attackmaterial );
+				damageArea.position.y = -113;
+				//damageArea.position.y = 70;
+				damageArea.name = "areaD";
+				scene.add( damageArea );
+					
+				}
 			
 			
 			
@@ -791,21 +844,18 @@
 			}
 			function clickEvent( event ) {
 				event.preventDefault();
-				camera.updateMatrixWorld();
-				raycaster.setFromCamera( mouse, camera );	
 				
 				
 				if(terminal == 1){
-					charge1 += 1.2;
+					charge1 += 1.3;
 				}else 
 				if(terminal == 2){
-					charge2 += 1.2;
+					charge2 += 1.3;
 				}else 
 				if(terminal == 3){
-					charge3 += 1.2;
+					charge3 += 1.3;
 				}
 				
-					render();
 				
 			}
 			
@@ -863,7 +913,6 @@
 					prevTime = time;
 				}
 
-				
 				render();
 
 			}
@@ -880,7 +929,6 @@
 					for(i=0; i < scene.children.length; i++){
 						if(scene.children[i].name == "HF"){
 							HF = scene.children[i];
-							console.log(HF);
 							var startpos = HF.position;
 							detectHF = 1;
 						}
@@ -947,7 +995,7 @@
 					//animation:
 					HF.position.z = HF.position.z + 0.6;
 					
-					if(HF.position.z >= 180){ toCenter = 2;HF.children[1].visible = true;}
+					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; fadeVolumeDown(h1); fadeVolumeUp(h2);}
 				}else
 				if(toCenter == 2){
 					
@@ -1005,21 +1053,82 @@
 					charge1 -=0.05;
 				}else if(charge1 <= 0){
 					charge1 = 0;
-				}else{if(charged1 == 0){hlife(); light1.color.b=0.79; light1.color.g=0.5;light1.color.r=0; charged1 = 1;}}
+				}else{if(charged1 == 0){hlife(); light1.color.b=0.79; light1.color.g=0.5;light1.color.r=0; charged1 = 1;parent.children[0].visible = true;}}
 				
 				if(charge2 < 100 && charge2 > 0){
 					charge2 -=0.05;
 				}else if(charge2 <= 0){
 					charge2 = 0;
-				}else{if(charged2 == 0){hlife();light2.color.b=0.79; light2.color.g=0.5;light2.color.r=0; charged2 = 1;}}
+				}else{if(charged2 == 0){hlife();light2.color.b=0.79; light2.color.g=0.5;light2.color.r=0; charged2 = 1;parent.children[4].visible = true;}}
 				
 				if(charge3 < 100 && charge3 > 0){
 					charge3 -=0.05;
 				}else if(charge3 <= 0){
 					charge3 = 0;
-				}else{if(charged3 == 0){hlife();light3.color.b=0.79; light3.color.g=0.5;light3.color.r=0; charged3 = 1;}}
+				}else{if(charged3 == 0){hlife();light3.color.b=0.79; light3.color.g=0.5;light3.color.r=0; charged3 = parent.children[3].visible = true;}}
 				
 				updatecharge();
+				
+				
+				//attack 
+							//var lives = 3;	var damageArea;	var attacktime = new THREE.Clock();
+				
+				if(attackReady == 1){
+					attacktime += clock.getDelta()*100;
+					attackmaterial.opacity = attacktime/50;
+					if(chargeplay == 1){
+							charge.play();
+							chargeplay = 2;
+						}
+					if(attacktime > 10 && endv != 1){
+						cooldownlife -= clock.getDelta()*100;
+						if(chargeplay == 2){
+								charge.pause();
+								charge.currentTime = 0;
+								bleep.play();
+								chargeplay =3;
+							}
+						if(attacktime > 12){
+							if(chargeplay ==3){
+								bleep.pause();
+								bleep.currentTime = 0;
+								bass.play();
+								chargeplay = 1;
+							}
+							//damage animation
+							if(damageArea.position.y >= 70){ 
+								
+							}
+							else{damageArea.position.y += 3;}
+							
+							if(cooldownlife < 0){
+								if(scene.children[0].position.z > (damageArea.position.z-38) && scene.children[0].position.z < (damageArea.position.z+38) && scene.children[0].position.x > (damageArea.position.x-38) && scene.children[0].position.x < (damageArea.position.x+38)){
+									lives -=1;
+									console.log("Glives = "+lives);
+									cooldownlife = 10;
+								}
+							}
+						}
+						if(attacktime > 15){
+							damageArea.position.y = -113;
+							attackmaterial.opacity = 0;
+							chargeplay = 1;
+							attacktime = 0;
+						}
+					}else if(endv != 1){
+						damageArea.position.x = scene.children[0].position.x;
+						damageArea.position.z = scene.children[0].position.z;
+					}else if(endv == 1){
+						charge.pause();
+						charge.currentTime = 0;
+						bleep.pause();
+						bleep.currentTime = 0;
+						attackmaterial.opacity = 0;
+					}
+				}
+				
+				
+				
 				
 				renderer.render( scene, camera );
 				
@@ -1142,12 +1251,21 @@ function hlife(){
 	console.log(Hlives);
 	if(Hlives == 2){
 		HF.children[1].children[0].visible = false;
+		fadeVolumeDown(h2);
+		fadeVolumeUp(h3);
 	}
 	if(Hlives == 1){
 		HF.children[1].children[1].visible = false;
+		fadeVolumeDown(h3);
+		fadeVolumeUp(h4);
 	}
 	if(Hlives == 0){
 		HF.children[1].children[2].visible = false;
+		fadeVolumeDown(h4);
+		end.volume=0;
+		end.play();
+		endv = 1;
+		fadeVolumeUp(end);
 		
 	}
 }
@@ -1163,12 +1281,21 @@ function life(){
 function updatecharge(){
 	if(charge1 >= 100){
 		charge1 = 100.01;
+		if(parent.children[0].visible === true){parent.children[0].visible = false;parent.children[1].visible = true;}else
+		if(parent.children[1].visible === true){parent.children[1].visible = false;parent.children[0].visible = true;}
+		document.getElementById("charge1").style.background = 'green';
 	}
 	if(charge2 >= 100){
 		charge2 = 100.01;
+		if(parent.children[4].visible === true){parent.children[4].visible = false;parent.children[5].visible = true;}else
+		if(parent.children[5].visible === true){parent.children[5].visible = false;parent.children[4].visible = true;}
+		document.getElementById("charge2").style.background = 'green';
 	}
 	if(charge3 >= 100){
 		charge3 = 100.01;
+		if(parent.children[2].visible === true){parent.children[2].visible = false;parent.children[3].visible = true;}else
+		if(parent.children[3].visible === true){parent.children[3].visible = false;parent.children[2].visible = true;}
+		document.getElementById("charge3").style.background = 'green';
 	}
 	document.getElementById("charge1").innerHTML = Math.floor(charge1)+"%";
 	document.getElementById("charge1").style.width = charge1+"%";
@@ -1176,27 +1303,51 @@ function updatecharge(){
 	document.getElementById("charge2").style.width = charge2+"%";
 	document.getElementById("charge3").innerHTML = Math.floor(charge3)+"%";
 	document.getElementById("charge3").style.width = charge3+"%";
+	
+	
 }	
 
-function addTube() {
-		if ( group !== undefined ) {
-			scene.remove( group );
-			group.children[ 0 ].geometry.dispose();
-			group.children[ 1 ].geometry.dispose();
-		}
-		extrudePath = splines[ rayparams.spline ];
-		tubeGeometry = new THREE.TubeBufferGeometry( extrudePath, rayparams.extrusionSegments, 2, rayparams.radiusSegments, rayparams.closed );
+function addTube(a) {
+			
+		extrudePath = splines[ a ]; 
+		tubeGeometry = new THREE.TubeBufferGeometry( extrudePath, rayparams.extrusionSegments, 0.8, rayparams.radiusSegments, rayparams.closed );
 		addGeometry( tubeGeometry );
-	}
+
+}
 
 function addGeometry( geometry ) {
 			// 3D shape
-			group = THREE.SceneUtils.createMultiMaterialObject( geometry, [ raymaterial, wireframeMaterial ] );
 			
+			group = THREE.SceneUtils.createMultiMaterialObject( geometry, [ raymaterial, wireframeMaterial ] );
+			group.name ="electricity";
+			group.visible = false;
+			parent.remove(group);
 			parent.add( group );
 			
 		}
+function fadeVolumeDown(a){
+var vol = a.volume;
+if(!(vol == 0)){
+	setTimeout(function(){
+			vol = vol - 0.03;
+			if(vol < 0)vol = 0;
+			a.volume = vol;
+			fadeVolumeDown(a);
+		}, 75);
+	}
+}
 
+function fadeVolumeUp(a){
+var vol = a.volume;
+if(!(vol == 1)){
+	setTimeout(function(){
+			vol = vol + 0.03;
+			if(vol > 1)vol = 1;
+			a.volume = vol;
+			fadeVolumeUp(a);
+		}, 75);
+	}
+}
 		</script>
 
 	</body>
