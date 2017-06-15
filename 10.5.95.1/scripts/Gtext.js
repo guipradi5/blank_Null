@@ -123,7 +123,7 @@ var resS = res/31556952000;
 					printG("I'm just crying out of happiness", "happy");
 					nextC("3311");
 					break;
-					case "3311":
+					case 3311:
 						printG("It's only that...I'll be able to escape and know more places!", "happy");
 						nextC("3111");
 						break;

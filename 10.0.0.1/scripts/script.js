@@ -182,7 +182,15 @@ function dialogue(i,t){
 		setNext(0);
 		break;
 		
-		
+	case 30:
+		$("#gw").css("top", "35%");
+		printG("... Wait... BTS? Biological Transference System?", "sad");
+		setNext(31);
+		break;
+	case 31:
+		printG("... It's a machine that can transfer information from a human brain to a computer!", "sad");
+		setNext(31);
+		break;
 		
 		
 	case 201:

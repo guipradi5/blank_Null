@@ -99,10 +99,13 @@
 	<!--<div style="width:100%; height:100vh; background:#101010; text-align:center;"><div style="position:relative;">LOADING</div></div>
 	--><div id="overlay"></div>
 	<div id="overlay2"></div>
+		<video id="static" webkit-playsinline style="display:none">
+			<source src="vid/static.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+		</video>
 		<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
 		<div id="info">		</div>
 		<div id="infoS">		</div>
-	<div style="width:100%; position: absolute; bottom: 0;">
+	<div id="gw" style="width:100%; position: absolute; bottom: 0;">
 		<table style="width:860px; margin: 0 auto; position:relative;" id="G">
 		  <tr>
 			<th style="width:1%; text-align:right;">
@@ -186,6 +189,8 @@
 			var down = 0;
 			var phonecall = 0;
 			
+			var vidmaterial;
+			var tvable = 0;
 			var intvar = 5;
 			
 			var angela = new Audio("audio/angela.mp3");
@@ -319,7 +324,13 @@
 				
 				
 				
-				
+				video = document.getElementById("static");
+				texture = new THREE.VideoTexture( video );
+				texture.minFilter = THREE.LinearFilter;
+				texture.magFilter = THREE.LinearFilter;
+				texture.format = THREE.RGBFormat;
+				var parameters = { color: 0xffffff, map: texture };
+				vidmaterial =	new THREE.MeshLambertMaterial( parameters );
 				
 				
 				//mouse
@@ -442,9 +453,16 @@
 				var intersects = raycaster.intersectObjects( scene.children[5].children );				
 				if (intersects.length > 0 ) {
 					console.log( "clicked: "+intersects[ 0 ].object.name);
-					if(intersects[ 0 ].object.name == "TV" || intersects[ 0 ].object.name == "TVScreen"){
-						$("#info").html("");
-						$("#info").append("<div>test</div>");
+					if(intersects[ 0 ].object.name == "TV" || intersects[ 0 ].object.name == "TVScreen" ){
+						if(tvable == 1){
+							$("#info").html("");
+							document.getElementById("static").volume = 0;
+						var string = "<div class='window3d' style=''>";
+						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(3);'>Close</div>";
+							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
+							string += "<video id='video' autoplay onended='$(this).parents(`.window3d`).remove(); dialogue(30);' ><source src='vid/vid.mp4' type='video/mp4;'></video></div></div>";
+						$("#info").html(string);
+						}
 					}
 					if(intersects[ 0 ].object.name == "InBook1"){
 						$("#info").html("");
@@ -492,8 +510,14 @@
 						$( "#keyinput" ).bind( "keydown", function(e) {
 							var pass = $( "#keyinput" ).val().toUpperCase();//call broadcast function in nulwo.js
 							if( pass == "YHN852" && e.which == 13){
+								tvable = 1;
 								$( "#keyinput" ).val("");
 								$("#RESPONSE").html("<br><strong>YHN852 SIGNAL FOUND!</strong><br>Please refer to the nearest TV station.");
+								scene.children[5].children[0].material = vidmaterial;
+								angela.pause();
+								document.getElementById("static").volume = 0.5;
+								document.getElementById("static").loop = true;
+								document.getElementById("static").play();
 								//Open broadcast 9 on TV - Static sounding suddenly
 							}else if(e.which == 13 && pass != "YHN852"){
 								var error = new Audio("audio/error.mp3");
