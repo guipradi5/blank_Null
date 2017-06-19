@@ -89,6 +89,21 @@
 				left: 0;
 				position: absolute;
 			}
+			.loadingscreen{
+				position:absolute;
+				width:100%;
+				height:100%;
+				background:#101010;
+				color:white;
+				z-index:10;
+			}
+			.loadingscreen #number{
+				position: absolute;
+				margin:0 auto;
+				color:white;
+				bottom:30%;
+				
+			}
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -96,6 +111,10 @@
 	</head>
 
 	<body>
+	<div class="loadingscreen">
+		Loading OS...
+		<div id="number" ></div>
+	</div>
 	<!--<div style="width:100%; height:100vh; background:#101010; text-align:center;"><div style="position:relative;">LOADING</div></div>
 	-->	
 	<div id="overlay"></div>
@@ -103,7 +122,7 @@
 	<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
 		<div id="info">		</div>
 		<div id="infoS">		</div>
-	<div style="width:100%; position: absolute; bottom: 0;">		
+	<div id="gw" style="width:100%; position: absolute; bottom: 0;">		
 		<table style="width:860px; margin: 0 auto; position:relative;" id="G">
 		  <tr>
 			<th style="width:1%; text-align:right;">
@@ -183,6 +202,7 @@
 
 			var hemiLight;
 			
+			var itemsload = 0;
 			var tea;
 			var team;
 			var phonenumber = "0";
@@ -190,6 +210,7 @@
 			var down = 0;
 			var phonecall = 0;
 			
+			var key = 0;
 			var intvar = 5;
 			
 			var amb = new Audio("audio/amb.mp3");
@@ -362,6 +383,7 @@
 						console.log( Math.round(percentComplete, 2) + '% loaded' );
 						if(Math.round(percentComplete, 2) >= 100){
 							console.log("FULLY LOADED!");
+							itemsload += 1;
 						}
 					}
 				};
@@ -523,12 +545,14 @@
 					if(intersects[ 0 ].object.name == "Box"){
 							$("#info").html("");
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();dialogue(24);'>Close</div>";
-							string += "<img style='width:100%;height:auto;' src='img/box1.png'></div>";
+						    string += "<div id='closebuttona' style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove();dialogue(24);'>Close</div>";
+							string += "<div style='position: absolute;margin-left: 273px;top: 340px;height: 38px;width: 66px;cursor:pointer;' onclick='if(key == 1){openchest();}'></div>";
+							string += "<img id='chest' style='width:100%;height:auto;' src='img/box1.png'></div>";
 						$("#info").html(string);
 					}
 					if(intersects[ 0 ].object.name == "Pilar"){
 						$("#info").html("");
+						key = 1;
 						var string = "<div class='window3d' style=''>";
 						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(26);'>Close</div>";
 							string += "<img style='width:100%;height:auto;' src='img/key.jpg'></div>";
@@ -557,6 +581,9 @@
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( scene.children[5].children );
 				
+				if(itemsload >= 2){
+					$(".loadingscreen").remove();
+				}
 				if ( intersects.length > 0 ) {
 				console.log(intersects[ 0 ].object.name);
 					if ( INTERSECTED != intersects[ 0 ].object ) {
@@ -621,6 +648,15 @@
 				water.material.uniforms.time.value += 6.0 / 60.0;
 				renderer.render( scene, camera );
 
+			}
+			
+			function openchest(){
+				$("#chest").attr("src", "img/box2.png");
+				setTimeout(function(){ 
+					$("#chest").attr("src", "img/box3.png");
+					$("#closebuttona").attr("onclick", "$(this).parents(`.window3d`).remove();dialogue(27);");
+						
+				}, 2000);
 			}
 		</script>
 

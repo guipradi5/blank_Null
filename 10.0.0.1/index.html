@@ -89,6 +89,21 @@
 				left: 0;
 				position: absolute;
 			}
+			.loadingscreen{
+				position:absolute;
+				width:100%;
+				height:100%;
+				background:#101010;
+				color:white;
+				z-index:10;
+			}
+			.loadingscreen #number{
+				position: absolute;
+				margin:0 auto;
+				color:white;
+				bottom:30%;
+				
+			}
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -96,6 +111,10 @@
 	</head>
 
 	<body>
+	<div class="loadingscreen">
+		Loading OS...
+		<div id="number" ></div>
+	</div>
 	<!--<div style="width:100%; height:100vh; background:#101010; text-align:center;"><div style="position:relative;">LOADING</div></div>
 	--><div id="overlay"></div>
 	<div id="overlay2"></div>
@@ -182,6 +201,7 @@
 
 			var hemiLight;
 			
+			var itemsload = 0;
 			var tea;
 			var team;
 			var phonenumber = "0";
@@ -345,6 +365,7 @@
 						console.log( Math.round(percentComplete, 2) + '% loaded' );
 						if(Math.round(percentComplete, 2) >= 100){
 							console.log("FULLY LOADED!");
+							itemsload += 1;
 						}
 					}
 				};
@@ -458,7 +479,6 @@
 							$("#info").html("");
 							document.getElementById("static").volume = 0;
 						var string = "<div class='window3d' style=''>";
-						    string += "<div style='width: 50px;position:relative; top:-20px; float:right; margin:5px; cursor:pointer;' onclick='$(this).parents(`.window3d`).remove(); dialogue(3);'>Close</div>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
 							string += "<video id='video' autoplay onended='$(this).parents(`.window3d`).remove(); dialogue(30);' ><source src='vid/vid.mp4' type='video/mp4;'></video></div></div>";
 						$("#info").html(string);
@@ -693,6 +713,10 @@
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( scene.children[5].children );
+
+				if(itemsload >= 3){
+					$(".loadingscreen").remove();
+				}
 				
 				if ( intersects.length > 0 ) {
 				console.log(intersects[ 0 ].object.name);

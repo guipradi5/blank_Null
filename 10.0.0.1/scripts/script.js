@@ -183,13 +183,41 @@ function dialogue(i,t){
 		break;
 		
 	case 30:
-		$("#gw").css("top", "35%");
+		$("#gw").css("bottom", "40%");
 		printG("... Wait... BTS? Biological Transference System?", "sad");
 		setNext(31);
 		break;
 	case 31:
-		printG("... It's a machine that can transfer information from a human brain to a computer!", "sad");
-		setNext(31);
+		printG("... It's a machine that can transfer information from a human brain to a computer! And those... green pods, with humans in them. Those were the test subjects! Nulwo was experimenting with humans!", "sad");
+		setNext(32);
+		break;
+	case 32:
+		printG("... Wait... That portion of the video. With the young man's voice. That was not part of the original video... That is more recent.", "sad");
+		setNext(33);
+		break;
+	case 33:
+		printG("Someone else knows about us... But how? ... ", "sad");
+		setNext(34);
+		break;
+	case 34:
+		printG("... We can't know right now. There is no way I can get something just from the video. No relevant metadata is assigned to that broadcast.", "sad");
+		setNext(35);
+		break;
+	case 35:
+		printG("What could he want form me and / or you? ...", "sad");
+		setNext(36);
+		break;
+	case 36:
+		printG("...", "sad");
+		setNext(37);
+		break;
+	case 37:
+		printG("... Anyways... We finally got the password for the last computer. So let's go there and log in right now. C'mon... I feel weird about this... BTS...", "sad");
+		setNext(38);
+		break;
+	case 38:
+		$("#gw").css("bottom", "0");
+		setNext(0);
 		break;
 		
 		

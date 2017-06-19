@@ -170,13 +170,17 @@ function dialogue(i,t){
 		
 		
     case 27:
+		$("#gw").css("bottom", "40%");
         printG("Look! A BROADCAST CODE!", "happy");
 		setNext(28);
         break;
-		
     case 28:
         printG("YHN852. Perfect! Now we've got to go to the first PC and use it there to tune in on the TV Channel. Maybe we will get the password for the third computer there. C'mon!", "happy");
-		setNext(28);
+		setNext(29);
+        break;
+    case 29:
+		$("#gw").css("bottom", "0");
+		setNext(0);
         break;
 	}
 	

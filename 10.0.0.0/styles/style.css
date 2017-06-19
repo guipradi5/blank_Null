@@ -156,3 +156,23 @@ padding: 15px;
     border-top: 2px solid #878684;
     border-left: 2px solid #878684;
 }
+
+.loginwindow{
+	width: 500px;
+	z-index: 312;
+	margin: 0px auto;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	position: absolute;
+}
+
+.loginwindow *{
+	-webkit-touch-callout: default; /* iOS Safari */
+    -webkit-user-select: default; /* Safari */
+     -khtml-user-select: default; /* Konqueror HTML */
+       -moz-user-select: default; /* Firefox */
+        -ms-user-select: default; /* Internet Explorer/Edge */
+            user-select: default; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
