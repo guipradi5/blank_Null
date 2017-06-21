@@ -140,10 +140,16 @@
 		Loading OS...
 		<div id="number" ></div>
 	</div>
-	<div id="gmes" hidden style="background:rgba(0,0,0,0.2); color:white; position:absolute;">
-		<div id="gmessage" style="position:absolute; top:50%; left:50%;  transform: translate(-50%, -50%);">O</div>
+	<div id="Plife" style="position:absolute; top:10px; left:10px;">
+		<div>Connection Force</div>
+		<div id="life1" style="height:60px; width:30px; background:green;border:2px white solid;"></div>
+		<div id="life2" style="height:60px; width:30px; background:green;border:2px white solid;"></div>
+		<div id="life3" style="height:60px; width:30px; background:green;border:2px white solid;"></div>
 	</div>
-	<video id="video" onended="startH();h1.play();h2.play();h3.play();h4.play();" webkit-playsinline style="display:none">
+	<div id="gmes" hidden style="background:rgba(0,0,0,0.2); color:white; position:absolute;">
+		<div id="gmessage" style="position:absolute; top:50%; left:50%;  transform: translate(-50%, -50%);"></div>
+	</div>
+	<video id="video" onended="startH();h1.play();h2.play();h3.play();h4.play();sessionStorage.Hfin = 1" webkit-playsinline style="display:none">
 			<source src="mod/vid_.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
 
@@ -362,6 +368,8 @@
 			var terminal = 0;
 			var area1 = {z1: -72, z2: -40, x1:-45, x2: 45};
 			
+			var spacedown = 1;
+			
 			var charge1 = 0;
 			var charge2 = 0;
 			var charge3 = 0;
@@ -504,7 +512,7 @@
 							break;
 
 						case 32: // space
-							clickEvent(event);
+							spaceEvent(event);
 							break;
 
 					}
@@ -533,6 +541,10 @@
 						case 39: // right
 						case 68: // d
 							moveRight = false;
+							break;
+							
+						case 32: // space
+							spacedown = 1;
 							break;
 							
 
@@ -863,6 +875,25 @@
 				}
 				
 			}
+			function spaceEvent( event ) {
+				event.preventDefault();
+					
+					if(spacedown == 1){
+					if(readypcs == 1){
+						if(terminal == 1){
+							charge1 += 1.3;
+						}else 
+						if(terminal == 2){
+							charge2 += 1.3;
+						}else 
+						if(terminal == 3){
+							charge3 += 1.3;
+						}
+						spacedown = 0;
+					}
+					}
+				
+				}
 			
 			
 			
@@ -952,21 +983,29 @@
 					for(i = 0; i < scene.children.length && flagvideo != 1; i++){
 						if(scene.children[i].children.length > 0){
 						length1 = scene.children[i].children.length;
-							for(j = 0; j < length1; j++){
-								if(scene.children[i].children[j].name == "Box004"){
-									flagvideo += 1;
-									scene.children[i].children[j].material = material;
-									scene.children[i].children[j+1].material = material;
-									scene.children[i].children[j+2].material = material;
-									scene.children[i].children[j+3].material = material;
-									scene.children[i].children[j+4].material = material;
-									scene.children[i].children[j+5].material = material;
-									scene.children[i].children[j+6].material = material;
-									scene.children[i].children[j+7].material = material;
-									scene.children[i].children[j+8].material = material;
-									document.getElementById("video").play();
-									$(".loadingscreen").remove();
-									flag = 1;
+							if(scene.children[i].name == "Screen1"){
+								for(j = 0; j < length1; j++){
+									if(scene.children[i].children[j].name == "Box004"){
+										flagvideo += 1;
+										scene.children[i].children[j].material = material;
+										scene.children[i].children[j+1].material = material;
+										scene.children[i].children[j+2].material = material;
+										scene.children[i].children[j+3].material = material;
+										scene.children[i].children[j+4].material = material;
+										scene.children[i].children[j+5].material = material;
+										scene.children[i].children[j+6].material = material;
+										scene.children[i].children[j+7].material = material;
+										scene.children[i].children[j+8].material = material;
+										if(sessionStorage.Hfin != 1){
+											document.getElementById("video").play();
+											$(".loadingscreen").remove();
+											flag = 1;
+										}else if(sessionStorage.Hfin == 1){
+											$(".loadingscreen").remove();
+											startH();h1.play();h2.play();h3.play();h4.play();
+											flag = 1;
+										}
+									}
 								}								
 							}
 						}
@@ -1004,13 +1043,13 @@
 				if(toCenter == 1){					
 					//animation:
 					if(tutorial == 0){
-					 gmessage("That's... That's Hector...",0);
+					 gmessage("That's... That's Hector...");
 					 $("#Gtext").html("That's... That's Hector...");
 					tutorial = 1;
 					 }
 					HF.position.z = HF.position.z + 0.6;
 					
-					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; readypcs = 1; fadeVolumeDown(h1); fadeVolumeUp(h2); if(tutorial == 1){gmessage("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!",0);  $("#Gtext").html("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!");tutorial = 2;}}
+					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; readypcs = 1; fadeVolumeDown(h1); fadeVolumeUp(h2); if(tutorial == 1){gmessage("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!");  $("#Gtext").html("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!");tutorial = 2;}}
 				}else
 				if(toCenter == 2){
 					HF.position.x = 0;
@@ -1093,12 +1132,12 @@
 				if(attackReady == 1){
 					attacktime += clock.getDelta()*100;
 					attackmaterial.opacity = attacktime/50;
+					cooldownlife -= clock.getDelta()*10000;
 					if(chargeplay == 1){
 							charge.play();
 							chargeplay = 2;
 						}
 					if(attacktime > 10 && endv != 1){
-						cooldownlife -= clock.getDelta()*100;
 						if(chargeplay == 2){
 								charge.pause();
 								charge.currentTime = 0;
@@ -1117,36 +1156,34 @@
 								
 							}
 							else{damageArea.position.y += 3;}
-							
 							if(cooldownlife < 0){
 								if(scene.children[0].position.z > (damageArea.position.z-38) && scene.children[0].position.z < (damageArea.position.z+38) && scene.children[0].position.x > (damageArea.position.x-38) && scene.children[0].position.x < (damageArea.position.x+38)){
-									lives -=1;
+									life();
 									console.log("Glives = "+lives);
 									cooldownlife = 10;
 								}
 							}
 						}
 						if(attacktime > 15){
-						setTimeout(function(){ 
 							if(tutorial == 2){
-								gmessage("Very well done. Watch out with that. if we touch that red laser we can get disconnected",0);
-								tutorial = 4;
+										gmessage("Very well done. Watch out with that. if we touch that red laser we can get disconnected");
+										tutorial = 4;
 							}
+							if(tutorial == 4){
 								setTimeout(function(){ 
-									if(tutorial == 4){
-									gmessage("I am scanning those big screens. Seems like they can overload Hector's avatar with electricity if we activate them.",0);
+									
+									gmessage("I am scanning those big screens. Seems like they can overload Hector's avatar with electricity if we activate them.");
 									tutorial = 5;
-									}
-									setTimeout(function(){ 
-									if(tutorial == 5){
-										gmessage("Go to the keyboards and smash your click and spacebar buttons. Let's paralize him!",0);
-										 $("#Gtext").html("Go to the big screens and smash your click and spacebar buttons. Let's overload those machines and paralize him!");
-										tutorial = 6;
-									}
-									}, 7000);
-								}, 7000);		
-							}, 7000);
-								
+									
+								}, 8000);
+							}
+							if(tutorial == 5){
+								setTimeout(function(){ 
+									gmessage("Go to the keyboards and smash your click and spacebar buttons. Let's paralize him!");
+									 $("#Gtext").html("Go to the big screens and smash your click and spacebar buttons. Let's overload those machines and paralize him!");
+									tutorial = 6;
+								}, 7000);								
+							}	
 							damageArea.position.y = -113;
 							attackmaterial.opacity = 0;
 							chargeplay = 1;
@@ -1321,8 +1358,17 @@ function hlife(){
 
 function life(){
 	lives -=1;
+	if(lives == 2){
+		$("#life1").css( "background", "transparent" );
+	}
+	if(lives == 1){
+		$("#life2").css( "background", "transparent" );
+	}
 	if(lives == 0){
-		//location.assign("../");
+		nuAlert("Connection failed, returning to 10.0.0.0...", null);
+		setTimeout(function(){
+			//location.assign("../");
+		}, 3000);
 	}
 }	
 	
@@ -1398,26 +1444,24 @@ if(!(vol == 0.8)){
 	}
 }
 
-function gmessage(a, b){
-	
-	scene.autoUpdate = false;
-		charge.pause();
-		bleep.pause();
-		bass.pause();
+function gmessage(a){
 	$("#gmessage").html(a);
 	$("#gmes").fadeIn(500);
-	if(b == 1){
 	setTimeout(function(){
 		$("#gmes").fadeOut(1000);
-		scene.autoUpdate = true;
-	}, 5000);
-	}else{
-		$("#gmes").delay(6000).fadeOut(1000);
-		scene.autoUpdate = true;
-		
-	}
+	}, 6000);
 	
 
+}
+
+function nuAlert(a,time){
+
+	scene.autoUpdate = false;
+		$("body").append('<div class="ALERT"><div id="ALERT">'+a+'</div></div>');
+		if(time == null) time = 3000;
+		setTimeout(function(){ 
+			$( ".ALERT" ).remove();
+		}, time);	
 }
 
 		</script>
