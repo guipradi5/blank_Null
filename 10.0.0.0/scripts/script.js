@@ -1,37 +1,43 @@
 var flag = [0, 0, 0]; 
 
 function connect(ip){
-	switch(ip) {
-	case "10.0.0.1":
-			location.assign("../10.0.0.1/index.html");
-		break;
-	case "10.0.0.2":
-			$(".loginwindow").show();
-			$("#loginbutton").attr("onclick", "login(2);");
-		break;
-	case "10.0.0.3":
-			$(".loginwindow").show();
-			$("#loginbutton").attr("onclick", "login(3);");
-		break;
-	}
-}
-
-function login(a){
-	switch(a) {
-		case 1:
-			
-		break;
-		case 2:
-			if($("#pass").val() == "25702"){
-				location.assign("../10.0.0.2/index.html");
+	if(flag[0]+flag[1]+flag[2] != 3){
+		switch(ip) {
+		case "10.0.0.1":
+			if(flag[0] == 0){
+				nuAlert("ERROR<br>No boot.exe detected");
+				flag[0] = 1;
+				G_response(flag[0]+flag[1]+flag[2]);
+				
+			}else{
+				nuAlert("ERROR<br>No boot.exe detected");
+				printG("We already tried this one, try another computer", "VVV");
 			}
-		break;
-		case 3:
-			if($("#pass").val() == "24AA45"){
-				location.assign("../10.0.0.3/index.html");
+			break;
+		case "10.0.0.2":
+			if(flag[1] == 0){
+				nuAlert("System unavailable. Connection error.");
+				flag[1] = 1;
+				G_response(flag[0]+flag[1]+flag[2]);
+				
+			}else{
+				nuAlert("System unavailable. Connection error.");
+				printG("We already tried this one, try another computer", "VVV");
 			}
-		break;
-	}
+			break;
+		case "10.0.0.3":
+			if(flag[2] == 0){
+				nuAlert("ERROR<br>No boot.exe detected");
+				flag[2] = 1;
+				G_response(flag[0]+flag[1]+flag[2]);
+				
+			}else{
+				nuAlert("ERROR<br>No boot.exe detected");
+				printG("We already tried this one, try another computer", "VVV");
+			}
+			break;
+		}
+	}	
 }
 
 function G_response(a){

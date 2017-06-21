@@ -95,7 +95,7 @@
 				height: 100%;
 				background-color: rgba(0,0,0,0.5);
 			}
-			#instructions{
+			#instructions, #gmes{
 				    width: 100%;
 					height: 100%;
 					display: -webkit-box;
@@ -140,10 +140,13 @@
 		Loading OS...
 		<div id="number" ></div>
 	</div>
+	<div id="gmes" hidden style="background:rgba(0,0,0,0.2); color:white; position:absolute;">
+		<div id="gmessage" style="position:absolute; top:50%; left:50%;  transform: translate(-50%, -50%);">O</div>
+	</div>
 	<video id="video" onended="startH();h1.play();h2.play();h3.play();h4.play();" webkit-playsinline style="display:none">
-			<source src="mod/vid.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
+			<source src="mod/vid_.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
-		
+
 		<div id="blocker" style="display: -webkit-box;">
 
 			<div id="instructions">
@@ -182,7 +185,7 @@
 					</div>
 				</div>
 				<div id="Gtext" class="Gtext">
-					Okey, First PC. Let's find out if we can get to the second PC, 10.0.0.2.Look around and see if any object around is interactuable.
+					What... Is this?
 				</div>
 			</th>
 			<th id="next" onclick="" style="width:6%; displaY:none;">
@@ -401,6 +404,7 @@
 			var bass = new Audio('audio/bass.mp3');
 			var chargeplay = 1;
 			
+			var tutorial = 0;
 			
 			// http://www.html5rocks.com/en/tutorials/pointerlock/intro/
 
@@ -451,41 +455,11 @@
 			
 			
 			function init() {
-			
+				try{
 				 
 			//	document.getElementById("video").volume = 0;
 				//session
-					$.ajax({
-						type: "GET",
-						url: "../session.php"
-					})
-					.done(function (msg) {
-						if(msg != "true"){
-							window.location.assign("../")
-						}
-					});
 					
-					$.ajax({
-						type: "GET",
-						url: "../userinfo.php"
-					})
-					.done(function (msg) {
-						var mail = msg;
-					});	
-					
-					$.ajax({
-						type: "POST",
-						url: "../updateplace.php",
-					//	data: {user:mail, url: "/10.0.0.3"},
-						success: function(data, textStatus, jqXHR)
-						{
-							//data - response from server
-						},
-						error: function (jqXHR, textStatus, errorThrown)
-						{
-					 
-						}
-					});
 					
 						
 			
@@ -651,7 +625,18 @@
 				};
 				
 				
-				var onError = function ( xhr ) { console.log(xhr); };
+				var onError = function ( xhr ) { console.log(xhr);
+						if(!sessionStorage.try){
+							sessionStorage.try = 0;
+						}else{
+							sessionStorage.try += 1;
+						}; 
+						
+						if(sessionStorage.try > 3){
+							location.assign('../');
+						}
+						location.reload(); 
+					 };
 				THREE.Loader.Handlers.add( /\.dds$/i, new THREE.DDSLoader() );
 				
 				var mtlLoader = new THREE.MTLLoader();
@@ -683,23 +668,24 @@
 					HF=object;
 					action.play();
 					scene.add( object );
+					//lives
+					mtlLoader.load( 'lives.mtl', function( materials ) {
+						materials.preload();
+						var objLoader = new THREE.OBJLoader();
+						objLoader.setMaterials( materials );
+						objLoader.setPath( 'mod/' );
+						objLoader.load( 'lives.obj', function ( object ) {
+							object.position.x = 0;
+							object.position.y = 135;
+							object.position.z = -40;
+							object.visible = false;
+							object.name = "lives";
+							HF.add( object );
+						}, onProgress, onError );
+					});
 				}, onProgress, onError );
 				
-				//lives
-				mtlLoader.load( 'lives.mtl', function( materials ) {
-					materials.preload();
-					var objLoader = new THREE.OBJLoader();
-					objLoader.setMaterials( materials );
-					objLoader.setPath( 'mod/' );
-					objLoader.load( 'lives.obj', function ( object ) {
-						object.position.x = 0;
-						object.position.y = 135;
-						object.position.z = -40;
-						object.visible = false;
-						object.name = "lives";
-						HF.add( object );
-					}, onProgress, onError );
-				});
+				
 				
 
 //load animations from different fbxs
@@ -773,14 +759,6 @@
 
 				
 				
-				//Final?
-				if(sessionStorage.hecpresence == 1){
-					gasTime = 0.0020;
-					scene.fog = new THREE.FogExp2( 0x101010, 0.0020 );
-					$("#soundSwitch").remove();
-				}
-				
-				
 				
 				var runnerTexture = new THREE.ImageUtils.loadTexture( 'mod/elec.png' );
 				annie = new TextureAnimator( runnerTexture, 10, 1, 10, 75 ); // texture, #horiz, #vert, #total, duration.
@@ -788,6 +766,7 @@
 				var runnerGeometry = new THREE.PlaneGeometry(50, 50, 1, 1);
 				var runner = new THREE.Mesh(runnerGeometry, runnerMaterial);
 				runner.position.set(-100,25,0);
+				runner.visible = false;
 				scene.add(runner);
 				
 				
@@ -835,6 +814,10 @@
 				damageArea.name = "areaD";
 				scene.add( damageArea );
 					
+					}catch(err) {
+						location.reload();
+					}	
+				
 				}
 			
 			
@@ -982,6 +965,7 @@
 									scene.children[i].children[j+7].material = material;
 									scene.children[i].children[j+8].material = material;
 									document.getElementById("video").play();
+									$(".loadingscreen").remove();
 									flag = 1;
 								}								
 							}
@@ -1004,12 +988,12 @@
 				
 				//Animation transitions:
 				if(action2){
-					if(action2.time >= 7.3){
+					if(action2.time >= 7.0){
 						action2.stop();
 						for(i = 0; i < scene.children.length; i++){
 							if(scene.children[i].name == "entry"){
 								scene.children[i].visible = false;
-								scene.children[i+1].visible = true;
+								HF.visible = true;
 								toCenter = 1;
 							}
 						}
@@ -1019,12 +1003,19 @@
 				
 				if(toCenter == 1){					
 					//animation:
+					if(tutorial == 0){
+					 gmessage("That's... That's Hector...",0);
+					 $("#Gtext").html("That's... That's Hector...");
+					tutorial = 1;
+					 }
 					HF.position.z = HF.position.z + 0.6;
 					
-					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; readypcs = 1; fadeVolumeDown(h1); fadeVolumeUp(h2);}
+					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; readypcs = 1; fadeVolumeDown(h1); fadeVolumeUp(h2); if(tutorial == 1){gmessage("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!",0);  $("#Gtext").html("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!");tutorial = 2;}}
 				}else
 				if(toCenter == 2){
-					
+					HF.position.x = 0;
+					HF.position.y = 0;
+					HF.position.z = 180;
 				}
 				
 				//console.log(scene.children[0].position);
@@ -1136,6 +1127,26 @@
 							}
 						}
 						if(attacktime > 15){
+						setTimeout(function(){ 
+							if(tutorial == 2){
+								gmessage("Very well done. Watch out with that. if we touch that red laser we can get disconnected",0);
+								tutorial = 4;
+							}
+								setTimeout(function(){ 
+									if(tutorial == 4){
+									gmessage("I am scanning those big screens. Seems like they can overload Hector's avatar with electricity if we activate them.",0);
+									tutorial = 5;
+									}
+									setTimeout(function(){ 
+									if(tutorial == 5){
+										gmessage("Go to the keyboards and smash your click and spacebar buttons. Let's paralize him!",0);
+										 $("#Gtext").html("Go to the big screens and smash your click and spacebar buttons. Let's overload those machines and paralize him!");
+										tutorial = 6;
+									}
+									}, 7000);
+								}, 7000);		
+							}, 7000);
+								
 							damageArea.position.y = -113;
 							attackmaterial.opacity = 0;
 							chargeplay = 1;
@@ -1214,6 +1225,8 @@ function startH()
 
 var rotObjectMatrix;
 function rotateAroundObjectAxis(object, axis, radians) {
+	try{
+
     rotObjectMatrix = new THREE.Matrix4();
     rotObjectMatrix.makeRotationAxis(axis.normalize(), radians);
 
@@ -1228,12 +1241,16 @@ function rotateAroundObjectAxis(object, axis, radians) {
     // object.rotation.setEulerFromRotationMatrix(object.matrix);
     // new code for Three.js r59+:
     object.rotation.setFromRotationMatrix(object.matrix);
+	}catch(err) {
+		location.reload();
+	}
 }
 
 
 var rotWorldMatrix;
 // Rotate an object around an arbitrary axis in world space       
 function rotateAroundWorldAxis(object, axis, radians) {
+	try{
     rotWorldMatrix = new THREE.Matrix4();
     rotWorldMatrix.makeRotationAxis(axis.normalize(), radians);
 
@@ -1250,11 +1267,14 @@ function rotateAroundWorldAxis(object, axis, radians) {
     // object.rotation.setEulerFromRotationMatrix(object.matrix);
     // code for r59+:
     object.rotation.setFromRotationMatrix(object.matrix);
+	}catch(err) {
+		location.reload();
+	}
 }
 
 function rotateScreens(){
 
-				
+	try{			
 	var xAxis = new THREE.Vector3(0,1,0);
 	asf = screen2;
 	rotateAroundWorldAxis(asf, xAxis, Math.PI/1.3);
@@ -1268,7 +1288,9 @@ function rotateScreens(){
 	asf.position.x = 180;
 	asf.position.y = 0;
 	asf.position.z = 200;
-
+	}catch(err) {
+			location.reload();
+		}
 }	
 
 
@@ -1290,6 +1312,7 @@ function hlife(){
 		fadeVolumeDown(h4);
 		end.volume=0;
 		end.play();
+		end.onended = function(){location.assign("end.html")};
 		endv = 1;
 		fadeVolumeUp(end);
 		
@@ -1299,7 +1322,7 @@ function hlife(){
 function life(){
 	lives -=1;
 	if(lives == 0){
-		
+		//location.assign("../");
 	}
 }	
 	
@@ -1365,15 +1388,38 @@ if(!(vol == 0)){
 
 function fadeVolumeUp(a){
 var vol = a.volume;
-if(!(vol == 1)){
+if(!(vol == 0.8)){
 	setTimeout(function(){
 			vol = vol + 0.03;
-			if(vol > 1)vol = 1;
+			if(vol > 0.8)vol = 0.8;
 			a.volume = vol;
 			fadeVolumeUp(a);
 		}, 75);
 	}
 }
+
+function gmessage(a, b){
+	
+	scene.autoUpdate = false;
+		charge.pause();
+		bleep.pause();
+		bass.pause();
+	$("#gmessage").html(a);
+	$("#gmes").fadeIn(500);
+	if(b == 1){
+	setTimeout(function(){
+		$("#gmes").fadeOut(1000);
+		scene.autoUpdate = true;
+	}, 5000);
+	}else{
+		$("#gmes").delay(6000).fadeOut(1000);
+		scene.autoUpdate = true;
+		
+	}
+	
+
+}
+
 		</script>
 
 	</body>

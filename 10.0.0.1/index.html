@@ -104,6 +104,20 @@
 				bottom:30%;
 				
 			}
+			#back{
+			color: black;
+			cursor: pointer;
+			position: relative;
+			backface-visibility: hidden;
+			margin-right: 2px;
+			background: #D3D0C7;
+			font-weight: bold;
+			pointer-events: initial;
+			background-color: #bdbdbd;
+			border: 2px solid #878684;
+			border-top: 2px solid white;
+			border-left: 2px solid white;
+			}
 		</style>
 		
 <link rel="stylesheet" type="text/css" href="../css/nulwo.css">
@@ -121,6 +135,7 @@
 		<video id="static" webkit-playsinline style="display:none">
 			<source src="vid/static.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'>
 		</video>
+		<a id="back" href="../10.0.0.0/index.html" style="position:absolute; top:0;left:20px; height:auto; width:auto; text-decoration:none;padding: 18px;"><== Go Back to Map</a>
 		<div id="soundSwitch" onclick="playAngela(0);" style="position:absolute; top:0;right:20px; height:30px; width:30px;"><img src="img/soundon.png"></div>
 		<div id="info">		</div>
 		<div id="infoS">		</div>
@@ -231,41 +246,56 @@
 			init();
 			animate();
 			
+			var username;
+			var name;
 			
 			function init() {
 				
 				//session
 					$.ajax({
 						type: "GET",
-						url: "../session.php"
+						url: "../sessioninfo.php"
 					})
-					.done(function (msg) {
-						if(msg != "true"){
-							window.location.assign("../")
-						}
-					});
-					
-					$.ajax({
-						type: "GET",
-						url: "../userinfo.php"
-					})
-					.done(function (msg) {
-						var mail = msg;
+					.done(function (dat) {
+							if(dat != "false"){
+								dat = dat.split('//');
+								username = dat[0];
+								console.log(username);
+								localStorage = username;
+								name = dat[1];
+								$.ajax({
+									type: "POST",
+									url: "../loadpoint.php",
+									data: {user: username, pla: "10.0.0.1"},
+									success: function(dataa, textStatus, jqXHR)
+										{
+											console.log(dataa);
+											if(dataa != 2){
+												$.ajax({
+													type: "POST",
+													url: "../save.php",
+													data: {user: username, pla: "10.0.0.1", val: "1"},
+													success: function(data, textStatus, jqXHR)
+													{
+														console.log(data);
+														console.log("saved succesfully");
+													},
+													error: function (jqXHR, textStatus, errorThrown)
+													{
+														console.log("Something went wrong saving. Try connecting to the internet.");
+													}
+												});
+											}
+										}
+								})
+								
+							}else{
+								location.assign("../");
+							}
+							
 					});	
 					
-					$.ajax({
-						type: "POST",
-						url: "../updateplace.php",
-						//data: {user:mail},
-						success: function(data, textStatus, jqXHR)
-						{
-							//data - response from server
-						},
-						error: function (jqXHR, textStatus, errorThrown)
-						{
-					 
-						}
-					});
+					
 					
 						
 			
@@ -363,6 +393,7 @@
 					if ( xhr.lengthComputable ) {
 						var percentComplete = xhr.loaded / xhr.total * 100;
 						console.log( Math.round(percentComplete, 2) + '% loaded' );
+						$("#number").html(Math.round(percentComplete, 2) + '% loaded');
 						if(Math.round(percentComplete, 2) >= 100){
 							console.log("FULLY LOADED!");
 							itemsload += 1;
@@ -480,7 +511,7 @@
 							document.getElementById("static").volume = 0;
 						var string = "<div class='window3d' style=''>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
-							string += "<video id='video' autoplay onended='$(this).parents(`.window3d`).remove(); dialogue(30);' ><source src='vid/vid.mp4' type='video/mp4;'></video></div></div>";
+							string += "<video id='video' autoplay onended='$(this).parents(`.window3d`).remove(); dialogue(30);pass2();' ><source src='vid/vid.mp4' type='video/mp4;'></video></div></div>";
 						$("#info").html(string);
 						}
 					}
@@ -713,8 +744,8 @@
 				camera.updateMatrixWorld();
 				raycaster.setFromCamera( mouse, camera );
 				var intersects = raycaster.intersectObjects( scene.children[5].children );
-
-				if(itemsload >= 3){
+				
+				if(itemsload >= 2){
 					$(".loadingscreen").remove();
 				}
 				
@@ -792,6 +823,21 @@
 							phonecall = 1;
 							$("#soundSwitch").remove();
 							cache_phone_call.onended = function(){phonecall = 0;hEc.volume = 0; hEc.play(); fadeVolumeUp(hEc); sessionStorage.hecpresence = 1; dialogue(21);};
+									$.ajax({
+											type: "POST",
+											url: "../save.php",
+											data: {user: username, pla: "10.0.0.1", val: "2"},
+											success: function(data, textStatus, jqXHR)
+											{
+												console.log(data);
+												console.log("saved succesfully");
+											},
+											error: function (jqXHR, textStatus, errorThrown)
+											{
+												console.log("Something went wrong saving. Try connecting to the internet.");
+											}
+										});
+												
 						}
 							phonenumber = "";
 							phoneflag = 0;
@@ -802,6 +848,23 @@
 				
 				renderer.render( scene, camera );
 
+			}
+			
+			function pass2(){
+				$.ajax({
+					type: "POST",
+					url: "../save.php",
+					data: {user: username, pla: "10.0.0.2", val: "3"},
+					success: function(data, textStatus, jqXHR)
+					{
+						console.log(data);
+						console.log("saved succesfully");
+					},
+					error: function (jqXHR, textStatus, errorThrown)
+					{
+						console.log("Something went wrong saving. Try connecting to the internet.");
+					}
+				});
 			}
 		</script>
 

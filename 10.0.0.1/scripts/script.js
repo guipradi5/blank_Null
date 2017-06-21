@@ -196,7 +196,7 @@ function dialogue(i,t){
 		setNext(33);
 		break;
 	case 33:
-		printG("Someone else knows about us... But how? ... ", "sad");
+		printG("Was he addressing us? Someone else knows about us?... But how? ... ", "sad");
 		setNext(34);
 		break;
 	case 34:

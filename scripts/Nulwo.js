@@ -2,8 +2,17 @@
 
 
 function loadGame(data){
-	var username = data[1];
-		console.log("Loading..." + data[1]);
+	$.ajax({
+	  method: "POST",
+	  url: "sessioninfo.php"
+	})
+	  .done(function( dat ) {
+		if(dat != "false"){
+			dat = dat.split('//');
+			console.log(dat[2]);
+			location.assign(dat[2]);
+		}
+	  });
 }
 
 
