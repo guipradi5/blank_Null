@@ -410,6 +410,7 @@
 			var charge = new Audio('audio/charge.mp3');
 			var bleep = new Audio('audio/bleep.mp3');
 			var bass = new Audio('audio/bass.mp3');
+			var dam = new Audio('audio/damage.mp3');
 			var chargeplay = 1;
 			
 			var tutorial = 0;
@@ -1160,7 +1161,7 @@
 								if(scene.children[0].position.z > (damageArea.position.z-38) && scene.children[0].position.z < (damageArea.position.z+38) && scene.children[0].position.x > (damageArea.position.x-38) && scene.children[0].position.x < (damageArea.position.x+38)){
 									life();
 									console.log("Glives = "+lives);
-									cooldownlife = 10;
+									cooldownlife = 7;
 								}
 							}
 						}
@@ -1358,6 +1359,8 @@ function hlife(){
 
 function life(){
 	lives -=1;
+	bass.pause();
+	dam.play();
 	if(lives == 2){
 		$("#life1").css( "background", "transparent" );
 	}
@@ -1365,9 +1368,10 @@ function life(){
 		$("#life2").css( "background", "transparent" );
 	}
 	if(lives == 0){
+		$("#life3").css( "background", "transparent" );
 		nuAlert("Connection failed, returning to 10.0.0.0...", null);
 		setTimeout(function(){
-			//location.assign("../");
+			location.assign("../");
 		}, 3000);
 	}
 }	
