@@ -351,7 +351,7 @@ var resS = res/31556952000;
 									setAnswers(array, arrayA);
 									break;
 										case 71111111:
-										printG("Yes, you'll see, I, even though can't move from here, can scan other computers connected to the one I reside in this moment, the one you are connected to right now and through which you can watch me in this moment", "ask");
+										printG("Yes, you'll see, I, even though can't move from here, I can scan other computers connected to the one I reside in this moment, the one you are connected to right now and through which you can watch me in this moment", "ask");
 										nextC("711111111");
 										break;
 											case 711111111:
@@ -404,9 +404,9 @@ var resS = res/31556952000;
 					break;	
 					
 						case 8411:
-						printG("WAHT MALWARE? I AM BEING OPEN WITH YOU C'MON PLEASE HELP ME", "angrier");
-						array = ["1 - I don't even know you! You could be a malware or something worst. I don't want to fuck my computer","2 - yep... I MEAN, NO","3 - As you heard, no","4 - It was a joke, hahahaha. I'll help"];
-						arrayA = ["88","82","83","84"];
+						printG("WHAT MALWARE? I AM BEING OPEN WITH YOU C'MON PLEASE HELP ME", "angrier");
+						array = ["1 - No","2 - Ugh, ALRIGHT!"];
+						arrayA = ["88","83"];
 						setAnswers(array, arrayA);
 						break;	
 						
