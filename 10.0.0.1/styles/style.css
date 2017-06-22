@@ -11,7 +11,7 @@ src: url(DOS.ttf);
 	bottom:0;
 }
 #G div{
-	display:inline-table;
+	display:inline-block;
 	
 }
 #G #bio{
