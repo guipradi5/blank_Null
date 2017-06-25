@@ -264,26 +264,26 @@ var resS = res/31556952000;
 																				break;
 																				case 5111111111112111111://18
 																					array = ["1 - I really loved that song","2 - Well.. You play it very well","3 - It's a really pretty keyboard","4 - It's cool, but you could play it better"];
-																					arrayA = ["51","52","53","54"];
+																					arrayA = ["512","522","532","542"];
 																					setAnswers(array, arrayA);
 																					break;
 																					
-																					case 51://19
+																					case 512://19
 																						printG("Oh... Th-Thank you, it means a lot to me to hear that for the first time", "blush-happy"); //blush embarrased
 																						nextC("61");
 																						break;
 																						
-																					case 52://19
+																					case 522://19
 																						printG("Th-Thank you. Hehehehe That made me really happy", "blush-happy");//blush happy
 																						nextC("61");
 																						break;
 																						
-																					case 53://19
+																					case 532://19
 																						printG("Yeah... It's got something that makes me smile everytime...", "happy");
 																						nextC("61");
 																						break;
 																						
-																					case 54://19
+																					case 542://19
 																						printG("...", "angry");
 																						nextC("541");
 																						break;
