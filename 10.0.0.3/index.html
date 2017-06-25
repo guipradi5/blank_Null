@@ -1202,7 +1202,11 @@
 					}
 				}
 				
-				
+				if(Hlives == 0){
+					screen1.position.y = screen1.position.y -1;
+					screen2.position.y = screen2.position.y -1;
+					screen3.position.y = screen3.position.y -1;
+				}
 				
 				
 				renderer.render( scene, camera );
@@ -1350,9 +1354,11 @@ function hlife(){
 		fadeVolumeDown(h4);
 		end.volume=0;
 		end.play();
-		end.onended = function(){location.assign("end.html")};
+		//end.onended = function(){location.assign("end.html")};
 		endv = 1;
 		fadeVolumeUp(end);
+		gas();
+		
 		
 	}
 }
@@ -1466,6 +1472,22 @@ function nuAlert(a,time){
 		setTimeout(function(){ 
 			$( ".ALERT" ).remove();
 		}, time);	
+}
+
+var gasTime = 0.0001;
+var level = 1000;
+function gas(){
+	if(hex >= 15){
+		setTimeout(function(){ 
+			hexN = hex.toString(16);
+			hexString = ""+hexN+hexN+hexN;
+			hexString = parseInt(hexString, 16);
+			console.log(hex);
+			scene.fog = new THREE.Fog( hexString, -200, level );	
+			if(hex > 15){
+			gas();
+			}
+	}
 }
 
 		</script>
