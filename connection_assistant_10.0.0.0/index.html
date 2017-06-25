@@ -691,11 +691,9 @@ $( "#reg" ).submit(function( e ) {
 	var pass2 = $("#pass2").val();
 	
 	if(pass1 == pass2){
-			console.log("We're in");
 		var posting = $.post( "../NulwoRegistry.php", { name: name, user: user, pass: pass });
 
 		posting.done(function( data ) {
-		console.log(data);
 			if(data == "1"){
 				continue_();
 			}else if(data == "0"){

@@ -509,10 +509,11 @@
 						if(tvable == 1){
 							$("#info").html("");
 							document.getElementById("static").volume = 0;
-						var string = "<div class='window3d' style=''>";
+						var string = "<div class='window3d' style='max-width: 840px;'>";
 							string += "<div style='font-family:Times New Roman;color:black;background:white;margin:10px; padding:30px;text-align:left;'>";
-							string += "<video id='video' autoplay onended='$(this).parents(`.window3d`).remove(); dialogue(30);pass2();' ><source src='vid/vid.mp4' type='video/mp4;'></video></div></div>";
+							string += "<video id='video' style='width:100%' autoplay onended='$(this).parents(`.window3d`).remove(); dialogue(30);pass2();' ><source src='vid/vid.mp4' type='video/mp4;'></video></div></div>";
 						$("#info").html(string);
+						fadeVolumeDown(hEc);
 						}
 					}
 					if(intersects[ 0 ].object.name == "InBook1"){
