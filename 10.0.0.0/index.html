@@ -12,7 +12,7 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-<script src="scripts/script.js"></script>
+<script src="scripts/scriptnew.js"></script>
 <script src="../scripts/Nulwo.js"></script>
 
 <link rel="stylesheet" type="text/css" href="styles/style.css">
@@ -22,6 +22,28 @@
 <body>
 <div id="overlay"></div>
 <div id="overlay2"></div>
+
+<div class="loginwindow window" hidden>
+	<div class="window98" id="message" style="position:absolute;">
+		<div class="top">
+				<span>Login</span>
+				<input type="button" onclick="$(this).parents('.loginwindow').hide();" value="X">
+				<input type="button" onclick="alert('ERROR');" value="&#x25a1;">
+				<input type="button" onclick="alert('ERROR');" value="_">
+			</div>
+		<div class="in" style="font-size:10pt; text-align:left;">
+			<div style="width: 50%;margin: 0 auto;">
+				<span>Username: </span><span>HectorF</span>
+			</div>
+			<div style="width: 50%;margin: 0 auto;" >
+				<span>Password: </span><input type="text" id="pass" placeholder="password">
+			</div>
+			<div style="float:right;">
+				<button id="loginbutton" value="Login" onclick="">Login</button>
+			</div>
+		</div>
+	</div>
+</div>
 
 <div id="graph">
 	<div id="ind">
@@ -55,6 +77,7 @@
 					</div>
 				</div>
 				<div id="Gtext" class="Gtext">
+					<span id="pass1"></span> | <span id="pass2"></span><br>
 					Here we are!! The Router! Now, from here we are able to go to multiple computers.
 				</div>
 			</th>
@@ -67,6 +90,59 @@
 	var AMB_01 = new Audio('sound/10_BMA.mp3');
 	AMB_01.loop = true;
 	AMB_01.play();
+	
+	var username;
+	var name;
+	
+	$.ajax({
+			type: "GET",
+			url: "../sessioninfo.php"
+		})
+		.done(function (dat) {
+				if(dat != "false"){
+					dat = dat.split('//');
+					username = dat[0];
+					console.log(username);
+					localStorage = username;
+					name = dat[1];
+					
+					$.ajax({
+								type: "POST",
+								url: "../loadpoint.php",
+								data: {user: username, pla: "10.0.0.1"},
+								success: function(data, textStatus, jqXHR)
+								{
+										if(data >= 2)$("#pass1").html("Password for PC2: 25702");
+												
+												$.ajax({
+													type: "POST",
+													url: "../loadpoint.php",
+													data: {user: username, pla: "10.0.0.2"},
+													success: function(data, textStatus, jqXHR)
+													{
+														if(data >= 3)$("#pass2").html("Password for PC3: 24AA45");
+													},
+													error: function (jqXHR, textStatus, errorThrown)
+													{
+														console.log("Something went wrong saving. Try connecting to the internet.");
+													}
+												});
+									
+									
+									
+								},
+								error: function (jqXHR, textStatus, errorThrown)
+								{
+									console.log("Something went wrong saving. Try connecting to the internet.");
+								}
+					});
+					
+					
+				}else{
+					location.assign("../");
+				}
+				
+		});	
 </script>
 
 </body>
