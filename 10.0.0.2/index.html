@@ -267,7 +267,7 @@
 									success: function(dataa, textStatus, jqXHR)
 										{
 											console.log(dataa);
-											if(dataa != 2){
+											if(dataa != 2 && dataa < 2){
 												$.ajax({
 													type: "POST",
 													url: "../save.php",
