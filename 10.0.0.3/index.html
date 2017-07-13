@@ -301,6 +301,9 @@
 			var screen3;
 			var asf;
 			
+			var waitmes = 0;
+			
+			
 			//rays of electricity
 			var binormal = new THREE.Vector3();
 			var normal = new THREE.Vector3();
@@ -900,7 +903,10 @@
 			
 			//animate
 			function animate() {
-				requestAnimationFrame( animate );
+				setTimeout( function() {
+					requestAnimationFrame( animate );
+				}, 1000 / 45 );
+				
 				if ( mixers.length > 0 ) {
 					for ( var i = 0; i < mixers.length; i ++ ) {
 							mixers[ i ].update( clock.getDelta() );
@@ -1043,14 +1049,14 @@
 				
 				if(toCenter == 1){					
 					//animation:
-					if(tutorial == 0){
+					if(tutorial == 0 && waitmes == 0){
 					 gmessage("That's... That's Hector...");
-					 $("#Gtext").html("That's... That's Hector...");
+					 $("#Gtext").html("That's... That's <span style='color:red'>Hector</span>...");
 					tutorial = 1;
 					 }
 					HF.position.z = HF.position.z + 0.6;
 					
-					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; readypcs = 1; fadeVolumeDown(h1); fadeVolumeUp(h2); if(tutorial == 1){gmessage("Watch out! Below you there is a red circle. It seems like a laser. Try to avoid it!");tutorial = 2;}}
+					if(HF.position.z >= 180){ toCenter = 2;attackReady = 1;HF.children[1].visible = true; readypcs = 1; fadeVolumeDown(h1); fadeVolumeUp(h2); if(tutorial == 1 && waitmes == 0){gmessage("Watch out! <span style='color:red'>Below you</span> there is a <span style='color:red'>red circle</span>. It seems like a laser. <span style='color:red'>RUN!</span>");tutorial = 2;}}
 				}else
 				if(toCenter == 2){
 					HF.position.x = 0;
@@ -1130,6 +1136,19 @@
 				//attack 
 							//var lives = 3;	var damageArea;	var attacktime = new THREE.Clock();
 				
+				if(tutorial == 4 && waitmes == 0){
+						setTimeout(function(){
+							gmessage("I am scanning those <span style='color:red'>Big Computers</span>. Seems like they can <span style='color:red'>overload</span> Hector's avatar with electricity if we activate them.");
+							tutorial = 5;
+						}, 1000);						
+				}
+				if(tutorial == 5 && waitmes == 0){
+						setTimeout(function(){
+							gmessage("<span style='color:red'>Go to the Big Computers</span> and smash your <span style='color:red'>click and spacebar buttons</span>. Let's paralize him!");	
+							$("#Gtext").html("<span style='color:red'>Go to the Big Computers</span> and smash your <span style='color:red'>click and spacebar buttons</span>. Let's paralize him!");
+							tutorial = 6;
+						}, 1000);						
+					}
 				if(attackReady == 1){
 					attacktime += clock.getDelta()*100;
 					attackmaterial.opacity = attacktime/50;
@@ -1166,25 +1185,10 @@
 							}
 						}
 						if(attacktime > 15){
-							if(tutorial == 2){
-										gmessage("Very well done. Watch out with that. if we touch that red laser we can get disconnected");
-										tutorial = 4;
+							if(tutorial == 2 && waitmes == 0){
+								gmessage("Very well done. Watch out with that. if we touch that <span style='color:red'>red laser</span> we can get <span style='color:red'>disconnected</span>");
+								tutorial = 4;
 							}
-							if(tutorial == 4){
-								setTimeout(function(){ 
-									
-									gmessage("I am scanning those big screens. Seems like they can overload Hector's avatar with electricity if we activate them.");
-									tutorial = 5;
-									
-								}, 8000);
-							}
-							if(tutorial == 5){
-								setTimeout(function(){ 
-									gmessage("Go to the keyboards and smash your click and spacebar buttons. Let's paralize him!");
-									 $("#Gtext").html("Go to the big screens and smash your click and spacebar buttons. Let's overload those machines and paralize him!");
-									tutorial = 6;
-								}, 7000);								
-							}	
 							damageArea.position.y = -113;
 							attackmaterial.opacity = 0;
 							chargeplay = 1;
@@ -1377,7 +1381,7 @@ function life(){
 		$("#life3").css( "background", "transparent" );
 		nuAlert("Connection failed, returning to 10.0.0.0...", null);
 		setTimeout(function(){
-			location.assign("../");
+			location.assign("../10.0.0.0");
 		}, 3000);
 	}
 }	
@@ -1455,11 +1459,13 @@ if(!(vol == 0.8)){
 }
 
 function gmessage(a){
+	waitmes = 1;	
 	$("#gmessage").html(a);
 	$("#gmes").fadeIn(500);
 	setTimeout(function(){
 		$("#gmes").fadeOut(1000);
-	}, 6000);
+		waitmes = 0;	
+	}, 7000);
 	
 
 }

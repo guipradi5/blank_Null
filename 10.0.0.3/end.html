@@ -3,17 +3,39 @@
 <head>
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>VOS</title>
+<title>____e_________________________n_________________________d_______________</title>
 
 </head>
 
 <body style="background:#101010;  font-family:Helvetica;">
-	<video autoplay="" loop="" name="media">
+<div id="dia">
+	<div>
+	AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!<br>
+	AAAAaaaaAAAAAAAAAAAAAA!!!!
+	</div>
+</div>
+<div id="g">
+	<div>
+	</div>
+</div>
+	<video autoplay="" style="  z-index: -100;" loop="" name="media">
 		<source src="vid/end.mp4" type="video/mp4">
 	</video>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 <style>
+@font-face{
+			font-family:DOS;
+			src:url(../../fonts/DOS.ttf);
+		}
+		@font-face {
+			font-family: 'laborateregular';
+			src: url('../fonts/laborate-webfont.woff2') format('woff2'),
+				 url('../fonts/laborate-webfont.woff') format('woff');
+			font-weight: normal;
+			font-style: normal;
+		}
+
 #logIntoThisSite {
 	transition: color 0.5s ease;
 	font-size: 15vh;
@@ -23,7 +45,15 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
-video { 
+
+body{
+	overflow:hidden;
+}
+body *{
+	cursor:pointer;
+}
+
+video, #dia, #g { 
   position: fixed;
   top: 50%;
   left: 50%;
@@ -31,13 +61,119 @@ video {
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -100;
   transform: translate(-50%, -50%);
+}
+
+#dia div, #g div{
+	position:absolute;
+	top: 50%;
+	left: 50%;
+	text-align:center;
+	transform: translate(-50%, -50%);
+	color:white;
+	font-size:36pt;
+	font-family:'laborateregular';
+}
+#g div{
+	font-family:DOS;
 }
 
 #logIntoThisSite:hover{
 color:#101010;
 }
 </style>
+
+<script>
+	var dia = document.getElementById("dia");
+	var did = 1;
+	var passcheck = 1;
+	$(document).on("keyup",function(){
+		cat(did);
+	});
+	$(document).on("click",function(){
+		cat(did);
+	});
+	
+	function cat(a){
+		switch(a){
+			case 1:
+				Hd("<span style='color:red'>KILL MEEEE</span> PLEAAASEEEE!!!!<br><span style='color:red'>KILL MEEEE</span>");
+			break;
+			case 2:
+				Hd("AAAAAAAAAAAAAAAAAAAAA END MEEEEEE!!<br>EEEND MEEEEE!!!<br>EEEND MEEEEE!!!<br>EEEND MEEEEE!!!<br>EEEND MEEEEE!!!<br>EEEND MEEEEE!!!<br><span style='color:red'>EEEND MEEEEE!!!</span><br>EEEND MEEEEE!!!");
+			break;
+			case 3:
+				gprint("... H- Hector... Is that you?");
+			break;
+			case 4:
+				Hd("...");
+			break;
+			case 5:
+				Hd("THa-tHHAT vOiICE. ,.");
+			break;
+			case 6:
+				Hd("You are G-G-G--------<br>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!");
+			break;
+			case 7:
+				gprint("HECTOR!");
+			break;
+			case 8:
+				Hd("AAAAAAAAAAAAAAAAAAAAA!!!<br>yOuuu Are NooRRmAAn'S<br>AaaaaAAAaAAA!!!<br>NORRRRMAAAAAN!!!!AAAAAAAA! ");
+			break;
+			case 9:
+				gprint("WHO IS NORMAN, HECTOR!?<br>HECTOR!");
+			break;
+			case 10:
+				Hd("GGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGGGGGGGGG<br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span>");
+			break;
+			case 11:
+				Hd("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGG<br>GGGGGGGGG<br><span style='color:red'>WHY ARE YOU HERE!?</span><br>GGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGG");
+			break;
+			case 12:
+				gprint("What do you mean?<br>HECTOR PLEASE ANSWER!!!");
+			break;
+			case 13:
+				Hd("WHY DID THEY DOO THISUISISISSSSSS!!!!!!??!<br>WHYWHYWHYWHYWHYWHY<br>WWHYWHYWHYHYWHYWHY<br>WHYWHWHYWHYWHYYWHY<br>WHYWHYWHYWHYWHYWHY<br>WHYWHYWHYWHYWHYWHY<br><span style='color:red'>WHYWHYWHYWHYWHYWHY</span><br><span style='color:red'>WHYWHYWHYWHYWHYWHY</span><br><span style='color:red'>WHYWHYWHYWHYWHYWHY</span>");
+			break;
+			case 14:
+				Hd("NOOOOOOOOOOOOOOO!!!!<br>NULWO!!!!<br> <span style='color:red;font-size:120pt'>WHY!!??!!?<span>");
+				setTimeout(function(){
+					Hd("");
+				},4000);
+			break;
+		}
+	}
+	
+	function Hd(a){
+		if(passcheck == 1){
+			did +=1;
+			passcheck = 0;
+			$("#g div").fadeOut(500);
+			$("#dia div").fadeOut(500);
+			setTimeout(function(){
+				$("#dia div").html(a);
+				$("#dia div").fadeIn(500);
+				setTimeout(function(){
+					passcheck = 1;
+				},500);
+			},500);
+		}
+	}
+	function gprint(a){
+		if(passcheck == 1){
+			did +=1;
+			passcheck = 0;
+			$("#g div").fadeOut(500);
+			$("#dia div").fadeOut(500);
+			setTimeout(function(){
+				$("#g div").html(a);
+				$("#g div").fadeIn(500);
+				setTimeout(function(){
+					passcheck = 1;
+				},500);
+			},500);
+		}
+	}
+</script>
 </body>
 </html>
