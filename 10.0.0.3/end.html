@@ -18,15 +18,19 @@
 	<div>
 	</div>
 </div>
-	<video autoplay="" style="  z-index: -100;" loop="" name="media">
-		<source src="vid/end.mp4" type="video/mp4">
+	<video id="vid" autoplay="" style="  z-index: -100;" name="media">
+		<source src="vid/vid.mp4" type="video/mp4">
 	</video>
+	<audio autoplay loop>
+	  <source src="audio/rumb.mp3" type="audio/mpeg">
+	  Your browser does not support the audio tag.
+	</audio>
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 <style>
 @font-face{
 			font-family:DOS;
-			src:url(../../fonts/DOS.ttf);
+			src:url(../fonts/DOS.ttf);
 		}
 		@font-face {
 			font-family: 'laborateregular';
@@ -112,22 +116,24 @@ color:#101010;
 				Hd("THa-tHHAT vOiICE. ,.");
 			break;
 			case 6:
-				Hd("You are G-G-G--------<br>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!!");
+				Hd("You are G-G-G--------");
+				change(2);
 			break;
 			case 7:
-				gprint("HECTOR!");
+				gprint("Y-Yes... I am G.<br>Are you trying to say something else?");
 			break;
 			case 8:
-				Hd("AAAAAAAAAAAAAAAAAAAAA!!!<br>yOuuu Are NooRRmAAn'S<br>AaaaaAAAaAAA!!!<br>NORRRRMAAAAAN!!!!AAAAAAAA! ");
+				Hd("G-G-G---GGGGGGGGG<br><br><span style='color:red; font-size:60pt'>AAAAAAAAAAAAAAAAAAAAA!!!</span><br>yOuuu Are NooRRmAAn'S<br>AaaaaAAAaAAA!!!<br>NORRRRMAAAAAN!!!!AAAAAAAA! ");
 			break;
 			case 9:
 				gprint("WHO IS NORMAN, HECTOR!?<br>HECTOR!");
 			break;
 			case 10:
 				Hd("GGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGGGGGGGGG<br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span><br><span style='color:red'>GGGGGGGGGGGGGGGGGGGGGGGGGGGG</span>");
+				change(3);
 			break;
 			case 11:
-				Hd("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGG<br>GGGGGGGGG<br><span style='color:red'>WHY ARE YOU HERE!?</span><br>GGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGG");
+				Hd("GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGG<br>GGGGGGGGG<br><span style='color:red; font-size:60pt'>WHY ARE YOU HERE!?</span><br>GGGGGGGGGGGGGGGGGGGGGGGGG<br>GGGGGGGGGGGGGGGGGGGGG");
 			break;
 			case 12:
 				gprint("What do you mean?<br>HECTOR PLEASE ANSWER!!!");
@@ -139,6 +145,7 @@ color:#101010;
 				Hd("NOOOOOOOOOOOOOOO!!!!<br>NULWO!!!!<br> <span style='color:red;font-size:120pt'>WHY!!??!!?<span>");
 				setTimeout(function(){
 					Hd("");
+					change(5);
 				},4000);
 			break;
 		}
@@ -174,6 +181,76 @@ color:#101010;
 			},500);
 		}
 	}
+	
+	
+	
+	
+	var s = 0.00;
+	var e = 22.851588;
+	var vids = 1;
+	var vid = document.getElementById("vid");
+
+	
+	vid.ontimeupdate = function() {
+			if(vid.currentTime >= e || vid.currentTime < s){
+				if(vid.currentTime >= e && vids == 2){
+					change(1);
+					vid.currentTime = s;
+				}else if(vid.currentTime >= e && vids==4){
+					change(4);
+					vid.currentTime = s;
+				}else{
+				vid.currentTime = s;
+				}
+				
+			}
+		};
+		
+	vid.onended = function() {
+			$("#vid").fadeOut();
+			setTimeout(function(){
+				location.assign("../error0134.html");
+			},3000);
+	};
+	
+	function change(a){
+			
+			switch(a){
+				case 2: 
+					s = 24.143729;
+					e = 24.324909;
+					vids = 2;
+				break;
+				case 1: 
+					s = 25.95;
+					e = 26.918931;
+					vids = 3;
+				break;
+				case 3:
+					s = 29.244114;
+					e = 32.951483;
+					vids = 4
+				break;
+				case 4: 
+					s = 35.968822;
+					e = 38.510565;
+					vids = 5;
+				break;
+				case 5: 
+					s = 41.980472;
+					e = 5000;
+				break;
+			}
+		
+		}
+	
+	
+	
+	
+	
+	
+	
+	
 </script>
 </body>
 </html>
