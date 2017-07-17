@@ -13,12 +13,47 @@
 	ERROR<br>G.bio lost connection<br>Nulwo System lost connection<br>Please contact admin.
 	</div>
 </div>
-	
+
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 	<audio autoplay loop>
 	  <source src="10.0.0.3/audio/bb.mp3" type="audio/mpeg">
 	  Your browser does not support the audio tag.
 	</audio>
+	
+<script>
+
+	//session
+				$.ajax({
+						type: "GET",
+						url: "sessioninfo.php"
+					})
+					.done(function (dat) {
+							if(dat != "false"){
+								dat = dat.split('//');
+								username = dat[0];
+								console.log(username);
+								localStorage = username;
+								name = dat[1];
+								$.ajax({
+									type: "POST",
+									url: "save.php",
+									data: {user: username, pla: "lastplace", val: "error0134.html"},
+									success: function(data, textStatus, jqXHR)
+									{
+										console.log(data);
+										console.log("saved succesfully");
+									},
+									error: function (jqXHR, textStatus, errorThrown)
+									{
+										console.log("Something went wrong saving. Try connecting to the internet.");
+									}
+								})
+								
+							}
+							
+					});	
+	
+</script>
 <style>
 @font-face{
 			font-family:DOS;
